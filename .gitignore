@@ -1,0 +1,22 @@
+credentials
+.aws/shell/
+.azure/azure*
+.azure/access*
+.npm/
+.ssh/
+.streamline/
+cpdeploy/mg/output/*
+cpdeploy/app/domain
+/cpdeploy/gw/output/client/*
+PRIVATEBUILD
+# OS generated files #
+######################
+.bash_history
+.viminfo
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
