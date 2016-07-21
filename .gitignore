@@ -7,7 +7,9 @@ credentials
 .streamline/
 cpdeploy/mg/output/*
 cpdeploy/app/domain
-/cpdeploy/gw/output/client/*
+cpdeploy/gw/output/*
+!cpdeploy/gw/output/client/.gitkeep
+
 PRIVATEBUILD
 # OS generated files #
 ######################
