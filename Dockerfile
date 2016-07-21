@@ -8,7 +8,7 @@ RUN \
 	nodejs curl jq tree groff less nano vim && \
     	python3 -m ensurepip && \
     	rm -r /usr/lib/python*/ensurepip && \
-    	pip3 install --upgrade pip setuptools && \
+	pip3 install --upgrade pip setuptools && \
 	pip3 install awscli && \
 	pip3 install aws-shell && \
 	npm install -g azure-cli && \
