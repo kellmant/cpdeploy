@@ -11,7 +11,6 @@ cpdeploy/mg/output/*
 cpdeploy/app/domain
 cpdeploy/gw/output/*
 !cpdeploy/gw/output/.gitkeep
-cpdeploy/gw/output/client/*
 !cpdeploy/gw/output/client/.gitkeep
 
 PRIVATEBUILD
