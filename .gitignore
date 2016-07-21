@@ -9,9 +9,10 @@ MakeSystem.priv
 cpdeploy/mg/output/*
 !cpdeploy/mg/output/.gitkeep
 cpdeploy/app/domain
+cpdeploy/gw/output/client/*
+!cpdeploy/gw/output/client/.gitkeep
 cpdeploy/gw/output/*
 !cpdeploy/gw/output/.gitkeep
-!cpdeploy/gw/output/client/.gitkeep
 
 PRIVATEBUILD
 # OS generated files #
