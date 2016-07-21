@@ -1,7 +1,12 @@
 FROM alpine:latest
 MAINTAINER kellman
-COPY cpdeploy /cpdeploy
-COPY root /root
+#
+# uncomment if you want to have the shell contained
+# leave and mount the directories locally to save 
+# your own configuration.
+#
+#COPY cpdeploy /cpdeploy
+#COPY root /root
 RUN \
 	apk -Uuv add --no-cache --update bash ca-certificates \
 	tzdata dialog openssh openssl python python3 ncurses \
