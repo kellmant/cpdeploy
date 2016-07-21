@@ -1,8 +1,0 @@
-docker images
-docker ps
-pwd
-docker build -t newcpdeploy .
-docker images
-#docker ps -a
-docker create --name cpdata -v $PWD/cpdeploy:/cpdeploy alpine /bin/true
-docker run --volumes-from cpdata --name mycpdeploy -it newcpdeploy
