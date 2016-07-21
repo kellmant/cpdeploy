@@ -1,0 +1,4 @@
+echo "$0 on ${1}" >> /tmp/auto.job
+cat /tmp/auto.job | grep -v "$0 on ${1}" > /tmp/${1}.done
+mv /tmp/${1}.done /tmp/auto.job
+

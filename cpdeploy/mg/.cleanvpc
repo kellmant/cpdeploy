@@ -1,0 +1,9 @@
+#!/bin/bash
+rm -rf /tmp/*
+touch /tmp/auto.job
+#rm -rf /cpdeploy/mg/output/*
+rm -rf /cpdeploy/gw/output/*
+rm -rf /cpdeploy/app/domain
+mkdir /cpdeploy/gw/output/client
+echo "" > /cpdeploy/debug.output
+echo "done"

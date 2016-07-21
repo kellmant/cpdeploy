@@ -1,0 +1,39 @@
+#!/bin/bash
+source VAR
+# get the list of secured app gateways
+#
+site=$(awk '/PublicIpAddress/ {print $2;}' ${out}/${1}/pubip | sed 's/"//g' | sed 's/,//g')
+
+echo "{" > ${aplb}
+echo "\"Comment\": \"${domain} DNS change \"," >> ${aplb}
+echo "       \"Changes\": [" >> ${aplb}
+echo "            {" >> ${aplb}
+echo " \"Action\": \"UPSERT\"," >> ${aplb}
+echo "\"ResourceRecordSet\": {" >> ${aplb}
+echo "\"Name\": \"app.${domain}\"," >> ${aplb}
+echo "\"Type\": \"A\"," >> ${aplb}
+echo "\"TTL\": 10," >> ${aplb}
+echo "\"ResourceRecords\": [" >> ${aplb}
+echo "            {\"Value\": \"$site\"} " >> ${aplb}
+echo "         ]" >> ${aplb}
+echo "      }" >> ${aplb}
+echo "    }" >> ${aplb}
+echo "  ]" >> ${aplb}
+echo "}" >> ${aplb}
+
+aws route53 change-resource-record-sets --hosted-zone-id $hostedid --change-batch file://${aplb}
+echo "setting VPC $1 at $site as app.${domain}" 
+echo "Redirection of traffic in . . . "
+for i in {10..1}
+do
+echo -n "${i}"
+sleep .33
+echo -n "."
+sleep .33
+echo -n "."
+sleep .33
+done
+echo ". . . "
+sleep 1
+echo "VPC $1 is app.${domain}" > ${app}/domain
+exit

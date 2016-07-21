@@ -1,0 +1,27 @@
+#!/bin/bash
+# test for input
+if [ -z "$1" ]
+  then
+echo ""
+    echo "Just give the name of the site to disconnect ex.: $0 <name>"
+echo ""
+exit
+fi
+source VAR
+if [ ! -d "${out}/${1}" ] ; then
+echo "no policy to kill called ${1}"
+echo ""
+exit
+fi
+
+# here we go
+$api/DelPolicy ${1}
+sleep 10
+$api/DelObjects ${1}
+rm -rf ${out}/$1/natuids
+echo " -> $0 COMMAND COMPLETED. || "
+exit 0
+#
+#
+# Set DNS record
+#

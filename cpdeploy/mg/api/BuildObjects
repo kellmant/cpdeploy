@@ -1,0 +1,118 @@
+#!/bin/bash
+if [ -z "$1" ]
+  then
+echo ""
+    echo "Just give the number designation for the gateway, like $0 1"
+    echo "This will build policy"
+echo ""
+exit
+fi
+
+source VAR
+gw_name="${1}.${domain}"
+vpcid=$(awk '/VpcId/ {print $2;}' ${out}/${1}/vpc | sed 's/"//g' | sed 's/,//g')
+subnetid0=$(awk '/SubnetId/ {print $2;}' ${out}/${1}/subnet0 | sed 's/"//g' | sed 's/,//g')
+IP=$(awk '/PublicIpAddress/ {print $2;}' ${out}/${1}/pubip | sed 's/"//g' | sed 's/,//g')
+subid=(`cat ${out}/${1}/id`)
+baseurl=https://$host/web_api
+curl_cmd="curl --silent --insecure -X POST"
+
+SID=`${curl_cmd} -H "Content-Type: application/json" -d @- $baseurl/login <<. | awk -F\" '/sid/ {print $4}'
+{
+  "user":"$username" ,
+  "password":"$password" ,
+  "session-name":"API"
+}
+.`
+# Login complete, add objects, rules and such here.
+
+sleep 5
+
+################################################################################################
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/add-host <<.
+{
+  "name" : "${1}-gw",
+  "ip-address" : "10.0.${subid}.254"
+}
+.
+
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/add-host <<.
+{
+  "name" : "${1}-app",
+  "ip-address" : "10.0.${subid}.12"
+}
+.
+
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/add-network <<.
+{
+  "name" : "${1}-$vpcid",
+  "subnet" : "10.0.${subid}.0",
+  "subnet-mask" : "255.255.255.0"
+}
+.
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/add-network <<.
+{
+  "name" : "${1}-$subnetid0",
+  "subnet" : "10.0.${subid}.0",
+  "subnet-mask" : "255.255.255.128"
+}
+.
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/set-group <<.
+{
+  "name" : "SecureVPC",
+  "members" : {
+  "add" : "${1}-${subnetid0}"
+  }
+}
+.
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/set-group <<.
+{
+  "name" : "CloudGateways",
+  "members" : {
+  "add" : "${gw_name}"
+  }
+}
+.
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/set-vpn-community-star <<.
+{
+  "name" : "CloudBurstVPN",
+  "satellite-gateways" : {
+  "add" : "${gw_name}"
+  }
+}
+.
+
+
+
+
+sleep 5
+
+################################################################################################
+# Publish and get out of here
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/publish
+
+sleep 5
+
+#Logout
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/logout
+
+exit 0

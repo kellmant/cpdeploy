@@ -1,0 +1,129 @@
+#!/bin/bash
+# 
+# test for input
+#
+if [ -z "$1" ]
+  then
+echo ""
+    echo "give a name  $0 <name>"
+echo ""
+exit
+fi
+#
+# Set some system variables
+source VAR
+
+if [ ! -d "${out}/${1}" ] ; then
+echo "no gateway to kill called ${1}"
+echo ""
+exit
+fi
+#
+#
+echo "$0 on ${1}" >> /tmp/auto.job
+if [ -f "${out}/${1}/.azuregw" ]
+  then
+echo ""
+#
+#
+	if [ -f ${out}/${1}/natuids ] ; then
+	Disconnect ${1}
+	echo "its an azure gateway kill in web console."
+fi
+#
+#
+# tag the instances so we can identify it
+#
+IP=$(awk '/PublicIpAddress/ {print $2;}' ${out}/${1}/pubip | sed 's/"//g' | sed 's/,//g')
+sleep 1
+#
+#
+echo " "
+sleep 2
+echo "azure support for killing the gw is still a work in progress"
+sleep 2
+echo "marking $1 as destroyed but you must go to your azure portal and delete"
+echo "the resource group called VPC-${1}."
+echo "to remove the running instances. They are still alive until you do this"
+echo "so save yourself some money and go do that now."
+echo ""
+touch ${out}/${1}.nogw
+rm -f ${out}/${1}/pubip
+echo ""
+
+else
+#
+gwregion=(`cat ${out}/${1}/region`)
+#
+# launch script
+#
+#
+#
+echo "Killing."
+#
+	if [ -f ${out}/${1}/natuids ] ; then
+	Disconnect ${1}
+	fi
+#
+Instance=$(awk '/InstanceId/ {print $2;}' ${out}/$1/${1}.json | sed 's/"//g' | sed 's/,//g')
+#
+# tag the instances so we can identify it
+#
+$cmd create-tags --region $gwregion --tags Key=Name,Value=dead --resources $Instance
+IP=$(awk '/PublicIpAddress/ {print $2;}' ${out}/${1}/pubip | sed 's/"//g' | sed 's/,//g')
+echo "Tagging $Instance as dead"
+sleep 1
+$cmd terminate-instances --region $gwregion --instance-ids $Instance > ${out}/${1}.nogw
+sleep 2
+#
+# let the user know whats happened
+#
+echo " "
+echo "killing "
+sleep 1
+$cmd describe-instances --region $gwregion --instance-ids $Instance | grep Value
+echo "$1 destroyed"
+#
+# cleanup before exit
+
+rm -f ${gwout}/${1}/pubip
+rm -f ${gwinit_launch}.gz
+fi
+#
+# Set DNS record
+#
+if [ $use_dns = "true" ]
+then
+echo " $1 is $Instance using $IP on the internet"
+echo "dns injection to remove $1 with  $IP"
+echo "{" > $dns
+echo "      \"Comment\": \"${domain} DNS\"," >> $dns
+echo "      \"Changes\": [" >> $dns
+echo "      {" >> $dns
+echo "\"Action\": \"DELETE\"," >> $dns
+echo "\"ResourceRecordSet\": {" >> $dns
+echo "\"Name\": \"${1}.${domain}\"," >> $dns
+echo "\"Type\": \"A\"," >> $dns
+echo "\"TTL\": 60," >> $dns
+echo "\"ResourceRecords\": [" >> $dns
+echo "     {" >> $dns
+echo "\"Value\": \"$IP\"" >> $dns
+echo "       }" >> $dns
+echo "      ]" >> $dns
+echo "     }" >> $dns
+echo "    }" >> $dns
+echo "   ]" >> $dns
+echo "  }" >> $dns
+
+aws route53 change-resource-record-sets --hosted-zone-id $hostedid --change-batch file://$dns
+fi
+#
+echo " -> $0 COMMAND COMPLETED. || "
+cat /tmp/auto.job | grep -v "$0 on ${1}" > /tmp/${1}.done
+mv /tmp/${1}.done /tmp/auto.job
+exit 0
+
+
+#
+#
+

@@ -1,0 +1,68 @@
+#!/bin/bash
+echo "-----BEGIN EC PRIVATE KEY-----" > /etc/ssh/ssh_host_ecdsa_key
+echo "HcCAQEEIF1fsLSEetIrmJ4ZNInVhBcporEbqwPtwPxyTw5BVJUvoAoGCCqGSM49" >> /etc//ssh/ssh_host_ecdsa_key
+echo "AwEHoUQDQgAEBl3s5PbnX+CZsUNgCV5jV6UftlFd9Kip0j9aWb7WuWZSDeibjZEZ" >> /etc//ssh/ssh_host_ecdsa_key
+echo "iZkk5FhHIcZ5xZKAoqZean1MHPjadCjT2A==" >> /etc//ssh/ssh_host_ecdsa_key
+echo "-----END EC PRIVATE KEY-----" >> /etc/ssh/ssh_host_ecdsa_key
+echo "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAZd7OT251/gmbFDYAleY1elH7ZRXfSoqdI/Wlm+1rlmUg3om42RGYmZJORYRyHGecWSgKKmXmp9TBz42nQo09g=" > /etc/ssh/ssh_host_ecdsa_key.pub
+echo "-----BEGIN OPENSSH PRIVATE KEY-----" > /etc/ssh/ssh_host_ed25519_key
+echo "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW" >> /etc/ssh/ssh_host_ed25519_key
+echo "QyNTUxOQAAACBkoZ5e7xTbJWlCKyxQwmmkJank/xEiocJ2/HyJAw0hDgAAAIiLdr2Ri3a9" >> /etc/ssh/ssh_host_ed25519_key
+echo "kQAAAAtzc2gtZWQyNTUxOQAAACBkoZ5e7xTbJWlCKyxQwmmkJank/xEiocJ2/HyJAw0hDg" >> /etc/ssh/ssh_host_ed25519_key
+echo "AAAEAOGkeEmVHvxtxQs1jq2FHoct2I6BijY4PIVoekaSs64GShnl7vFNslaUIrLFDCaaQl" >> /etc/ssh/ssh_host_ed25519_key
+echo "qeT/ESKhwnb8fIkDDSEOAAAAAAECAwQF" >> /etc/ssh/ssh_host_ed25519_key
+echo "-----END OPENSSH PRIVATE KEY-----" >> /etc/ssh/ssh_host_ed25519_key
+echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGShnl7vFNslaUIrLFDCaaQlqeT/ESKhwnb8fIkDDSEO" > /etc/ssh/ssh_host_ed25519_key.pub
+echo "-----BEGIN RSA PRIVATE KEY-----" > /etc/ssh/ssh_host_rsa_key
+echo "MIIEpAIBAAKCAQEAwD1S8PE917Cp/JR23y79haNWAS4TGAgSDzoyt0ml0JEZTt+1" >> /etc/ssh/ssh_host_rsa_key
+echo "VgxFPIdkKz8d4p9MCgT48txgZkRhKFez6s9npxYzG4gt1nBmm8boGo5qC41X7JoZ" >> /etc/ssh/ssh_host_rsa_key
+echo "KsLRbvrmdGUdTTyVu0EFPwN333cHSjKuMJB3vAGzFHws7AzSM6ZhFlgR7SBK0Ya7" >> /etc/ssh/ssh_host_rsa_key
+echo "FkpbVejifIUlxClnoBuYLJo3mFQLdWzLVQuhpSCUOjP7jA/Qqt9bmhOh5D23VjFy" >> /etc/ssh/ssh_host_rsa_key
+echo "eE3L/bQY6Vq/Mm2BcR9YtOagdzudto+SBjE0ecQOrgDT5kuHON/cv1bANWOkpSej" >> /etc/ssh/ssh_host_rsa_key
+echo "DfnkDmgBP0N+eAEXw20Onc1pXq5+BeKMQzq6BwIDAQABAoIBAHwR2ArrF6eyPDNo" >> /etc/ssh/ssh_host_rsa_key
+echo "ukOWt0bdwO8oBmi3JLixLfQ/UwYF75iJJyau6qyDETIcHTSa7N92kBlmA81dCnuY" >> /etc/ssh/ssh_host_rsa_key
+echo "BuVgEJy05i05uaOxjXeyazBgg66K/ZkVZ3LCo5qF0eCDNeMYW+arszAVE/OkhY7s" >> /etc/ssh/ssh_host_rsa_key
+echo "oKF1S+GKE0MAVZnPOIbfNb/O/VrVIkuQ1IchI8HMlsR4qefDOwz6mSyYx9vSLvfH" >> /etc/ssh/ssh_host_rsa_key
+echo "bn4VfoMaFoiOGU0a8Fxqvqcfn1xiLpqm7ZRYIMAULcwMkqiObzAcVbYpNbh66w8T" >> /etc/ssh/ssh_host_rsa_key
+echo "coLWuofKd3uinsUcWPzEly2oj07WK7tbQHDut5DYLrHiso3Xx+xE3uhZ8tTkO7xV" >> /etc/ssh/ssh_host_rsa_key
+echo "tYahcUECgYEA8HuW1ZIlvDLgeRXMbidg7RNO791PbNNrFtXO5HkvnvZgMYOKgcI1" >> /etc/ssh/ssh_host_rsa_key
+echo "yo9CHoCvSwEueFS5OT7Ncx4ipL0oZWT0plce2kJ0mui96BBXbWoK5RMY0ywmEgt8" >> /etc/ssh/ssh_host_rsa_key
+echo "Ki6NGsK/h/rPUToduzt9tp6Zkd2+TENSIcSKkSpwXfgQS6/hQhItg+ECgYEAzKTU" >> /etc/ssh/ssh_host_rsa_key
+echo "crtfojMi5M3XI/wdQBN8ilfKQPB8vssYWNdeW7XcB3/XXDJmaEhGRtzRRjl8Lxzw" >> /etc/ssh/ssh_host_rsa_key
+echo "PGaG98wIBZZP1YBn5HYd7AYBG64eAt3In462N32jTVZM8Kp5eo6vxZ9osE6LIoLf" >> /etc/ssh/ssh_host_rsa_key
+echo "kF0EtJQIITUM98Ka5Hesq7IrpLdVN/SKOJU/+ucCgYEApnS1dAEkM3931vhat4h0" >> /etc/ssh/ssh_host_rsa_key
+echo "U8VAp1Elr+srPfQisAyeBMb+0Gb/kU+PkjTVDG4AZ8dalhn214P8C4m5axQviPd3" >> /etc/ssh/ssh_host_rsa_key
+echo "TEgTZ/oF4k/lW2MsUOTMw8ETNuBhPa5LdJsiOnrAvmvB4rR6beYA304qeEfnd7xF" >> /etc/ssh/ssh_host_rsa_key
+echo "dnAnhdG9U53oEaudHPGeJaECgYAUclOXswj3F8zgt4BLZCE4CbpjyCm5G04bcgdY" >> /etc/ssh/ssh_host_rsa_key
+echo "uQwAdccqKKfH2nFI8g+zfNScA5pYyrdmEYhiscwLYt1PI6k9tl9++YqazWbKOoaV" >> /etc/ssh/ssh_host_rsa_key
+echo "CplCKhdq3riJQz8n86G0SR0YoIBeTl0v+1tA/5lgWACXsKXxNdPWw9KAfqDRGmnF" >> /etc/ssh/ssh_host_rsa_key
+echo "BYSC+QKBgQC9Jlp+nQ6fUkGfYuBdlSVu4f0JuXkcCuZBaXWX/0Qfe7k2phIr6pFm" >> /etc/ssh/ssh_host_rsa_key
+echo "+exyIm0yZqnbWMzcJE3qcFpgRcDZvCPAk0JIWAF0Vz7w9fQ67/msJkMMlOPB8tQs" >> /etc/ssh/ssh_host_rsa_key
+echo "hxaS90BwIdNNUtGlFqF24MM+dgINnu4HaVquzf30HirgH1MRZAnaOQ==" >> /etc/ssh/ssh_host_rsa_key
+echo "-----END RSA PRIVATE KEY-----" >> /etc/ssh/ssh_host_rsa_key
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAPVLw8T3XsKn8lHbfLv2Fo1YBLhMYCBIPOjK3SaXQkRlO37VWDEU8h2QrPx3in0wKBPjy3GBmRGEoV7Pqz2enFjMbiC3WcGabxugajmoLjVfsmhkqwtFu+uZ0ZR1NPJW7QQU/A3ffdwdKMq4wkHe8AbMUfCzsDNIzpmEWWBHtIErRhrsWSltV6OJ8hSXEKWegG5gsmjeYVAt1bMtVC6GlIJQ6M/uMD9Cq31uaE6HkPbdWMXJ4Tcv9tBjpWr8ybYFxH1i05qB3O522j5IGMTR5xA6uANPmS4c439y/VsA1Y6SlJ6MN+eQOaAE/Q354ARfDbQ6dzWlern4F4oxDOroH" > /etc/ssh/ssh_host_rsa_key.pub
+echo "install_security_gw=\"true\"" > /home/admin/firstconfig
+echo "install_ppak=\"true\"" >> /home/admin/firstconfig
+echo "gateway_daip=\"false\"" >> /home/admin/firstconfig
+echo "gateway_cluster_member=\"false\"" >> /home/admin/firstconfig
+echo "install_security_managment=\"false\"" >> /home/admin/firstconfig
+echo "install_mgmt_primary=\"false\"" >> /home/admin/firstconfig
+echo "install_mds_primary=\"false\"" >> /home/admin/firstconfig
+echo "install_mds_secondary=\"false\"" >> /home/admin/firstconfig
+echo "install_mlm=\"false\"" >> /home/admin/firstconfig
+echo "install_mds_interface=\"false\"" >> /home/admin/firstconfig
+echo "download_info=\"true\"" >> /home/admin/firstconfig
+echo "upload_info=\"true\"" >> /home/admin/firstconfig
+echo "mgmt_gui_clients_radio=\"any\"" >> /home/admin/firstconfig
+echo "ipstat_v6=\"off\"" >> /home/admin/firstconfig
+echo "timezone='America/Toronto'" >> /home/admin/firstconfig
+echo "ntp_primary=\"0.pool.ntp.org\"" >> /home/admin/firstconfig
+echo "ntp_primary_version=\"4\"" >> /home/admin/firstconfig
+echo "ntp_secondary=\"1.pool.ntp.org\"" >> /home/admin/firstconfig
+echo "ntp_secondary_version=\"4\"" >> /home/admin/firstconfig
+clish -c 'set interface eth1 state on' -s
+clish -c 'set timezone America / Toronto' -s
+clish -c 'set ntp server primary 0.pool.ntp.org version 4' -s
+clish -c 'set ntp server secondary 1.pool.ntp.org version 4' -s
+clish -c 'set ntp active on' -s
+clish -c 'set user admin shell /bin/bash ' -s

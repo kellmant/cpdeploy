@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+if [ -z "$1" ]
+  then
+echo ""
+    echo "give a name for your management station, like $0 greta"
+    echo "you do not need to specify the domain"
+echo ""
+exit
+fi
+
+source VAR
+
+if [ $use_dns = "true" ]
+then
+
+ssh admin@${1}.${domain} "api restart"
+
+else
+IP=$(awk '/PublicIpAddress/ {print $2;}' ${mgout}/${1}-pubip | sed 's/"//g' | sed 's/,//g')
+
+ssh admin@${IP} "api restart"
+fi
+exit 0

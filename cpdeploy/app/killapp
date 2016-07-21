@@ -1,0 +1,57 @@
+#!/bin/bash
+# 
+# test for input
+#
+if [ -z "$1" ]
+  then
+echo ""
+    echo "give a number  $0 <0-254>"
+echo ""
+exit
+fi
+#
+# Set some system variables
+source VAR
+if [ ! -d "${out}/${1}" ] ; then
+echo "no app called ${1} found"
+echo ""
+exit
+fi
+#
+appregion=(`cat ${out}/${1}/region`)
+echo "$0 on ${1}" >> /tmp/auto.job
+#
+# launch script
+#
+#
+#
+echo "Killing."
+#
+Instance=$(awk '/InstanceId/ {print $2;}' ${appout}/${1}/app-${1}.json | sed 's/"//g' | sed 's/,//g')
+#
+# tag the instances so we can identify it
+#
+$cmd create-tags --region $appregion --tags Key=Name,Value=dead --resources $Instance
+echo "Tagging $Instance as dead"
+sleep 2
+$cmd terminate-instances --region $appregion --instance-ids $Instance > ${out}/${1}/app-${1}.dead
+sleep 1
+#
+# let the user know whats happened
+#
+echo " "
+sleep 1
+echo "state of app is . .  "
+sleep 1
+$cmd describe-instances --region $appregion --instance-ids $Instance | grep Value
+echo "app $1 destroyed"
+#
+# set launch time and cleanup before exit
+#
+rm -rf ${appout}/${1}/app-${1}.json
+#
+echo " -> $0 ${1} COMMAND COMPLETE || "
+cat /tmp/auto.job | grep -v "$0 on ${1}" > /tmp/${1}.done
+mv /tmp/${1}.done /tmp/auto.job
+exit 0
+

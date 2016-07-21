@@ -1,0 +1,79 @@
+{
+  "uid" : "34b1ed0a-d009-4fd2-97bc-dbaef3d578c8",
+  "name" : "CloudBurstVPN",
+  "type" : "vpn-community-star",
+  "domain" : {
+    "name" : "SMC User",
+    "uid" : "41e821a0-3720-11e3-aa6e-0800200c9fde",
+    "domain-type" : "domain"
+  },
+  "center-gateways" : [ {
+    "uid" : "9644353e-a652-4c97-ba74-11c3378ec464",
+    "name" : "corp.meghu.ca",
+    "type" : "simple-gateway",
+    "domain" : {
+      "name" : "SMC User",
+      "uid" : "41e821a0-3720-11e3-aa6e-0800200c9fde",
+      "domain-type" : "domain"
+    }
+  } ],
+  "satellite-gateways" : [ {
+    "uid" : "782aebb2-d848-4ba1-acaf-1c09f4f1e415",
+    "name" : "cb1.meghu.ca",
+    "type" : "simple-gateway",
+    "domain" : {
+      "name" : "SMC User",
+      "uid" : "41e821a0-3720-11e3-aa6e-0800200c9fde",
+      "domain-type" : "domain"
+    }
+  }, {
+    "uid" : "073c0baf-71ba-4936-b026-b842c88f5e70",
+    "name" : "cb2.meghu.ca",
+    "type" : "simple-gateway",
+    "domain" : {
+      "name" : "SMC User",
+      "uid" : "41e821a0-3720-11e3-aa6e-0800200c9fde",
+      "domain-type" : "domain"
+    }
+  }, {
+    "uid" : "e0e7d0ad-d3f3-464e-927f-6b9b2ad28446",
+    "name" : "cb3.meghu.ca",
+    "type" : "simple-gateway",
+    "domain" : {
+      "name" : "SMC User",
+      "uid" : "41e821a0-3720-11e3-aa6e-0800200c9fde",
+      "domain-type" : "domain"
+    }
+  }, {
+    "uid" : "9fedb4e8-99d9-4a5e-b50a-698eda4ece0a",
+    "name" : "cb5.meghu.ca",
+    "type" : "simple-gateway",
+    "domain" : {
+      "name" : "SMC User",
+      "uid" : "41e821a0-3720-11e3-aa6e-0800200c9fde",
+      "domain-type" : "domain"
+    }
+  } ],
+  "mesh-center-gateways" : false,
+  "comments" : "",
+  "color" : "black",
+  "icon" : "VPNCommunities/Star",
+  "tags" : [ ],
+  "meta-info" : {
+    "lock" : "unlocked",
+    "validation-state" : "ok",
+    "last-modify-time" : {
+      "posix" : 1465359986945,
+      "iso-8601" : "2016-06-08T00:26-0400"
+    },
+    "last-modifier" : "gwadmin",
+    "creation-time" : {
+      "posix" : 1465348077116,
+      "iso-8601" : "2016-06-07T21:07-0400"
+    },
+    "creator" : "gwadmin"
+  },
+  "read-only" : true
+}{
+  "message" : "OK"
+}

@@ -1,0 +1,83 @@
+#!/bin/bash
+# 
+# test for input
+#
+if [ -z "$1" ]
+  then
+echo ""
+    echo "give a name for the management station, like $0 greta"
+echo ""
+exit
+fi
+#
+# Set some system variables
+source VAR
+echo "$0 on ${1}" >> /tmp/auto.job
+#
+#
+# launch script
+#
+#
+#
+echo "Killing."
+#
+Instance=$(awk '/InstanceId/ {print $2;}' ${mgout}/$1 | sed 's/"//g' | sed 's/,//g')
+#
+# tag the instances so we can identify it
+#
+$cmd create-tags --region $mgregion --tags Key=Name,Value=dead --resources $Instance
+IP=$(awk '/PublicIpAddress/ {print $2;}' ${mgout}/${1}-pubip | sed 's/"//g' | sed 's/,//g')
+echo "Tagging $Instance as dead"
+sleep 2
+$cmd terminate-instances --region $mgregion --instance-ids $Instance > ${mgout}/$1
+sleep 1
+#
+# Set DNS record
+#
+echo " $1 is $Instance using $IP on the internet"
+if [ $use_dns = "true" ]
+then
+echo "dns injection to remove $1 with  $IP"
+echo "{" > $dns
+echo "      \"Comment\": \"Killhup DNS\"," >> $dns
+echo "      \"Changes\": [" >> $dns
+echo "      {" >> $dns
+echo "\"Action\": \"DELETE\"," >> $dns
+echo "\"ResourceRecordSet\": {" >> $dns
+echo "\"Name\": \"${1}.${domain}\"," >> $dns
+echo "\"Type\": \"A\"," >> $dns
+echo "\"TTL\": 60," >> $dns
+echo "\"ResourceRecords\": [" >> $dns
+echo "     {" >> $dns
+echo "\"Value\": \"$IP\"" >> $dns
+echo "       }" >> $dns
+echo "      ]" >> $dns
+echo "     }" >> $dns
+echo "    }" >> $dns
+echo "   ]" >> $dns
+echo "  }" >> $dns
+
+aws route53 change-resource-record-sets --hosted-zone-id $hostedid --change-batch file://$dns
+fi
+#
+# let the user know whats happened
+#
+echo " "
+sleep 1
+echo "destroying the image and records complete"
+sleep 1
+$cmd describe-instances --region $mgregion --instance-ids $Instance | grep Value
+echo "$1 destroyed"
+#
+# kill records that are no longer needed
+#
+rm -f ${mginit_launch}.gz
+rm -f ${mgout}/$1
+rm -f ${mgout}/.access
+rm -f ${mgout}/${1}-pubip
+#
+echo " -> $0 COMMAND COMPLETED. || "
+cat /tmp/auto.job | grep -v "$0 on ${1}" > /tmp/${1}.done
+mv /tmp/${1}.done /tmp/auto.job
+exit 0
+

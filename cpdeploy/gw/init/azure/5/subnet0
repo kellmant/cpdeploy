@@ -1,0 +1,10 @@
+{
+    "Subnet": {
+        "VpcId": "vpc-microsft",
+        "CidrBlock": "10.0.5.0/25",
+        "State": "pending",
+        "AvailabilityZone": "us-west-1a",
+        "SubnetId": "subnet-itsazure",
+        "AvailableIpAddressCount": 123
+    }
+}

@@ -1,0 +1,84 @@
+#!/bin/bash
+#
+# auto spin up gateways in the cloud.
+# 
+# complete with web server.
+#syslog="aws ec2 get-console-output --instance-id"
+#
+. VAR
+azurelaunch ${1} ${2}
+# time to wait
+# 
+echo "gateways will self configure, autoconnecting in 15 minutes. . ."
+echo "take a break, I'll get back to you when the VPC is ready to go live."
+echo ""
+sleep 5
+echo -n "gateway ${2} instance initalized . "
+# average time to init is 3 minutes, but can take longer.
+# 4 minutes for init
+for i in {3..1}
+do
+sleep 60
+echo -n "gateway ${2} initalize in ${i} min.. "
+done
+echo ""
+echo -n "gateway starting . "
+# 3 minutes and 30seconds to boot
+for i in {4..1}
+do
+sleep 60 
+echo -n "${2} gateway boot ${i} min. . . . "
+done
+echo ""
+echo -n "first config (gateways will autoconfigure for the enviroment) . "
+echo -n " please do not disturb ${2}. "
+# 6 minutes for first config
+for i in {5..1}
+do
+sleep 60 
+echo -n " ${2} gateway first config ${i} min. . . "
+done
+echo ""
+echo -n "reload ${2} for vpc config . "
+# 2 minutes for first boot 
+for i in {3..0}
+do
+sleep 60 
+echo -n "gateway ${2} restart in  ${i} min . . . "
+done
+echo ""
+echo "starting attachment and installing policy on ${2}"
+
+# 2 minutes for first boot 
+for i in {1..5}
+do
+sleep 1
+echo -n ". "
+done
+
+Connect ${2}
+sleep 65
+azapplaunch ${2}
+
+echo -n "web app ${2} initalizing . "
+# average time to init is 3 minutes, but can take longer.
+# 4 minutes for init
+for i in {2..1}
+do
+sleep 60
+echo -n "${2} app init in ${i} min.. . . "
+done
+
+echo ""
+echo -n "${2} website configuring . "
+# 9 minutes for app to come online
+for i in {2..1}
+do
+sleep 60
+echo -n " almost ready . . ${i} min to live site at ${2}"
+done
+echo " VPC Activated."
+lb
+echo "  done."
+
+

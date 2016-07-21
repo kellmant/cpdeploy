@@ -1,0 +1,113 @@
+#!/bin/bash
+# test for input
+if [ -z "$1" ]
+  then
+echo ""
+    echo "Just give the subnet designation for the gateway and a name, like $0 101 <name>"
+    echo "This will create the gateway to attach to the vpc of the same name."
+echo ""
+exit
+fi
+
+# test for input
+if [ -z "${2}" ]
+  then
+az_name="${1}"
+else
+az_name="${2}"
+fi
+
+azsubnet_id="${1}"
+
+. VAR
+
+eval echo "$0 on ${2}" >> /tmp/auto.job
+
+echo "azsubnet_id is ${azsubnet_id}"
+echo "az_name is ${az_name}"
+echo "path to output is ${out}"
+# check to see if config exists
+if [ -d ${out}/${az_name} ] ; then
+echo "VPC ${az_name} already exists! If you want to provision this VPC again"
+echo "run 'rm -rf ${out}/${az_name}' from the command line"
+echo "and make sure you have also deleted the associated resource group"
+echo "in the azure web interface!"
+echo ""
+echo "If VPC-${az_name} was previously deployed for aws, clean it up or choose another"
+echo "name/subnetid to launch with."
+exit
+fi
+
+
+echo "region set to: $azregion"
+touch ${out}/${az_name}.nogw
+mkdir -p ${out}/${az_name}
+echo "$azregion" > ${out}/${az_name}/region
+echo "$azsubnet_id" > ${out}/${az_name}/id
+
+# here we go
+echo "Create gw-${az_name}"
+cp ${azinit}/param  ${out}/${az_name}/param
+cp ${azinit}/gw  ${out}/${az_name}/gw
+cp ${azinit}/vpc  ${out}/${az_name}/vpc
+cp ${azinit}/subnet0  ${out}/${az_name}/subnet0
+sed -i "s/%%AZNAME%%/${az_name}/g" ${out}/${az_name}/param
+sed -i "s/%%SUBNETID%%/${azsubnet_id}/g" ${out}/${az_name}/gw
+sed -i "s/%%AZNAME%%/${az_name}/g" ${out}/${az_name}/gw
+sed -i "s/%%SUBNETID%%/${azsubnet_id}/g" ${out}/${az_name}/vpc
+sed -i "s/%%AZNAME%%/${az_name}/g" ${out}/${az_name}/vpc
+sed -i "s/%%SUBNETID%%/${azsubnet_id}/g" ${out}/${az_name}/subnet0
+sed -i "s/%%AZNAME%%/${az_name}/g" ${out}/${az_name}/subnet0
+
+azure group create VPC-${az_name} -l $azregion
+
+azure group deployment create -vv -g VPC-${az_name} -n chkp${azsubnet_id} -f ${out}/${az_name}/gw -e ${out}/${az_name}/param
+
+azure network public-ip show -g VPC-${az_name} -n PublicIPAddr | grep "IP Address" > ${out}/${az_name}/tmpip
+getip=$(awk '/IP Address/ {print $5;}' ${out}/${az_name}/tmpip | sed 's/"//g' | sed 's/,//g')
+echo "               \"PublicIpAddress\": \"$getip\"," > ${out}/${az_name}/pubip
+rm -f ${out}/${az_name}/tmpip
+
+
+IP=$(awk '/PublicIpAddress/ {print $2;}' ${out}/${az_name}/pubip | sed 's/"//g' | sed 's/,//g')
+
+sleep 5
+echo " gw-${az_name} is using $IP on the internet"
+if [ $use_dns = "true" ]
+then
+echo "dns injection to resolve ${az_name}.${domain} to $IP"
+# Set DNS record
+#
+echo "{" > $dns
+echo "      \"Comment\": \"${domain} DNS\"," >> $dns
+echo "      \"Changes\": [" >> $dns
+echo "      {" >> $dns
+echo "\"Action\": \"CREATE\"," >> $dns
+echo "\"ResourceRecordSet\": {" >> $dns
+echo "\"Name\": \"${az_name}.${domain}\"," >> $dns
+echo "\"Type\": \"A\"," >> $dns
+echo "\"TTL\": 60," >> $dns
+echo "\"ResourceRecords\": [" >> $dns
+echo "     {" >> $dns
+echo "\"Value\": \"$IP\"" >> $dns
+echo "       }" >> $dns
+echo "      ]" >> $dns
+echo "     }" >> $dns
+echo "    }" >> $dns
+echo "   ]" >> $dns
+echo "  }" >> $dns
+
+aws route53 change-resource-record-sets --hosted-zone-id $hostedid --change-batch file://$dns
+fi
+blastoff=$(date)
+echo "launched at $blastoff, gw-${az_name} security gateway services are being deployed."
+echo "gw-${az_name} launched at $blastoff " > ${out}/${az_name}/launchdate
+echo " "
+echo "gw-${az_name} deployed"
+echo "1" > ${out}/${az_name}/.azuregw
+
+cat /tmp/auto.job | grep -v "$0 on ${2}" > /tmp/${2}.done
+mv /tmp/${2}.done /tmp/auto.job
+
+echo " -> $0 $1 $2 COMMAND COMPLETED. || "
+exit 0

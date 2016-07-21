@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+source VAR
+if [ "$1" = "east" ]
+then
+gwregion="$egwregion"
+# if region is west
+elif [ "$1" = "west" ]
+then
+gwregion="$wgwregion"
+gwaz="$wgwaz"
+# or i don't know what this is
+else
+echo ""
+echo "where the heck is $2 suppose to be? your options are east or west."
+echo ""
+exit
+fi
+
+$cmd describe-availability-zones --region $gwregion | grep Zone

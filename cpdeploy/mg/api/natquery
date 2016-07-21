@@ -1,0 +1,30 @@
+#!/bin/bash
+source VAR
+baseurl=https://$host/web_api
+curl_cmd="curl --silent --insecure -X POST"
+
+SID=`${curl_cmd} -H "Content-Type: application/json" -d @- $baseurl/login <<. | awk -F\" '/sid/ {print $4}'
+{
+  "user":"$username" ,
+  "password":"$password" ,
+  "session-name":"query"
+}
+.`
+# Login complete, add objects, rules and such here.
+################################################################################################
+
+ 
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/show-nat-rulebase <<.
+{
+	"package" : "standard",
+	"use-object-dictionary" : "true"
+}
+.
+
+
+ 
+################################################################################################
+# Publish and get out of here
+#${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/publish
+#Logout
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/logout

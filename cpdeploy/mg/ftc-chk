@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+cmdtorun="cat /var/log/cloud-user-data"
+
+source VAR
+
+if [ $use_dns = "true" ]
+then
+#	while [ "${stat[-1]}" != "completed!" ] ; do
+stat=(`ssh admin@${host} "$cmdtorun"`)
+echo "${stat[-1]}"
+#echo "${host} is not ready" 
+#sleep 5
+#done
+else
+echo "register a domain cheapskate."
+exit 1
+fi
+exit 0

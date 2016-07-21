@@ -1,0 +1,170 @@
+#!/bin/bash
+#
+. VAR
+red='\033[1;31m'
+yellow='\033[1;33m'
+green='\033[1;32m'
+blue='\033[1;34m'
+cyan='\033[1;36m'
+brown='\033[1;22m'
+purple='\033[1;35m'
+nc='\033[0m'
+
+if [ -z "$1" ]
+  then
+#gather the console logs early so we can show them quick
+#
+if [[ $(tr -d "\r\n" < /tmp/auto.job |wc -c ) -eq 0 ]]  ; then
+	system_status="Idle."
+	job_status="Nothing to do."
+	status_color="${green}"
+	else
+	system_status="WORKING . . . . "
+	job_status=(`cat /tmp/auto.job`)
+	status_color="${red}"
+	fi
+eval tail -c 324 /cpdeploy/debug.output > /tmp/.console.out
+debug_log=$( </tmp/.console.out)
+starttime=$(date)
+echo "-------------------------------------------------------------------------"
+printf ${cyan}
+printf "${starttime[@]}"  
+printf "\033[A"
+printf ${nc}
+printf " || Jobs: "
+printf ${status_color[@]}
+printf "${system_status[*]}"
+printf ${nc}
+echo ""
+echo "-------------------------------------------------------------------------"
+    printf "${green}VPCs online: ${nc} "
+vpc_on=(`ls ${gwout}/*/natuids 2> /dev/null | cut -d/ -f5`)
+echo -n "${vpc_on[@]}"
+echo ""
+	printf "${purple}standby VPCs: ${nc}"
+vpc_off=(`ls ${gwout}/ 2> /dev/null | grep .nogw | cut -d. -f1`)
+echo -n "${vpc_off[@]}"
+echo ""
+echo "-------------------------------------------------------------------------"
+echo "-------------------------------------------------------------------------"
+printf "${blue}Command${nc}       ||  Status: ${status_color}${job_status[@]} ${nc}"
+echo ""
+echo "-------------------------------------------------------------------------"
+	printf "${blue}('killgw') ${nc}   ||  ${green}gateways deployed: ${nc}"
+gw_up=(`find ${gwout}/*/pubip -mmin +15 2> /dev/null | cut -d/ -f5`)
+echo -n "${gw_up[@]}"
+echo ""
+	printf "${blue}('launchgw') ${nc} ||  ${yellow}gateways coming online: ${nc}"
+sec_init=(`find ${gwout}/*/pubip -mmin -16 2> /dev/null | cut -d/ -f5`)
+echo -n "${sec_init[@]}"
+echo ""
+echo "-------------------------------------------------------------------------"
+	printf "${blue}('killapp') ${nc}  ||${green}  apps deployed: ${nc}"
+app_active=(`find ${gwout}/*/app*.json -mmin +3 2> /dev/null | cut -d/ -f5 | cut -d. -f1`)
+	echo -n "${app_active[@]}"
+echo ""
+	printf "${blue}('launchapp') ${nc}||${yellow}  apps coming online: ${nc}"
+app_init=(`find ${gwout}/*/app*.json -mmin -3 2> /dev/null | cut -d/ -f6 | cut -d. -f1 | cut -d- -f2`)
+echo -n "${app_init[@]}"
+echo ""
+	printf "${nc}==============||${red}  apps terminated: ${nc}"
+app_dead=(`ls -r ${gwout}/*/app*dead 2> /dev/null | cut -d/ -f5`)
+echo -n "${app_dead[@]}"
+echo ""
+site_status=(`cat ${app}/domain 2> /dev/null`)
+printf ${green}
+echo -n "               ${site_status[@]}"
+printf ${nc}
+echo ""
+echo "-------------------------------------------------------------------------"
+mg_up=(`find ${mgout}/*pubip -mmin +30 2> /dev/null | cut -d/ -f5 | cut -d- -f1`)
+	printf "${blue}('killmg') ${nc}   ||${green}  management: ${nc}"
+	if [ ! -z "$mg_up" ] ; then
+echo -n "${mg_up[@]}"
+mg_loc=(`cat $mgout/.access 2> /dev/null`)
+echo -n " |  ${mg_loc[@]}"
+	else
+echo -n "$host"
+fi
+echo ""
+	printf "${blue}('launchmg') ${nc} ||${yellow}  management coming online: ${nc}"
+mg_init=(`find ${mgout}/*pubip -mmin -31 2> /dev/null | cut -d/ -f5 | cut -d- -f1`)
+echo -n "${mg_init[@]}"
+echo ""
+echo "-------------------------------------------------------------------------"
+	printf "${blue}('die') ${nc}      || ${green} test clients deployed: ${nc}"
+client_active=(`find ${gwout}/client/*.json -mmin +2 2> /dev/null | cut -d/ -f6 | cut -d. -f1`)
+#client_active=(`find ${gwout}/client/*.json -mmin +4 2> /dev/null `)
+	echo -n "${client_active[@]}"
+echo ""
+	printf "${blue}('testclient')${nc}||${yellow}  test clients coming online: ${nc}"
+client_init=(`find ${gwout}/client/*.json -mmin -3 2> /dev/null | cut -d/ -f6 | cut -d. -f1`)
+echo -n "${client_init[@]}"
+echo ""
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo "================================ CONSOLE LOGS ==========================="
+echo $debug_log
+exit 0
+fi
+if [ ! -d "${out}/${1}" ] ; then
+echo ""
+echo "Did you run prep-vpc ${1} first? No such VPC configured."
+echo ""
+exit
+fi
+echo ""
+gwregion=(`cat ${out}/${1}/region 2> /dev/null`)
+subid=(`cat ${out}/${1}/id 2> /dev/null`)
+
+if [ ! -f ${out}/${1}/pubip ]; then
+	echo "VPC ${1} in region $gwregion is offline"
+	echo ""
+fi
+
+if [  -f ${out}/${1}.nogw ]; then
+	echo "network 10.0.${subid}.0 is unprotected"
+		if [ -f ${out}/${1}/app-${1}.dead ]; then
+		echo "application terminated in VPC ${1}"
+		echo ""
+		fi
+		if [ ! -f ${out}/${1}/app-${1}.json ]; then
+		echo "no application has been deployed in VPC ${1}"
+		echo ""
+		fi
+		if [ ! -f ${out}/${1}/natuids ]; then
+		echo "no security policy applied to VPC ${1}"
+		echo ""
+		fi
+		if [ -f ${out}/${1}/pubip ]; then
+		inactiveIP=$(awk '/PublicIpAddress/ {print $2;}' ${out}/${1}/pubip | sed 's/"//g' | sed 's/,//g')
+		echo "gw VPC ${1} using ${inactiveIP}"
+		echo ""
+else
+echo "application deployed into VPC ${1} without security gw"
+echo "VPC ${1} app will not be operational and should be terminated. "
+echo ""
+fi
+exit
+fi
+
+IP=$(awk '/PublicIpAddress/ {print $2;}' ${out}/${1}/pubip | sed 's/"//g' | sed 's/,//g')
+subnetid=$(awk '/SubnetId/ {print $2;}' ${out}/$1/subnet128 | sed 's/"//g' | sed 's/,//g')
+azone=$(awk '/AvailabilityZone/ {print $2;}' ${out}/$1/subnet0 | sed 's/"//g' | sed 's/,//g')
+echo ""
+echo "$1 gateway is using $IP in region $gwregion"
+echo "protecting $subnetid 10.0.${subid}.0/25 in availability zone $azone "
+
+if [ -f ${out}/${1}/app-${1}.dead ]; then
+echo "however, application has been terminated in VPC ${1}"
+elif [ ! -f ${out}/${1}/app-${1}.json ]; then
+echo "but no application has been deployed in VPC ${1}"
+else
+echo "and application deployed into VPC ${1} and accessible at http://$IP"
+echo ""
+fi
+
+if [ $use_dns = "true" ]
+then
+echo "$1 VPC resolves to ${1}.${domain}"
+fi
+echo ""

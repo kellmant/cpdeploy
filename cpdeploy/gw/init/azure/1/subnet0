@@ -1,0 +1,10 @@
+{
+    "Subnet": {
+        "VpcId": "vpc-1t5a2ur3", 
+        "CidrBlock": "10.0.1.0/25", 
+        "State": "pending", 
+        "AvailabilityZone": "us-west-1b", 
+        "SubnetId": "subnet-53cur3ms", 
+        "AvailableIpAddressCount": 123
+    }
+}

@@ -1,0 +1,21 @@
+#!/bin/bash
+rm -rf ~/.bash_history
+rm -rf ~/.viminfo
+rm -rf ~/.aws/credentials
+rm -rf ~/.aws/shell
+rm -rf ~/.azure/azure*
+rm -rf ~/.azure/access*
+rm -rf ~/.ssh
+rm -rf ~/.npm
+rm -rf ~/.streamline
+rm -rf /tmp/*
+touch /tmp/auto.job
+rm -rf /cpdeploy/mg/output/*
+rm -rf /cpdeploy/gw/output/*
+rm -rf /cpdeploy/app/domain
+mkdir -p /cpdeploy/gw/output/client
+rm -rf /cpdeploy/PRIVATEBUILD
+rm -rf /cpdeploy/VAR
+cp /cpdeploy/VAR.defaults /cpdeploy/VAR
+cat /cpdeploy/help > /cpdeploy/debug.output
+echo "done"

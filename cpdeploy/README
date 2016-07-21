@@ -1,0 +1,212 @@
+v4.0 05/27/16 7:43PM EST
+
+IT WORKS! Mostly, will be documenting more at http://app.killhup.cx
+go there for the real deal, I can't keep up to the changes.
+
+@kellman
+
+
+v3.9 05/21/16 6:43PM EST
+
+Time for an update.
+
+v3.9 will be the last round of testing before release and training, now that I have a repeatable, automated process to roll this out  :)
+
+This version will be captured to movie, and a walkthrough presented. First demo is a simple webserver and will share an example deployment complete with traffic generation.
+
+Stay tuned for 4.0 coming soon to a docker hub near you.
+
+In the meantime, if you want a preview, launch a free tier of amazon
+linux, and paste the folowing in the Advanced box at the bottom of the second launch screen. Paste as text the following startup script.
+(not the cut parts! Between them.)
+<cut>
+#!/bin/bash
+hostname controller
+yum update -y
+yum install -y docker
+service docker start
+usermod -a -G docker ec2-user
+curl -o /home/ec2-user/.bash_profile www.killhup.cx/bash_profile
+curl -o /home/ec2-user/.bashrc www.killhup.cx/bashrc
+curl -o /home/ec2-user/private.cpdeploy.tar.gz www.killhup.cx/private.cpdeploy.tar.gz
+cd /home/ec2-user
+tar xfz private.cpdeploy.tar.gz
+rm -rf private.cpdeploy.tar.gz
+cd /home/ec2-user/private.build
+docker build -t controller .
+chown -R ec2-user /home/ec2-user
+</cut>
+when you login, run 'aws configure' to setup your aws account. Then edit your variables to personal account. This is where you will learn a few things about aws, run 'cpconfig' and define the parameters of your account.
+
+All the commands are still available, but if you want to preview a console to run your commands in, type '.console' after your are setup and take a look at whats to come.
+
+@kellman
+
+
+v3.7 05/21/16 5:18AM EST
+
+So you found the cpdeploy container? Must mean you really like gateways in the cloud.
+
+We should talk.
+
+Here is the quick rundown, please experiement for best results. Not meant for production,
+although I see no reason it wouldnt work with some extra focus, but at that point, there 
+are already many other tools that do it better. But they are big. And complex. 
+Just like a cloud project.
+
+I know it doesn't look like it now, especially if you are new to linux, 
+but once we walk through this setup, its simple commands to get what we want.
+I say again, not built to support a prodution cloud deployment, this is 
+for testing production deployments in pieces. That's what this does, stitch 
+together a secure VPC you can easily replicate or rebuild with a couple of commands. 
+Change a variable, run a command. This is what this does and lets not forget 
+it's a container, which means you can save your own version locally with your 
+configuration. If you know docker, you can save many version in different images.
+But this isn't about docker, this is about building gateways in the sky. Let's
+get to the operation of cpdeploy.
+
+First off, make sure you run 'aws configure' to authorize your account.
+If you don't have a key and secret key, visit the Identity and Access Management (IAM)
+page in the aws web console and generate yourself some. Ensure you create a role 
+with the appropriate permissions to manage EC2 instances (administrator role for example).
+
+The root directory for all the action is /cpdeploy, and you can get there with 'cpdeploy'.
+In this folder is a file we need to edit first, VAR. You can edit directly or type 'cpconfig'
+to launch directly into editing the file. (viconfig gives you the variable file in vi, 
+my personal favorite, but for some reason others prefer nano, which will be the default 
+with cpconfig. The VAR file holds all the details for where and what gets launched 
+in our shiny new virtual private cloud (VPC). You have to edit this file, but not 
+the whole thing, most of the work is done for you. The file is commented, so it 
+should make sense. . . right? Customize VAR to your enviroment.
+
+Once you are done customizing your VAR, you should be ready to propate the VPC, 
+routing, subnets, and interfaces. It's allot of clicking in the web, start small,
+add incrementally is the concept we are going for here.
+
+<optional if you already have a R80 management station>
+mg stands for Management, and to get to the management directory, run:
+   mg
+Thats it. your in the management directory. Now the bad news.
+*Due to the current R80 being a private ami, this container assumes you have access 
+to the private ami, or already have a management station to support your cloud gateways.*
+The container will be updated when the image goes public.
+</optional>
+You can always type ll or ls to see the commands available to you in each directory.
+If you run something without parameters it should tell you how it works and what 
+its looking for. You won't break anything so get in there.
+
+Now for the real stuff, launching gateways in the sky.
+
+'gw' takes you to the gateway scripts, but it is important you prepare the VPC 
+BEFORE YOU LAUNCH ANY GATEWAYS!. 'prep-vpc' is the script available in the 'gw' directory
+and is looking for you to specify a vpc identifier in the form of a number from 0-254. 
+This is also used to create the subnets in a template fashion. You also need to specify the
+region with a simple east or west designation. Basically do you want your vpc on the 
+east coast or the west coast? 
+Run 'prep-vpc 1 east' to prepare a simple secured VPC enviroment for EC2 instances.
+After the prep-vpc finishes, run 'launchgw 1' for you to add the security gateway
+to the VPC as the default path for the internal subnet. Don't worry about the details, 
+it also builds it's own policy, so you don't have to run any other commands. You can 
+use the aws web interface to monitor progress, but thats a little like watching paint dry.
+That's it. The screen will spill back a bunch of info, Don't worry about it. 
+Go get a coffee, relax. That gateway is setting itself up for you. 
+You can take note of any IP or hostname information that goes by, if it helps 
+you feel busy, The script already parsed out the stuff we care about. 
+Just give it the time it needs to provision, intialize, first time config, and reboot. 
+On the higher end instances, thats about 11 minutes, but just to be on the safe side, 
+give it 15. Even the m serices ami will be up and chugging by then. And I use the term 
+safe with any fear, you initalize too quick? Maybe? Who cares, 'killgw 1' and start again, 
+only no need to prep-vpc 1, since it stays there like a shell.  There is no cost to keep a vpc configured.
+You will have to go to the web gui if you want to delete the VPC (it's easier, you can 
+just delete the vpc in one shot) or leave them laying around, you can attach and detach 
+gateways to the VPC by number. 
+
+so to recap, run the following command in one line and this will create the vpc and initalize the gateway all at once.
+
+prep-net 22 west ; launchgw 22
+
+This would give me gw-22 ready in VPC-22 using network 10.0.22.0/24 . . or something 
+like that. Script takes care of it.
+
+. . . 
+
+so it's 15 minutes later and you are dying to play with your new gateway in the cloud. 
+Next step follows a pattern, in the same dir as before (type gw to go back) and execute 
+the command 'Connect 22'
+
+If you have your R80 console open, you will see your gateway appear, complete with rules 
+and nat appropriate for the cloud. It will also reference an app server, but we will get 
+to that. Please wait for the policy installs (there will be two) to complete, you can keep 
+yourself busy looking at logs if you want, 
+
+Your example VPC is live. Repeat as nessassary, for example:
+gw ; prep-vpc 10 east ; launchgw 10 ; 
+gw ; prep-vpc 20 west ; launchgw 20 ; 
+will prepare two seperage geo redundant secured data centers in the cloud.
+Don't get too excited, they are not active yet.
+
+It is important to keep in mind that the VPC we create will stay, and you will eventually 
+run out of VPCs (5 per region) and get errors. Don't panic. Anything out of order? 
+Something not working? Rememeber you have the nuke it from above option. It's only software. 
+
+gw ; killgw 10 ; killgw 20
+and if you want to bring them back to life again? run:
+gw ; launch 10 ; launch 20 
+anytime. . . well almost anytime, if you kill previous instances, give them 
+about 2 minutes to die before your relaunch. 
+
+But before you go killing anything, let's actually bring the gateway into production state
+and we do that by attaching it to the management station and setting policy. For the 
+complete process to create a VPC and bring a security gateway into a ready state, 
+run the following:
+
+gw
+prep-vpc <0-254>
+launchgw <0-254>
+
+- ~15 minutes for init -
+
+gw
+Connect <0-254>
+
+Check your logs on the management station, you have a gateway in the cloud.
+
+But it's not that exciting is it?  You know why? Nothing to protect, What's the point?
+
+type the following:
+
+app; launchapp <0-254>
+
+In about 10 minutes, a webserver will be accessible through the firewall public IP from AWS. 
+you can http://<ip of the fw, arent you glad you wrote it down?> or, if you are using 
+hosted dns, you are just connecting to a name.
+You can find the IP and name of your gateway in the ec2 console of the amazon web interface. 
+
+And so the journey begins, be patient, its a long trip and there are other goodies buried 
+in these scripts if you are inclined to look. I will be updating based on my own useage, 
+and hope to create a series of templates in the form of VAR files and saved containers. 
+Feedback is welcome, suggestions for scripting also welcome, but I may ask you how to do it, 
+so be prepared to help :) On that note, I'm no programmer, just a lazy security admin 
+who automates repetative or painful tasks.
+
+@kellman
+
+
+
+
+CPdeploy@09:13:48:/# aws configure
+Set your access (only neeeds to be done once)
+
+CPdeploy@09:14:52:/# cpconfig
+
+- edit the file to your enviroment -
+
+CPdeploy@09:17:31:/# gw
+CPdeploy@09:17:32:/cpdeploy/gw# prep-vpc <0-254>
+CPdeploy@09:19:14:/cpdeploy/gw# launchgw <0-254>
+
+- ~15 minutes for init -
+
+CPdeploy@09:34:38:/cpdeploy/gw# Connect <0-254>
+CPdeploy@09:38:51:/cpdeploy/gw# app <0-254>
+CPdeploy@09:38:52:/cpdeploy/app# launchapp <0-254>

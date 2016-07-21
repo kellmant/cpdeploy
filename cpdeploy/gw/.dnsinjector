@@ -1,0 +1,53 @@
+#!/bin/bash
+if [ -z "$1" ]
+  then
+echo ""
+    echo "no designator for the vpc"
+echo " something like ' $0 1 CREATE' will work"
+echo ""
+exit
+fi
+
+if [ -z "$2" ]
+  then
+echo ""
+    echo "need an operation in the form of 'CREATE' to inject the record"
+    echo "need an operation in the form of 'DELETE' to remove the record"
+    echo "$0 <0-254> <CREATE/DELETE>"
+echo ""
+exit
+fi
+
+source VAR
+# get the list of secured app gateways
+#
+site=$(awk '/PublicIpAddress/ {print $2;}' ${out}/${1}/pubip | sed 's/"//g' | sed 's/,//g')
+
+if [ $use_dns = "true" ]
+then
+echo "{" > ${aplb}
+echo "\"Comment\": \"${domain} DNS change \"," >> ${aplb}
+echo "       \"Changes\": [" >> ${aplb}
+echo "            {" >> ${aplb}
+echo " \"Action\": \"${2}\"," >> ${aplb}
+echo "\"ResourceRecordSet\": {" >> ${aplb}
+echo "\"Name\": \"${1}.gw.${domain}\"," >> ${aplb}
+echo "\"Type\": \"A\"," >> ${aplb}
+echo "\"TTL\": 30," >> ${aplb}
+echo "\"ResourceRecords\": [" >> ${aplb}
+echo "            {\"Value\": \"$site\"} " >> ${aplb}
+echo "         ]" >> ${aplb}
+echo "      }" >> ${aplb}
+echo "    }" >> ${aplb}
+echo "  ]" >> ${aplb}
+echo "}" >> ${aplb}
+aws route53 change-resource-record-sets --hosted-zone-id $hostedid --change-batch file://${aplb}
+echo "assigning VPC $1 at $site to ${domain}" 
+echo "VPC $1 at $site as now ${1}.gw.${domain} active site." 
+echo ""
+exit
+fi
+echo "you have not hosted domain configured in 'cpconfig'"
+echo " what do you think you are doing?"
+echo ""
+exit

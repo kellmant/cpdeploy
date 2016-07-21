@@ -1,0 +1,121 @@
+#!/bin/bash
+#
+if [ -z "$1" ]
+  then
+echo ""
+    echo "no reagion for import"
+echo " something like ' $0 east/west/<specific region>' will work"
+    echo "import-vpc <name of existing vpc> <east/west>"
+echo ""
+exit
+fi
+
+source VAR
+portin="/tmp/import"
+# check to see if config exists
+if [ ! -d "${out}/import" ]; then
+	mkdir ${out}/import
+fi
+
+if [ "$1" = "east" ]
+then
+gwregion="$egwregion"
+# if region is west
+elif [ "$1" = "west" ]
+then
+gwregion="$wgwregion"
+# or i don't know what this is
+else 
+gwregion="${1}"
+fi
+
+echo "Read vpc's in $gwregion "
+$cmd describe-vpcs --region $gwregion > ${portin}/vpc
+cat ${portin}/vpc | grep VpcId
+sleep 5
+vpcids=$(awk '/VpcId/ {print $2;}' ${portin}/vpc | sed 's/"//g' | sed 's/,//g')
+echo " vpcids found ${vpcids[@]} "
+len=${#vpcids[@]}
+last=${vpcids[$len-1]}
+count=`expr $len - 1`
+
+for (( i=0; i<=$count; i++ ))
+do
+vpc=$(echo ${vpcids[${i}]} | tr -d '\r')
+echo "probing for ${vpc}"
+$cmd describe-subnets --filters Name=vpc-id,Values=${vpc}
+done
+#echo "Read subnets for ${vpcid} in $gwregion "
+#$cmd create-subnet --region $gwregion --availability-zone $gwaz --vpc-id $vpcid --cidr-block 10.0.${1}.128/25 > ${out}/${tag}/subnet128
+#sleep 4
+#cat ${out}/${tag}/subnet128
+#echo "Create internal subnet . . . . "
+#$cmd create-subnet --region $gwregion --availability-zone $gwaz --vpc-id $vpcid --cidr-block 10.0.${1}.0/25 > ${out}/${tag}/subnet0
+#sleep 4
+#cat ${out}/${tag}/subnet0
+#subnetid0=$(awk '/SubnetId/ {print $2;}' ${out}/${tag}/subnet0 | sed 's/"//g' | sed 's/,//g')
+#echo "Secured vpc subnet set to $subnetid0 on this run . . . ."
+#subnetid128=$(awk '/SubnetId/ {print $2;}' ${out}/${tag}/subnet128 | sed 's/"//g' | sed 's/,//g')
+#echo "internet vpc subnet set to $subnetid128 on this run . . . . "
+#$cmd create-tags --region $gwregion --tags Key=Name,Value=VPC-${tag}-internal --resources $subnetid0
+#$cmd create-tags --region $gwregion --tags Key=Name,Value=VPC-${tag}-external --resources $subnetid128
+# set external to fetch public ip
+#$cmd modify-subnet-attribute --region $gwregion --subnet-id $subnetid128 --map-public-ip-on-launch
+#sleep 4
+#echo "create default router . . . "
+#$cmd create-internet-gateway --region $gwregion > ${out}/${tag}/igw
+#sleep 4
+#cat  ${out}/${tag}/igw
+#inetgw=$(awk '/InternetGatewayId/ {print $2;}' ${out}/${tag}/igw | sed 's/"//g' | sed 's/,//g')
+#$cmd create-tags --region $gwregion --tags Key=Name,Value=VPC-${tag}-igw --resources $inetgw
+#sleep 4
+#echo "Internet GW set to $inetgw . . . "
+#echo "attaching to vpc ${tag} . . . ."
+#$cmd attach-internet-gateway --region $gwregion --internet-gateway-id $inetgw --vpc-id $vpcid
+#sleep 4
+#echo "create internal interface . . . . "
+#aws ec2 create-network-interface --region $gwregion --subnet-id $subnetid0 --description "VPC-${tag}-int" --private-ip-address 10.0.${1}.10 > ${out}/${tag}/eth1
+#sleep 5
+#cat ${out}/${tag}/eth1
+#eni=$(awk '/NetworkInterfaceId/ {print $2;}' ${out}/${tag}/eth1 | sed 's/"//g' | sed 's/,//g')
+#echo "internal interface for gw-${tag} set to $eni . . . "
+#$cmd create-tags --region $gwregion --tags Key=Name,Value=VPC-${tag}-internal --resources $eni
+#sleep 4
+#echo "turn off src/dst check on the internal interface for the snd controller . . . "
+#$cmd modify-network-interface-attribute --region $gwregion --network-interface-id $eni --no-source-dest-check
+# capture route table info to file
+#echo "capturing route table . . . "
+#$cmd describe-route-tables --region $gwregion --filters Name=vpc-id,Values=$vpcid > ${out}/${tag}/routes
+#cat ${out}/${tag}/routes
+# pull route table id
+#route=$(awk '/RouteTableId/ {print $2;}' ${out}/${tag}/routes | tail -1 | sed 's/"//g' | sed 's/,//g')
+#sleep 4
+#echo "route table id set to $route . . . . "
+#echo "creating routes . . . "
+#$cmd create-route --region $gwregion --route-table-id $route --destination-cidr-block 0.0.0.0/0 --gateway-id $inetgw
+#sleep 4
+#$cmd associate-route-table --region $gwregion --subnet-id $subnetid128 --route-table-id $route
+#sleep 4
+#echo "internet gateway defined for internet subnet . . . . "
+#$cmd create-route-table --region $gwregion --vpc-id $vpcid > ${out}/${tag}/defgw
+#sleep 4
+#cat ${out}/${tag}/defgw
+#defroute=$(awk '/RouteTableId/ {print $2;}' ${out}/${tag}/defgw | tail -1 | sed 's/"//g' | sed 's/,//g')
+#echo " plucked out $defroute for internal routing table . . . . "
+#$cmd create-route --region $gwregion --route-table-id $defroute --destination-cidr-block 0.0.0.0/0 --network-interface-id $eni
+#sleep 4
+#echo "route created to gw interface $eni . . . . "
+#$cmd associate-route-table --region $gwregion --subnet-id $subnetid0 --route-table-id $defroute
+# clean up the groups
+#echo "clean up acls, let's leave it to the big kids ;) . . . . "
+#group=$(awk '/GroupId/ {print $2;}' ${out}/${tag}/eth1 | sed 's/"//g' | sed 's/,//g')
+#sleep 4
+#echo "setting policy for $group . . . . "
+#$cmd authorize-security-group-ingress --region $gwregion --group-id $group --protocol tcp --port 0-65535 --cidr 0.0.0.0/0
+#sleep 4
+#$cmd authorize-security-group-ingress --region $gwregion --group-id $group --protocol udp --port 0-65535 --cidr 0.0.0.0/0
+#sleep 4
+#$cmd authorize-security-group-ingress --region $gwregion --group-id $group  --protocol icmp --port -1 --cidr 0.0.0.0/0
+#echo "DONE! network infrastructure deployed. Now is the time to deploy security with ./launchgw ${tag}. . . . "
+exit
+

@@ -1,0 +1,38 @@
+#!/bin/bash
+# test for input
+if [ -z "$1" ]
+  then
+echo ""
+    echo "Just give the name designation for the gateway, like $0 <name>"
+    echo "This will create the app to attach to the vpc of the same number."
+echo ""
+exit
+fi
+. VAR
+echo "$0 on ${1}" >> /tmp/auto.job
+
+echo "region set to: $azregion"
+# here we go
+vpcid=$(awk '/VpcId/ {print $2;}' ${appout}/$1/vpc | sed 's/"//g' | sed 's/,//g')
+subnetid=$(awk '/SubnetId/ {print $2;}' ${appout}/$1/subnet0 | sed 's/"//g' | sed 's/,//g')
+azsubnet_id=(`cat ${appout}/${1}/id`)
+echo "Create app-$1"
+rm -rf ${appout}/${1}/app-${1}.dead
+azure network nic create -l $azregion -g VPC-$1 -n app-${1}-nic -k Internal -m vnet -a 10.0.${azsubnet_id}.12
+sleep 10
+cat $azapphead > $azappinit_launch
+echo "echo \"This data delivered by app-${1} in $subnetid as part of $vpcid protected by ${1}.${domain} \" > /tag" >> $azappinit_launch
+cat $azapptail >> $azappinit_launch
+
+azure vm create -vv -g VPC-$1 -l $azregion  -n app-${1} -f app-${1}-nic -y Linux -Q UbuntuLTS -F vnet -j Internal -C $azappinit_launch -u kellman -p abc123A!
+echo "Initalizing."
+sleep 5
+blastoff=$(date)
+echo "app-$1 deployed"
+echo "launched at $blastoff, app-$1 services are deployed."
+touch ${appout}/${1}/app-${1}.json
+echo " -> $0 ${1} COMMAND COMPLETE || "
+cat /tmp/auto.job | grep -v "$0 on ${1}" > /tmp/${1}.done
+mv /tmp/${1}.done /tmp/auto.job
+exit 0
+

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+username="admin"
+password="TheRainInSpain"
+host="demo.mg.killhup.cx"
+baseurl=https://$host/web_api
+curl_cmd="curl --silent --insecure -X POST"
+
+SID=`${curl_cmd} -H "Content-Type: application/json" -d @- $baseurl/login <<. | awk -F\" '/sid/ {print $4}'
+{
+  "user":"$username" ,
+  "password":"$password" ,
+  "session-name":"API"
+}
+.`
+# Login complete, add objects, rules and such here.
+################################################################################################
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/delete-host <<.
+{
+  "name":"Test_Host2"
+}
+.
+ 
+
+################################################################################################
+# Publish and get out of here
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/publish
+#Logout
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/logout

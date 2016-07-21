@@ -1,0 +1,139 @@
+#!/bin/bash
+if [ -z "$1" ]
+  then
+echo ""
+    echo "Just give the number designation for the gateway, like $0 1"
+    echo "This will rip the  policy out"
+echo ""
+exit
+fi
+
+source VAR
+natid=$(awk '/uid/ {print $3;}' ${out}/${1}/natuids | sed 's/"//g' | sed 's/,//g')
+#echo "$natid"
+
+IFS=$'\n' read -rd '' -a uid <<<"$natid"
+
+#echo " uid 0 is ${uid[0]}"
+#echo " uid 1 is ${uid[1]}"
+#echo " uid 2 is ${uid[2]}"
+
+vpcid=$(awk '/VpcId/ {print $2;}' ${out}/${1}/vpc | sed 's/"//g' | sed 's/,//g')
+subnetid0=$(awk '/SubnetId/ {print $2;}' ${out}/${1}/subnet0 | sed 's/"//g' | sed 's/,//g')
+IP=$(awk '/PublicIpAddress/ {print $2;}' ${out}/${1}/pubip | sed 's/"//g' | sed 's/,//g')
+baseurl=https://$host/web_api
+curl_cmd="curl --silent --insecure -X POST"
+
+SID=`${curl_cmd} -H "Content-Type: application/json" -d @- $baseurl/login <<. | awk -F\" '/sid/ {print $4}'
+{
+  "user":"$username" ,
+  "password":"$password" ,
+  "session-name":"api rules removed"
+}
+.`
+# Login complete, add objects, rules and such here.
+
+sleep 5
+
+################################################################################################
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/delete-access-rule <<.
+{
+  "layer" : "Network",
+  "name" : "${vpcid} App Access"
+}
+.
+
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/delete-access-rule <<.
+{
+  "layer" : "Network",
+  "name" : "${subnetid0} Outbound"
+}
+.
+
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/delete-access-rule <<.
+{
+  "layer" : "Network",
+  "name" : "NTP Noise ${vpcid}"
+}
+.
+
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/delete-access-rule <<.
+{
+  "layer" : "Network",
+  "name" : "DNS Noise ${vpcid}"
+}
+.
+
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/delete-access-section <<.
+{
+  "layer" : "Network",
+  "name" : "gw-${1}"
+}
+.
+
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/delete-nat-section <<.
+{
+  "package" : "standard",
+  "name" : "gw-${1}"
+}
+.
+
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/delete-nat-rule <<.
+{
+  "package" : "standard",
+  "uid" : "${uid[0]}"
+}
+.
+
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/delete-nat-rule <<.
+{
+  "package" : "standard",
+  "uid" : "${uid[1]}"
+}
+.
+
+
+sleep 5
+
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/delete-nat-rule <<.
+{
+  "package" : "standard",
+  "uid" : "${uid[2]}"
+}
+.
+
+
+sleep 5
+
+################################################################################################
+# Publish and get out of here
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/publish
+
+sleep 6
+
+#Logout
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/logout
+
+exit 0

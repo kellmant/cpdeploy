@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# auto spin down gateways in the cloud.
+# 
+# complete with web server.
+. VAR
+
+killapp ${1}
+killgw ${1}
+lb

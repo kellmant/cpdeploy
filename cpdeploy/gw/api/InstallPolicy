@@ -1,0 +1,61 @@
+#!/bin/bash
+if [ -z "$1" ]
+  then
+echo ""
+    echo "Just give the number designation for the gateway, like $0 1"
+    echo "add optional tp paramter to install threat policy as well as access."
+echo ""
+exit
+fi
+
+if [ -z "$2" ]
+  then
+echo "Installing access policy"
+install_value="false"
+echo ""
+else
+echo "Installing threat policy"
+install_value="true" 
+fi
+
+
+source VAR
+
+
+baseurl=https://$host/web_api
+curl_cmd="curl --silent --insecure -X POST"
+
+SID=`${curl_cmd} -H "Content-Type: application/json" -d @- $baseurl/login <<. | awk -F\" '/sid/ {print $4}'
+{
+  "user":"$username" ,
+  "password":"$password" ,
+  "session-name":"Policy Install"
+}
+.`
+# Login complete, add objects, rules and such here.
+
+sleep 3
+
+################################################################################################
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/install-policy <<.
+{
+  "policy-package" : "standard",
+  "access" : "true",
+  "threat-prevention" : "${install_value}",
+  "targets" : "gw-${1}"
+}
+.
+ 
+
+
+sleep 5
+
+################################################################################################
+# Publish and get out of here
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/publish
+
+sleep 5
+
+#Logout
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/logout
+

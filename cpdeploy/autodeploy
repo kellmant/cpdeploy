@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# auto spin up gateways in the cloud.
+# 
+# complete with web server.
+#syslog="aws ec2 get-console-output --instance-id"
+#
+. VAR
+echo "Autodeploy of ${1} VPC's in process." >> /tmp/auto.job
+
+#echo "Autodeploy Running for ${2} sites." >> /tmp/auto.job
+echo "Hope you know what your doing, or this gets messy"
+echo " Launching a total of ${1} ${2} sites."
+echo " And one of these gateways may not be like the other."
+
+
+for (( c=1; c<=${1}; c++ ))
+do
+	if [ $((c%2)) -eq 0 ];
+	then	
+	eval nohup spinup ${c} west ${2}${c} &
+	else
+azwins=$(( ( RANDOM % 3 )  + 1 ))
+		if  [ ${azwins} \> ${c} ] ; then
+echo "RANDOMIZING CLOUD PROVIDERS . . . . ${azwins}"
+	eval azspinup ${c} ${2}${c}
+			else
+echo "RANDOMIZING CLOUD PROVIDERS . . . . ${azwins}"
+		eval nohup spinup ${c} east ${2}${c} &
+		fi
+		sleep 20
+	fi
+done
+cat /tmp/auto.job | grep -v "Autodeploy of ${1} VPC's in process." > /tmp/${1}.done
+mv /tmp/${1}.done /tmp/auto.job
+exit 0
+
+

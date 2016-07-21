@@ -1,0 +1,53 @@
+#!/bin/bash
+# test for input
+if [ -z "$1" ]
+  then
+echo ""
+    echo "Just give the name of the automated site to deploy ex.: $0 name"
+echo ""
+exit
+fi
+source VAR
+if [ ! -d "${out}/${1}" ] ; then
+echo "no gateway to connect called ${1}"
+echo ""
+exit
+fi
+
+
+# here we go
+${mg}/api/BuildObjects ${1}
+sleep 4
+${mg}/api/BuildPolicy ${1} | grep nat-rule -B 1 | grep uid > ${out}/${1}/natuids
+sleep 4
+# check our work to see if the api is returning anything
+if [ -s ${out}/${1}/natuids ] ; then
+echo "Looks like the policy rules created ok, installing policy next."
+#${mg}/api/InstallPolicy ${1}
+#sleep 120
+#echo "Policy applied to ${1} , applying threat protections next. . "
+#rm -rf ${out}/${1}.nogw
+#${mg}/api/InstallPolicy ${1} tp
+echo "VPNConnect completed."
+rm -rf ${out}/${1}.nogw
+exit 0
+#
+else
+echo "Something wrong with the policy, perhaps the gateway wasn't fully up?"
+#echo "backing out any changes that may have been applied"
+#echo " to the managment station. It doesn't look like the policy "
+#echo " api injection worked, so expect allot of errors in this next part."
+#echo "It won't hurt anything, but check your management "
+#echo "station after backout is complete."
+#sleep 12
+#Disconnect ${1}
+#sleep 4
+#echo "Backout of ${1} gateway complete. Please kill and redepoy,"
+#echo " If this continues to happen, verify the api server is "
+#echo "up and running on the management station with 'api status'"
+echo ""
+exit
+fi
+exit 0
+#
+#
