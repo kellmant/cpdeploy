@@ -1,4 +1,4 @@
-##!/bin/bash
+#!/bin/bash
 # you need to configure the following settings to match your setup
 ##################################################################
 # define an availiability zone for west and east to put the vpc
@@ -82,10 +82,19 @@ hostedid="Z7YST92MKEJQJ"
 
 # name of your ssh key for access to the instance
 # wkeyname is your key in us-west-1 and ekeyname is looking for us-east-1
-
+# you can still just put a name here, but by default we will try to
+# use the shell control with a quick check.
+# leave this part alone unless you know what it is doing
+if [ -f ~/.ssh/mykey ] ; then
+	wkeyname=(`cat ~/.ssh/mykey`)
+	ekeyname=(`cat ~/.ssh/mykey`)
+	else
+# if you are using your own keys, set the names here
+# leave the part above alone either way
+# but if you use the shellcontrol it will override this
 wkeyname="mykey"
 ekeyname="mykey"
-
+fi
 # this is the host object and IP that are added to the poilcy
 # for access to the gateways. normally you don't log in at all.
 # for debug and testing only. set to your docker host if you are 

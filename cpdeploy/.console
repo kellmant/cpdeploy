@@ -24,7 +24,7 @@ trap "stty echo icanon ; stty $(stty -g) ; tput reset" EXIT
 #trap "tput sgr0 ; tput rmso ; stty echo icanon ; tput reset" EXIT
 
 # Disable echo and special characters, set input timeout to 0.2 seconds.
-stty -echo -icanon time 3 || exit $?
+stty -echo -icanon time 2 || exit $?
 
 # String containing all keypresses.
 KEYS=""
@@ -36,7 +36,7 @@ IFS=$'\a'
 while [ 1 ]; do
     # Read more input from keyboard when necessary.
     while read -t 0 ; do
-        read -s -r -d "" -N 1 -t 0.5 CHAR && KEYS="$KEYS$CHAR" || break
+        read -s -r -d "" -N 1 -t 0.6 CHAR && KEYS="$KEYS$CHAR" || break
     done
     # If no keys to process, wait 0.05 seconds and retry.
     if [ -z "$KEYS" ]; then
@@ -139,7 +139,7 @@ echo -n "               ${site_status[@]}"
 printf ${nc}
 echo ""
 echo "-------------------------------------------------------------------------"
-mg_up=(`find ${mgout}/*pubip -mmin +30 2> /dev/null | cut -d/ -f5 | cut -d- -f1`)
+mg_up=(`find ${mgout}/*pubip -mmin +4 2> /dev/null | cut -d/ -f5 | cut -d- -f1`)
 tput el
 printf "${blue}('killmg') ${nc}   ||${green}  management:${nc}"
 	if [ ! -z "$mg_up" ] ; then
@@ -158,7 +158,7 @@ fi
 echo ""
 tput el
 	printf "${blue}('launchmg') ${nc} ||${yellow}  management coming online: ${nc}"
-mg_init=(`find ${mgout}/*pubip -mmin -31 2>/dev/null | cut -d '/' -f 5 | cut -d '-' -f 1`)
+mg_init=(`find ${mgout}/*pubip -mmin -30 2>/dev/null | cut -d '/' -f 5 | cut -d '-' -f 1`)
 tput el
 echo -n "${mg_init[@]}"
 echo ""
@@ -204,6 +204,7 @@ if [ $sctimer -gt 6 ] ; then
 	tput cup 0 0 
 else
 ((sctimer++))	
+sleep 1
 tput ed
 fi
         continue

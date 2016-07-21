@@ -1,4 +1,5 @@
 credentials
+MakeSystem.priv
 .aws/shell/
 .azure/azure*
 .azure/access*

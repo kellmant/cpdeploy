@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+cmdtorun="cat /var/log/cloud-user-data"
+
+source VAR
+
+if [ $use_dns = "true" ]
+then
+#tput clear
+#while tput clear; do
+stat=(`ssh -q admin@${host} "$cmdtorun"`)
+	if [ "${stat[-1]}" != "completed!" ] ; then
+#echo "${stat[-1]}"
+echo "${host} is not ready" 
+echo " output is ${stat[@]}"
+sleep 5
+else
+echo "${stat[-1]}"
+fi
+#done
+#sleep 5
+#done
+else
+echo "get a domain in route53, I'm tired of IP"
+exit 1
+fi
+exit 0
+
