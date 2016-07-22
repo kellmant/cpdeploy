@@ -843,6 +843,13 @@ read sshctl
 	fi
 fi
 
+echo "Verifying Availability Zones we can use. . . (if there are credentials)"
+echo "Choose one from each region to use in your config."
+echo "checking us-east-1"
+checkaz east
+echo "checking us-west-1"
+checkaz west
+echo 
 echo -n "Run first time configuration? (y/n): "
 read firsttime
 	if [ "${firsttime}" = "y" ] ; then

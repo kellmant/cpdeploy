@@ -36,7 +36,7 @@ IFS=$'\a'
 while [ 1 ]; do
     # Read more input from keyboard when necessary.
     while read -t 0 ; do
-        read -s -r -d "" -N 1 -t 0.6 CHAR && KEYS="$KEYS$CHAR" || break
+        read -s -r -d "" -N 1 -t 0.5 CHAR && KEYS="$KEYS$CHAR" || break
     done
     # If no keys to process, wait 0.05 seconds and retry.
     if [ -z "$KEYS" ]; then

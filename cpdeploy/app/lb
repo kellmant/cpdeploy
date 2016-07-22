@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # lets rock!
-. VAR
+source VAR
 #vpc_active=(`ls ${gwout}/*/natuids 2> /dev/null | cut -d/ -f5`)
 app_active=(`find ${out}/*/app*.json -mmin +3 2> /dev/null | cut -d/ -f5 | cut -d. -f1`)
 if [ -z "${app_active}" ] ; then
@@ -22,7 +22,7 @@ fi
 
 last=${sites[$len-1]}
 count=`expr $len - 2`
-lastsite=$(awk '/PublicIpAddress/ {print $2;}' ${out}/$last/pubip | sed 's/"//g' | sed 's/,//g')
+lastsite=$(awk '/PublicIpAddress/ {print $2;}' ${gwout}/$last/pubip | sed 's/"//g' | sed 's/,//g')
 
 if [ $use_dns = "true" ]
 then
@@ -38,7 +38,7 @@ echo "\"TTL\": 10," >> ${aplb}
 echo "\"ResourceRecords\": [" >> ${aplb}
 for (( i=0; i<=$count; i++ ))
 do
-lbip=$(awk '/PublicIpAddress/ {print $2;}' ${out}/${sites[$i]}/pubip | sed 's/"//g' | sed 's/,//g')
+lbip=$(awk '/PublicIpAddress/ {print $2;}' ${gwout}/${sites[$i]}/pubip | sed 's/"//g' | sed 's/,//g')
 echo "            {\"Value\": \"$lbip\"}, " >> ${aplb}
 done
 echo "            {\"Value\": \"$lastsite\"} " >> ${aplb}
