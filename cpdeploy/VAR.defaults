@@ -112,8 +112,8 @@ admin_ip="99.253.4.27"
 # proceed with caution
 #
 mgami="ami-3b15d556"
-wgwami="ami-3b5e2e5b"
-egwami="ami-a00e32ca"
+wgwami="ami-726c2a12"
+egwami="ami-0bca4a1c"
 wappami="ami-6e84fa0e"
 eappami="ami-f5f41398"
 eclientami="ami-f5f41398"

@@ -833,17 +833,28 @@ if [ ! -f ~/.aws/credentials ] ; then
 echo "no credentials found for cloud service, requesting keys."
 aws configure
 echo ""
+fi
+
+	if [ ! -f ~/.ssh/mykey ] ; then
+echo -n "Manage ssh keys from controller (y/n): "
+read sshctl
+	if [ "${sshctl}" = "y" ] ; then
+	shellcontrol
+	fi
+fi
+
 echo -n "Run first time configuration? (y/n): "
 read firsttime
 	if [ "${firsttime}" = "y" ] ; then
 nano /cpdeploy/VAR
 	fi
-fi
 	echo -n "Login to azure? (y/n): "
+
 	read azfirsttime
 	if [ "${azfirsttime}" = "y" ] ; then
 azure login
-	fi
+fi
+
 echo ""
 echo -n "Start cpdeploy console interface? (y/n): " 
 read whattodo
@@ -851,7 +862,7 @@ if [ "${whattodo}" = "y" ] ; then
 .console
 else
 echo "Dropping you to shell, run 'aws configure' and 'cpconfig' if this is first time setup."
+	fi
+fi
 fi
 cd /cpdeploy
-fi
-fi

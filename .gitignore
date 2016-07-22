@@ -12,7 +12,6 @@ cpdeploy/app/domain
 cpdeploy/gw/output/*
 !cpdeploy/gw/output/client/
 !cpdeploy/gw/output/client/.gitkeep
-#!cpdeploy/gw/output/.gitkeep
 
 PRIVATEBUILD
 # OS generated files #

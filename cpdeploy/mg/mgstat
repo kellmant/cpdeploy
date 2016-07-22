@@ -12,7 +12,7 @@ stat=(`ssh -q admin@${host} "$cmdtorun"`)
 	if [ "${stat[-1]}" != "completed!" ] ; then
 #echo "${stat[-1]}"
 echo "${host} is not ready" 
-echo " output is ${stat[@]}"
+#echo " output is ${stat[@]}"
 sleep 5
 else
 echo "${stat[-1]}"
