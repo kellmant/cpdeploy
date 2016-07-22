@@ -1,9 +1,11 @@
 #docker build -t kellman/cpdeploy:latest .
-docker build -t cpdeploy .
+#docker build -t cpdeploy .
 #
 # uncommet the following two lines to build and launch cpdeploy
 # from the repo make sure you arent syncing your creds if you 
 # save your own commit
 #
-docker create --name cpdata -v $PWD/cpdeploy:/cpdeploy -v $PWD/root:/root alpine /bin/true
-docker run --volumes-from cpdata --name mycpdeploy -h controller -it cpdeploy
+
+docker rm mycpdeploy
+docker rm cpdata
+docker rmi cpdeploy
