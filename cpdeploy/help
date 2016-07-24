@@ -5,4 +5,4 @@ no support or help is implied or offered do what you want
 with this, bsd type license Not only do you not have to 
 tell me about it, you should just go ahead and make this 
 your own, thats how this works. fork me!<= https://https://github.com/kellmant
-.....before you do anything else, you can run shellcontrol (right now!) to take over ssh access to gateways and manager from this console.
+.....you can now run shellcontrol (should be used during startup) to take over ssh access to gateways and manager from this console. You can also backup this configuration at any time (in its running state) using 'backmeup'. There is a command, 'getmeback' that will restore a previous config, but should only be used during the startup of a new controller.
