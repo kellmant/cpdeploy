@@ -30,7 +30,7 @@ else
   aws s3 cp s3://${BUCKET_NAME}/VAR /cpdeploy/VAR
   aws s3 cp s3://${BUCKET_NAME}/domain /cpdeploy/app/domain
   aws s3 cp s3://${BUCKET_NAME}/debug.output /cpdeploy/debug.output
-  aws s3 sync s3://${BUCKET_NAME}/root /root --exclude 'credentials' 
+  aws s3 sync s3://${BUCKET_NAME}/root /root --exclude "*credentials" 
   aws s3 sync s3://${BUCKET_NAME}/gwoutput /cpdeploy/gw/output --delete
   aws s3 sync s3://${BUCKET_NAME}/mgoutput /cpdeploy/mg/output --delete
   fi 
