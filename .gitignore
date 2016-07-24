@@ -1,11 +1,10 @@
 credentials
-MakeSystem.priv
-.aws/shell/
-.azure/azure*
-.azure/access*
-.npm/
-.ssh/
-.streamline/
+root/.aws/shell
+root/.azure/az*
+root/.azure/access*
+root/.npm
+root/.ssh
+root/.streamline
 cpdeploy/mg/output/*
 !cpdeploy/mg/output/.gitkeep
 cpdeploy/app/domain
@@ -22,6 +21,6 @@ PRIVATEBUILD
 .DS_Store?
 ._*
 .Spotlight-V100
-.Trashes
+.Trash*
 ehthumbs.db
 Thumbs.db
