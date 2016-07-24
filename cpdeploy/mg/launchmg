@@ -103,5 +103,6 @@ echo "${1}.${domain} ($IP) " > ${mgout}/.access
 echo " -> $0 COMMAND COMPLETED. || "
 cat /tmp/auto.job | grep -v "$0 on ${1}" > /tmp/${1}.done
 mv /tmp/${1}.done /tmp/auto.job
+mgstat &>/cpdeploy/debug.output &!
 exit 0
 
