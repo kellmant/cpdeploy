@@ -18,18 +18,18 @@ for (( c=1; c<=${1}; c++ ))
 do
 	if [ $((c%2)) -eq 0 ];
 	then	
-	nohup spinup ${c} west ${2}${c} &
+	spinup ${c} west ${2}${c} &>>/cpdeploy/debug.output &!
 	else
 azwins=$(( ( RANDOM % 3 )  + 1 ))
 		if  [ ${azwins} \> ${c} ] ; then
 echo "RANDOMIZING CLOUD PROVIDERS . . . . ${azwins}"
-	nohup azspinup ${c} ${2}${c} &
+	azspinup ${c} ${2}${c} &>>/cpdeploy/debug.output &!
 			else
 echo "RANDOMIZING CLOUD PROVIDERS . . . . ${azwins}"
-		nohup spinup ${c} east ${2}${c} &
+		spinup ${c} east ${2}${c} &>>/cpdeploy/debug.output &!
 		fi
 	fi
-sleep 600
+sleep 580
 done
 cat /tmp/auto.job | grep -v "Autodeploy of ${1} VPC's in process." > /tmp/${1}.done
 mv /tmp/${1}.done /tmp/auto.job

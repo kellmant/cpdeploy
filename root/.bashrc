@@ -834,8 +834,9 @@ if [ ! -f ~/.aws/credentials ] ; then
 echo "no credentials found for cloud service, requesting keys."
 echo "Ensure the keys you use are authorized for S3FullAccess" 
 echo "The system is able to back itself up with S3 Access."
+echo 
 aws configure
-echo ""
+echo 
 echo "If we have access to S3, we can restore from backup."
 echo "Backup named after the route53 domain you used last time."
 echo -n "Restore a previous session? (y/n): "
@@ -843,7 +844,11 @@ read getmebackatit
 	if [ "${getmebackatit}" = "y" ] ; then
 echo 
 echo "Need to know what domain was used last time, "
-echo "It was configured in your variables file like domain=$domain"
+echo "It was configured in your variables file, "
+echo "For example like->  domain=\"gwinthesky.net\""
+echo "If you do not have a domain configured, this will not"
+echo "work very well for you. Backups are configured by domain."
+echo 
 echo -n "Domain you used last time?: "
 read bucketdomain
 getmeback ${bucketdomain}

@@ -166,7 +166,12 @@ tput el
 printf '%dh:%02dm' $((${mg_timer[@]}/3600)) $((${mg_timer[@]}%3600/60)) 
 	else
 tput el
-echo -n "$host not ready"
+printf ${red}
+printf ${boldit}
+echo -n "OFFLINE: $host"
+printf ${nobold}
+printf ${nc}
+
 fi
 echo ""
 tput el

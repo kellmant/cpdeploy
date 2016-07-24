@@ -27,11 +27,13 @@ then
 else
   echo "Bucket exists" 
   echo "restoring from backup ${BUCKET_NAME}"
-  aws s3 cp s3://${BUCKET_NAME}/VAR /cpdeploy/VAR
-  aws s3 cp s3://${BUCKET_NAME}/domain /cpdeploy/app/domain
+  aws s3 cp s3://${BUCKET_NAME}/VAR /cpdeploy/VAR 
+  aws s3 cp s3://${BUCKET_NAME}/.ctrlip /cpdeploy/.ctrlip 2>/dev/null
+  aws s3 cp s3://${BUCKET_NAME}/domain /cpdeploy/app/domain 2>/dev/null
   aws s3 cp s3://${BUCKET_NAME}/debug.output /cpdeploy/debug.output
   aws s3 sync s3://${BUCKET_NAME}/root /root --exclude "*credentials" 
   aws s3 sync s3://${BUCKET_NAME}/gwoutput /cpdeploy/gw/output --delete
   aws s3 sync s3://${BUCKET_NAME}/mgoutput /cpdeploy/mg/output --delete
 chmod -R go-rwx /root/.ssh
+.fixctrlip
   fi 

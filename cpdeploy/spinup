@@ -7,55 +7,11 @@
 #
 prep-vpc ${1} ${2} ${3}
 launchgw ${3}
+gwstat ${3}
 # time to wait
-# 
-echo "gateways will self configure, autoconnecting in 15 minutes. . ."
-echo "take a break, I'll get back to you when the VPC is ready to go live."
-echo ""
-sleep 5
-echo -n "gateway ${3} instance initalizing . "
-# average time to init is 3 minutes, but can take longer.
-# 4 minutes for init
-for i in {3..1}
-do
-sleep 60
-echo -n " gateway ${3} initalize in ${i} min.. "
-done
-echo -n " . . gateway starting boot from init . "
-# 3 minutes and 30seconds to boot
-for i in {4..1}
-do
-sleep 60 
-echo -n "${3} gateway boot ${i} min. . . . "
-done
-echo -n " first config (gateways will autoconfigure for the enviroment) . "
-echo -n " please do not disturb ${3}. "
-# 6 minutes for first config
-for i in {5..1}
-do
-sleep 60 
-echo -n " ${3} gateway config ${i} min. . . "
-done
-echo ""
-echo -n "reload ${3} for vpc config . "
-# 2 minutes for first boot 
-for i in {3..0}
-do
-sleep 60 
-echo -n "gateway ${3} restart in ${i} min . . . "
-done
-echo ""
-echo "starting attachment and installing policy on ${3}"
-
-# 2 minutes for first boot 
-for i in {1..10}
-do
-sleep 3
-echo -n ". "
-done
-
+sleep 25
 Connect ${3}
-sleep 65
+sleep 35
 launchapp ${3}
 echo -n "web app ${3} initalizing . "
 # average time to init is 3 minutes, but can take longer.

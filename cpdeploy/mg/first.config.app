@@ -1,5 +1,8 @@
 #!/bin/bash
 source VAR
+ctrlip=(`curl ipecho.net/plain`)
+echo -n "${ctrlip}" > /cpdeploy/.ctrlip
+ctrlname="${domain}.cpdeploy"
 baseurl=https://$host/web_api
 curl_cmd="curl --silent --insecure -X POST"
 
@@ -17,8 +20,8 @@ sleep 5
 
 ${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/add-host <<.
 {
-  "name" : "$admin_host",
-  "ip-address" : "$admin_ip"
+  "name" : "${ctrlname}",
+  "ip-address" : "${ctrlip}"
 }
 .
 
@@ -39,7 +42,7 @@ ${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $bas
   "layer" : "Network",
   "position" : "top",
   "name" : "ssh Access",
-  "source" : "$admin_host",
+  "source" : "${ctrlname}",
   "service" : "ssh_version_2",
   "action" : "Accept",
   "track" : "Full Log",
