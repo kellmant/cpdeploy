@@ -3,7 +3,7 @@
 if [ -z "$1" ]
   then
 echo ""
-    echo "Going to need active VPC names to remove load balance ex.: $0 <name> <name2>"
+    echo "Going to need active VPC names to remove load balance ex.: $0 <name> <name2> etc. . . "
 echo ""
 exit
 fi

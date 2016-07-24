@@ -817,6 +817,7 @@ export TZ
 if [ -f ~/azure.completion.sh ]; then
 	. ~/azure.completion.sh
 	fi
+
 if [ -d /cpdeploy ]; then
 echo "Welcome to the machine. "
 echo
@@ -833,6 +834,14 @@ if [ ! -f ~/.aws/credentials ] ; then
 echo "no credentials found for cloud service, requesting keys."
 aws configure
 echo ""
+echo -n "Would you like to restore from a previous session? (y/n): "
+read getmebackatit
+	if [ "${getmebackatit}" = "y" ] ; then
+echo 
+echo "what was the route53 domain (like mydomain.net) you used last time?: "
+read bucketdomain
+getmeback ${bucketdomain}
+	fi
 fi
 
 	if [ ! -f ~/.ssh/mykey ] ; then
@@ -850,7 +859,7 @@ checkaz east
 echo "checking us-west-1"
 checkaz west
 echo 
-echo -n "Run first time configuration? (y/n): "
+echo -n "Edit configuration? (y/n): "
 read firsttime
 	if [ "${firsttime}" = "y" ] ; then
 nano /cpdeploy/VAR
