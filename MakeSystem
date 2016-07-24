@@ -1,9 +1,9 @@
-#docker build -t kellman/cpdeploy:latest .
-docker build -t betacpdeploy .
+docker build -t kellman/cpdeploy:beta .
+#docker build -t betacpdeploy .
 #
 # uncommet the following two lines to build and launch cpdeploy
 # from the repo make sure you arent syncing your creds if you 
 # save your own commit it should ignore, but I'm not making promises
 #
-docker create --name cpdata -v $PWD/cpdeploy:/cpdeploy -v $PWD/root:/root alpine /bin/true
-docker run --volumes-from cpdata --name mycpdeploy -h controller -it betacpdeploy
+#docker create --name cpdata -v $PWD/cpdeploy:/cpdeploy -v $PWD/root:/root alpine /bin/true
+#docker run --volumes-from cpdata --name mycpdeploy -h controller -it betacpdeploy
