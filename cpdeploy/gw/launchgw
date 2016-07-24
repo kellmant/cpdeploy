@@ -35,7 +35,7 @@ fi
 # here we go
 echo "Create gw $1"
 cat $gwheadinit > $gwinit_launch
-echo "clish -c 'set interface eth1 ipv4-address 10.0.${subid}.254 mask-length 25' -s" >> $gwinit_launch
+echo "clish -c 'set interface eth1 ipv4-address 10.0.${subid}.10 mask-length 25' -s" >> $gwinit_launch
 echo "clish -c 'set interface eth1 state on' -s" >> $gwinit_launch
 echo "echo \"hostname=\\\"gw-${1}\\\"\" >> /home/admin/firstconfig" >> $gwinit_launch
 echo "echo \"ftw_sic_key=\\\"${otp}\\\"\" >> /home/admin/firstconfig" >> $gwinit_launch
