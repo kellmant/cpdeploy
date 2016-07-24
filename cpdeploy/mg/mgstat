@@ -13,7 +13,7 @@ then
 	while [ "${stat[-1]}" != "completed!" ] ; do
 sleep 65
 declare -a stat=(`ssh -q admin@${host} "$cmdtorun"`)
-echo "${host} status: ${stat[@]:-3} " 
+echo "${host} first time config . .  " 
 done
 sleep 165
 echo "${host} is ready: ${stat[-1]} " 

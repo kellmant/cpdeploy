@@ -166,13 +166,13 @@ tput el
 printf '%dh:%02dm' $((${mg_timer[@]}/3600)) $((${mg_timer[@]}%3600/60)) 
 	else
 tput el
-echo -n "$host"
+echo -n "$host not ready"
 fi
 echo ""
 tput el
-	printf "${blue}('launchmg') ${nc} ||${yellow}  management coming online: ${nc}"
+	printf "${blue}('launchmg') ${nc} ||${yellow}  coming online: ${nc}"
 	if [ -f "${mgout}/.islaunched" ] ; then
-	mg_init="${host} is coming online"
+	mg_init="${host}"
 		else
 	mg_init=""
 		fi
