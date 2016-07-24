@@ -18,21 +18,19 @@ for (( c=1; c<=${1}; c++ ))
 do
 	if [ $((c%2)) -eq 0 ];
 	then	
-	eval nohup spinup ${c} west ${2}${c} &
+	nohup spinup ${c} west ${2}${c} &
 	else
 azwins=$(( ( RANDOM % 3 )  + 1 ))
 		if  [ ${azwins} \> ${c} ] ; then
 echo "RANDOMIZING CLOUD PROVIDERS . . . . ${azwins}"
-	eval azspinup ${c} ${2}${c}
+	nohup azspinup ${c} ${2}${c} &
 			else
 echo "RANDOMIZING CLOUD PROVIDERS . . . . ${azwins}"
-		eval nohup spinup ${c} east ${2}${c} &
+		nohup spinup ${c} east ${2}${c} &
 		fi
-		sleep 20
 	fi
+sleep 600
 done
 cat /tmp/auto.job | grep -v "Autodeploy of ${1} VPC's in process." > /tmp/${1}.done
 mv /tmp/${1}.done /tmp/auto.job
 exit 0
-
-
