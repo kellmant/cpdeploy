@@ -832,19 +832,30 @@ echo "CPdeploy controller started."
 echo ". . . . . "
 if [ ! -f ~/.aws/credentials ] ; then
 echo "no credentials found for cloud service, requesting keys."
+echo "Ensure the keys you use are authorized for S3FullAccess" 
+echo "The system is able to back itself up with S3 Access."
 aws configure
 echo ""
-echo -n "Would you like to restore from a previous session? (y/n): "
+echo "If we have access to S3, we can restore from backup."
+echo "Backup named after the route53 domain you used last time."
+echo -n "Restore a previous session? (y/n): "
 read getmebackatit
 	if [ "${getmebackatit}" = "y" ] ; then
 echo 
-echo "what was the route53 domain (like mydomain.net) you used last time?: "
+echo "Need to know what domain was used last time, "
+echo "It was configured in your variables file like domain=$domain"
+echo -n "Domain you used last time?: "
 read bucketdomain
 getmeback ${bucketdomain}
 	fi
 fi
 
 	if [ ! -f ~/.ssh/mykey ] ; then
+echo "The system is now updated to use ssh to monitor and manage"
+echo "the deployment from the controller. If you do not do this now"
+echo "ensure you run 'shellcontrol' before deploying your gateways."
+echo "It is HIGHLY recommended that you say yes now, and is dependant"
+echo "on the aws access key credentials being supplied beforehand."
 echo -n "Manage ssh keys from controller (y/n): "
 read sshctl
 	if [ "${sshctl}" = "y" ] ; then
