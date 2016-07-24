@@ -112,6 +112,7 @@ echo "gw-$1 deployed"
 
 cat /tmp/auto.job | grep -v "$0 on ${1}" > /tmp/${1}.done
 mv /tmp/${1}.done /tmp/auto.job
-
+date > ${gwout}/${1}/.islaunched
 echo " -> $0 ${1} COMMAND COMPLETE || "
+gwstat $1 &>>/cpdeploy/debug.output &!
 exit 0

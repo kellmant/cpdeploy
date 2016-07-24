@@ -1,3 +1,21 @@
+web1 is initalizing 
+[1;34m||[0m[1;36mrun:[1;32mkillgw web1->[0mKilling.
+Tagging i-10a59996 as dead
+ 
+killing 
+                            "Value": "dead"
+web1 destroyed
+ web1 is i-10a59996 using 54.152.135.154 on the internet
+dns injection to remove web1 with  54.152.135.154
+{
+    "ChangeInfo": {
+        "SubmittedAt": "2016-07-24T11:04:51.312Z",
+        "Id": "/change/C24R6JGZFLL5RU",
+        "Comment": "gwinthesky.net DNS",
+        "Status": "PENDING"
+    }
+}
+ -> /cpdeploy/gw/killgw COMMAND COMPLETED. || 
 ...........................................................
 ...........................................................
 ................................................................................................................................................
@@ -5,4 +23,326 @@ no support or help is implied or offered do what you want
 with this, bsd type license Not only do you not have to 
 tell me about it, you should just go ahead and make this 
 your own, thats how this works. fork me!<= https://https://github.com/kellmant
-.....before you do anything else, you can run shellcontrol (right now!) to take over ssh access to gateways and manager from this console. You can also backup this configuration at any time (in its running state) using 'backmeup'. There is a command, 'getmeback' that will restore a previous config, but should only be used during the startup of a new controller.
+.....you can now run shellcontrol (should be used during startup) to take over ssh access to gateways and manager from this console. You can also backup this configuration at any time (in its running state) using 'backmeup'. There is a command, 'getmeback' that will restore a previous config, but should only be used during the startup of a new controller.
+...........................................................
+................................................................................................................................................
+no support or help is implied or offered do what you want 
+with this, bsd type license Not only do you not have to 
+tell me about it, you should just go ahead and make this 
+your own and fork me!<= https://https://github.com/kellmant
+.....you should use shellcontrol during startup to take over ssh access to gateways and manager from this console. You can also backup this configuration at any time (in its running state) using 'backmeup'. There is a command, 'getmeback' that will restore a previous config, but should only be used during the startup of a new controller.
+[1;34m||[0m[1;36mrun:[1;32mlaunchgw web2->[0mregion set to: us-east-1
+Create gw web2
+Initalizing.
+Tagging i-9b9da11d as gw-web2
+Attaching additional network interface, please wait for init of image
+ /:
+ (: looking for an attachment id
+attach network interface.
+{
+    "AttachmentId": "eni-attach-3e7745ee"
+}
+Waiting for public IP.
+                    "PublicIpAddress": "54.86.150.161",
+Public IP confirmed
+ gw-web2 is i-9b9da11d using 54.86.150.161 on the internet
+dns injection to resolve web2.gwinthesky.net to 54.86.150.161
+{
+    "ChangeInfo": {
+        "Status": "PENDING",
+        "Comment": "gwinthesky.net DNS",
+        "Id": "/change/C1KFB9QKHMDKAK",
+        "SubmittedAt": "2016-07-24T11:12:38.960Z"
+    }
+}
+i-9b9da11d launched at Sun Jul 24 07:12:39 EDT 2016, gw-web2 security gateway services are being deployed.
+ 
+gw-web2 deployed
+ -> /cpdeploy/gw/launchgw web2 COMMAND COMPLETE || 
+ web2 is initalizing 
+/cpdeploy/gw/gwstat: line 29: syntax error near unexpected token `fi'
+/cpdeploy/gw/gwstat: line 29: `	fi'
+[1;34m||[0m[1;36mrun:[1;32mkillgw web2->[0mKilling.
+Tagging i-9b9da11d as dead
+ 
+killing 
+                            "Value": "dead"
+web2 destroyed
+ web2 is i-9b9da11d using 54.86.150.161 on the internet
+dns injection to remove web2 with  54.86.150.161
+{
+    "ChangeInfo": {
+        "SubmittedAt": "2016-07-24T11:28:56.740Z",
+        "Comment": "gwinthesky.net DNS",
+        "Status": "PENDING",
+        "Id": "/change/C366GSNX9KQCYO"
+    }
+}
+ -> /cpdeploy/gw/killgw COMMAND COMPLETED. || 
+[1;34m||[0m[1;36mrun:[1;32mlaunchgw web1->[0mregion set to: us-east-1
+Create gw web1
+Initalizing.
+Tagging i-7c90acfa as gw-web1
+Attaching additional network interface, please wait for init of image
+ /:
+ (: looking for an attachment id
+attach network interface.
+{
+    "AttachmentId": "eni-attach-5b6d5f8b"
+}
+Waiting for public IP.
+                    "PublicIpAddress": "54.172.181.170",
+Public IP confirmed
+ gw-web1 is i-7c90acfa using 54.172.181.170 on the internet
+dns injection to resolve web1.gwinthesky.net to 54.172.181.170
+{
+    "ChangeInfo": {
+        "Comment": "gwinthesky.net DNS",
+        "SubmittedAt": "2016-07-24T11:30:15.804Z",
+        "Status": "PENDING",
+        "Id": "/change/CLY7U52126XIA"
+    }
+}
+i-7c90acfa launched at Sun Jul 24 07:30:15 EDT 2016, gw-web1 security gateway services are being deployed.
+ 
+gw-web1 deployed
+ -> /cpdeploy/gw/launchgw web1 COMMAND COMPLETE || 
+ web1 is initalizing 
+web1 is running first time configuration 
+web1 still on first time config . .  
+web1 still on first time config . .  
+web1 still on first time config . .  
+web1 still on first time config . .  
+/cpdeploy/gw/gwstat: line 23: stat: bad array subscript
+web1 still on first time config . .  
+ First time config on web1 is complete. Rebooting. 
+gateway ready to Connect to smc.gwinthesky.net for policy
+[1;34m||[0m[1;36mrun:[1;32mlaunchgw web2->[0mregion set to: us-east-1
+Create gw web2
+Initalizing.
+Tagging i-9a7d421c as gw-web2
+Attaching additional network interface, please wait for init of image
+ /:
+ (: looking for an attachment id
+attach network interface.
+{
+    "AttachmentId": "eni-attach-ac21137c"
+}
+Waiting for public IP.
+                    "PublicIpAddress": "54.198.217.9",
+Public IP confirmed
+ gw-web2 is i-9a7d421c using 54.198.217.9 on the internet
+dns injection to resolve web2.gwinthesky.net to 54.198.217.9
+{
+    "ChangeInfo": {
+        "Id": "/change/CGG21QTHHUQI4",
+        "SubmittedAt": "2016-07-24T12:05:49.280Z",
+        "Status": "PENDING",
+        "Comment": "gwinthesky.net DNS"
+    }
+}
+i-9a7d421c launched at Sun Jul 24 08:05:49 EDT 2016, gw-web2 security gateway services are being deployed.
+ 
+gw-web2 deployed
+ -> /cpdeploy/gw/launchgw web2 COMMAND COMPLETE || 
+ web2 is initalizing 
+web2 is running first time configuration 
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web2 completing first time config . .  
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web2 completing first time config . .  
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web2 completing first time config . .  
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web2 completing first time config . .  
+ First time config on web2 is complete. 
+/cpdeploy/gw/gwstat: line 35: 3: No such file or directory
+gateway ready to Connect to smc.gwinthesky.net for policy
+[1;34m||[0m[1;36mrun:[1;32mkillgw web1->[0mKilling.
+Tagging i-7c90acfa as dead
+ 
+killing 
+                            "Value": "dead",
+web1 destroyed
+ web1 is i-7c90acfa using 54.172.181.170 on the internet
+dns injection to remove web1 with  54.172.181.170
+{
+    "ChangeInfo": {
+        "SubmittedAt": "2016-07-24T12:44:16.289Z",
+        "Id": "/change/CEJSSQ674XXWN",
+        "Status": "PENDING",
+        "Comment": "gwinthesky.net DNS"
+    }
+}
+ -> /cpdeploy/gw/killgw COMMAND COMPLETED. || 
+[1;34m||[0m[1;36mrun:[1;32mlaunchgw web1->[0mregion set to: us-east-1
+Create gw web1
+Initalizing.
+Tagging i-14615e92 as gw-web1
+Attaching additional network interface, please wait for init of image
+ /:
+ (: looking for an attachment id
+attach network interface.
+{
+    "AttachmentId": "eni-attach-94f9cb44"
+}
+Waiting for public IP.
+                    "PublicIpAddress": "54.198.145.187",
+Public IP confirmed
+ gw-web1 is i-14615e92 using 54.198.145.187 on the internet
+dns injection to resolve web1.gwinthesky.net to 54.198.145.187
+{
+    "ChangeInfo": {
+        "SubmittedAt": "2016-07-24T12:48:17Z",
+        "Status": "PENDING",
+        "Comment": "gwinthesky.net DNS",
+        "Id": "/change/C5ZWGX5S4U71W"
+    }
+}
+i-14615e92 launched at Sun Jul 24 08:48:17 EDT 2016, gw-web1 security gateway services are being deployed.
+ 
+gw-web1 deployed
+ -> /cpdeploy/gw/launchgw web1 COMMAND COMPLETE || 
+ web1 is initalizing 
+web1 is running first time configuration 
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web1 completing first time config . .  
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web1 completing first time config . .  
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web1 completing first time config . .  
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web1 completing first time config . .  
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web1 completing first time config . .  
+ First time config on web1 is complete. 
+/cpdeploy/gw/gwstat: line 35: 3: No such file or directory
+gateway ready to Connect to smc.gwinthesky.net for policy
+[1;34m||[0m[1;36mrun:[1;32mkillgw web1->[0mKilling.
+Tagging i-14615e92 as dead
+ 
+killing 
+                            "Value": "dead",
+web1 destroyed
+ web1 is i-14615e92 using 54.198.145.187 on the internet
+dns injection to remove web1 with  54.198.145.187
+{
+    "ChangeInfo": {
+        "Comment": "gwinthesky.net DNS",
+        "Id": "/change/C23WA677LHNVL1",
+        "Status": "PENDING",
+        "SubmittedAt": "2016-07-24T13:06:14.545Z"
+    }
+}
+ -> /cpdeploy/gw/killgw COMMAND COMPLETED. || 
+[1;34m||[0m[1;36mrun:[1;32mkillmg smc->[0mKilling.
+Tagging i-c6c0463e as dead
+ smc is i-c6c0463e using 52.87.154.158 on the internet
+dns injection to remove smc with  52.87.154.158
+{
+    "ChangeInfo": {
+        "SubmittedAt": "2016-07-24T13:06:38.784Z",
+        "Status": "PENDING",
+        "Id": "/change/C3G24WNBNWUTGS",
+        "Comment": "Killhup DNS"
+    }
+}
+ 
+destroying the image and records complete
+                            "Value": "dead",
+smc destroyed
+ -> /cpdeploy/mg/killmg COMMAND COMPLETED. || 
+[1;34m||[0m[1;36mrun:[1;32mkillgw web2->[0mKilling.
+Tagging i-9a7d421c as dead
+ 
+killing 
+                            "Value": "dead"
+web2 destroyed
+ web2 is i-9a7d421c using 54.198.217.9 on the internet
+dns injection to remove web2 with  54.198.217.9
+{
+    "ChangeInfo": {
+        "Id": "/change/CMPNJJLPUQ2RI",
+        "Status": "PENDING",
+        "Comment": "gwinthesky.net DNS",
+        "SubmittedAt": "2016-07-24T13:07:09.232Z"
+    }
+}
+ -> /cpdeploy/gw/killgw COMMAND COMPLETED. || 
+[1;34m||[0m[1;36mrun:[1;32mlaunchgw web1->[0mregion set to: us-east-1
+Create gw web1
+Initalizing.
+Tagging i-d2546b54 as gw-web1
+Attaching additional network interface, please wait for init of image
+ /:
+ (: looking for an attachment id
+attach network interface.
+{
+    "AttachmentId": "eni-attach-46d5e796"
+}
+Waiting for public IP.
+                    "PublicIpAddress": "54.224.98.204",
+Public IP confirmed
+ gw-web1 is i-d2546b54 using 54.224.98.204 on the internet
+dns injection to resolve web1.gwinthesky.net to 54.224.98.204
+{
+    "ChangeInfo": {
+        "Comment": "gwinthesky.net DNS",
+        "SubmittedAt": "2016-07-24T13:08:49.657Z",
+        "Status": "PENDING",
+        "Id": "/change/C6II908LYBWEI"
+    }
+}
+i-d2546b54 launched at Sun Jul 24 09:08:49 EDT 2016, gw-web1 security gateway services are being deployed.
+ 
+gw-web1 deployed
+ -> /cpdeploy/gw/launchgw web1 COMMAND COMPLETE || 
+ web1 is initalizing 
+web1 is running first time configuration 
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web1 completing first time config . .  
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web1 completing first time config . .  
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web1 completing first time config . .  
+/cpdeploy/gw/gwstat: line 26: [: too many arguments
+web1 completing first time config . .  
+ First time config on web1 is complete. 
+/cpdeploy/gw/gwstat: line 35: =: No such file or directory
+gateway ready to Connect to smc.gwinthesky.net for policy
+[1;34m||[0m[1;36mrun:[1;32mkillgw web1->[0mKilling.
+Tagging i-d2546b54 as dead
+ 
+killing 
+                            "Value": "dead"
+web1 destroyed
+ web1 is i-d2546b54 using 54.224.98.204 on the internet
+dns injection to remove web1 with  54.224.98.204
+{
+    "ChangeInfo": {
+        "Comment": "gwinthesky.net DNS",
+        "Status": "PENDING",
+        "SubmittedAt": "2016-07-24T13:26:24.717Z",
+        "Id": "/change/C29GY1NX61TT8T"
+    }
+}
+ -> /cpdeploy/gw/killgw COMMAND COMPLETED. || 
+[1;34m||[0m[1;36mrun:[1;32mbackmeup->[0mChecking if S3 backup bucket exists...
+Bucket exists
+backing up to gwinthesky.net.cpdeploy
+upload: ./VAR to s3://gwinthesky.net.cpdeploy/VAR
+
+The user-provided path /cpdeploy/app/domain does not exist.
+upload: ./debug.output to s3://gwinthesky.net.cpdeploy/debug.output
+upload: ../root/.bash_history to s3://gwinthesky.net.cpdeploy/root/.bash_history
+Completed 1 part(s) with ... file(s) remainingupload: ../root/.ssh/known_hosts to s3://gwinthesky.net.cpdeploy/root/.ssh/known_hosts
+Completed 2 of 3 part(s) with 1 file(s) remainingupload: ../root/.viminfo to s3://gwinthesky.net.cpdeploy/root/.viminfo
+upload: gw/output/web1.nogw to s3://gwinthesky.net.cpdeploy/gwoutput/web1.nogw
+Completed 1 of 6 part(s) with 5 file(s) remainingupload: gw/output/web2.nogw to s3://gwinthesky.net.cpdeploy/gwoutput/web2.nogw
+Completed 2 of 6 part(s) with 4 file(s) remainingupload: gw/output/web1/launchdate to s3://gwinthesky.net.cpdeploy/gwoutput/web1/launchdate
+Completed 3 of 6 part(s) with 3 file(s) remainingupload: gw/output/web1/web1.json to s3://gwinthesky.net.cpdeploy/gwoutput/web1/web1.json
+Completed 4 of 6 part(s) with 2 file(s) remainingupload: gw/output/web2/web2.json to s3://gwinthesky.net.cpdeploy/gwoutput/web2/web2.json
+Completed 5 of 6 part(s) with 1 file(s) remainingupload: gw/output/web2/launchdate to s3://gwinthesky.net.cpdeploy/gwoutput/web2/launchdate
+delete: s3://gwinthesky.net.cpdeploy/mgoutput/.access
+Completed 1 of 3 part(s) with 2 file(s) remainingdelete: s3://gwinthesky.net.cpdeploy/mgoutput/smc-pubip
+Completed 2 of 3 part(s) with 1 file(s) remainingdelete: s3://gwinthesky.net.cpdeploy/mgoutput/smc

@@ -75,9 +75,10 @@ rm -f ${mginit_launch}.gz
 rm -f ${mgout}/$1
 rm -f ${mgout}/.access
 rm -f ${mgout}/${1}-pubip
+rm -f ${mgout}/.islaunched
+rm -f ${mgout}/.isready
 #
 echo " -> $0 COMMAND COMPLETED. || "
 cat /tmp/auto.job | grep -v "$0 on ${1}" > /tmp/${1}.done
 mv /tmp/${1}.done /tmp/auto.job
 exit 0
-

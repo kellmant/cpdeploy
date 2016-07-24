@@ -118,6 +118,8 @@ echo "  }" >> $dns
 aws route53 change-resource-record-sets --hosted-zone-id $hostedid --change-batch file://$dns
 fi
 #
+rm -rf ${gwout}/${1}/.islaunched
+rm -rf ${gwout}/${1}/.isready
 echo " -> $0 COMMAND COMPLETED. || "
 cat /tmp/auto.job | grep -v "$0 on ${1}" > /tmp/${1}.done
 mv /tmp/${1}.done /tmp/auto.job

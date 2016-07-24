@@ -1,25 +1,47 @@
 #!/bin/bash
 #
+if [ -z "$1" ] ; then
+echo "no gateway to stat provided"
+echo ""
+exit 1
+fi
+
 cmdtorun="cat /var/log/cloud-user-data"
 
 source VAR
-echo "${1} is initalizing "
-sleep 240
+
+echo " ${1} is initalizing "
+sleep 365
+declare -a stat
+stat=( "a" "b" "c" "d" "e" "f" "g" "h" "i" )
+declare -a statboot
+statboot=( "99" "99" "99" )
 
 if [ $use_dns = "true" ]
 then
-	while [ "${stat[-1]}" != "completed!" ] ; do
+echo "${1} is running first time configuration " 
+	while [ "${stat[-9]}" != "Reboot" ] ; do
 sleep 65
-declare -a stat=(`ssh -q admin@${1}.${domain} "$cmdtorun"`)
-unset stat[${#stat[@]}-1]
-echo "${1} is not ready: ${stat[@]} " 
-unset stat
+declare -a stat=(`ssh -q admin@${1}.${domain} "$cmdtorun" 2> /dev/null`)
+	if [ -z "${stat}" ] ; then
+declare -a stat=( "a" "b" "c" "d" "e" "f" "g" "h" "i" )
+	echo "gateway restart detected "
+	else
+echo "${1} completing first time config . .  " 
+	fi
 done
-sleep 185
-echo "${$1} is ready: ${stat[-1]} " 
+echo " First time config on ${1} is complete. " 
+sleep 65
+	while [ "${statboot[2]}" -le 3 ] ; do
+	sleep 60
+declare -a statboot=(`ssh -q admin@${1}.${domain} "uptime" 2> /dev/null`)
+echo "${1} is restarting " 
+done
 else
 echo "get a domain in route53, I'm tired of IP"
 exit 1
 fi
+echo "gateway ready to Connect to ${host} for policy"
+rm -rf ${gwout}/${1}/.islaunched
+date > ${gwout}/${1}/.isready
 exit 0
-

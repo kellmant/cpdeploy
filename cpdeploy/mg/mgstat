@@ -4,16 +4,16 @@ cmdtorun="cat /var/log/cloud-user-data"
 
 source VAR
 echo "${host} is initalizing "
-sleep 240
+sleep 360
+declare -a stat
+stat=( "starting up" "looking for first config" )
 
 if [ $use_dns = "true" ]
 then
 	while [ "${stat[-1]}" != "completed!" ] ; do
 sleep 65
 declare -a stat=(`ssh -q admin@${host} "$cmdtorun"`)
-unset stat[${#stat[@]}-1]
-echo "${host} is not ready: ${stat[@]} " 
-unset stat
+echo "${host} status: ${stat[@]:-3} " 
 done
 sleep 165
 echo "${host} is ready: ${stat[-1]} " 
@@ -21,5 +21,7 @@ else
 echo "get a domain in route53, I'm tired of IP"
 exit 1
 fi
+date > ${mgout}/.isready
+rm -rf ${mgout}/.islaunched
 exit 0
 

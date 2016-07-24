@@ -99,29 +99,42 @@ echo ""
 echo "-------------------------------------------------------------------------"
 tput el
 	printf "${blue}('killgw') ${nc}   ||  ${green}gateways deployed: ${nc}"
-gw_up=(`find ${gwout}/*/pubip -mmin +15 2> /dev/null | cut -d/ -f5`)
-gw_up=(`echo ${gw_up[@]} | tr "\n" " "`)
+readarray -t gw_up <<< "$(find ${gwout}/*/pubip 2> /dev/null | cut -d/ -f5)"
+	for ((f = 0;f<=${#gw_up[@]};f++))
+	do
+		if [ -f "${gwout}/${gw_up[$f]}/.isready" ] ; then
+		echo -n "${gw_up[$f]} "
+		else
+continue
+		fi
+done
 tput el
-echo -n "${gw_up[@]}"
+#echo -n "${gw_arr[@]}"
 echo ""
 tput el
 	printf "${blue}('launchgw') ${nc} ||  ${yellow}gateways coming online: ${nc}"
-sec_init=(`find ${gwout}/*/pubip -mmin -16 2> /dev/null | cut -d/ -f5`)
-sec_init=(`echo ${sec_init[@]} | tr "\n" " "`)
+readarray -t  sec_init <<< "$(find ${gwout}/*/pubip 2> /dev/null | cut -d/ -f5)"
+	for ((m = 0;m<=${#sec_init[@]};m++))
+	do
+		if [ -f "${gwout}/${sec_init[$m]}/.islaunched" ] ; then
+		echo -n "${sec_init[$m]} " 
+		else
+		continue
+		fi
+done
 tput el
-echo -n "${sec_init[@]}"
 echo ""
 echo "-------------------------------------------------------------------------"
 tput el
 	printf "${blue}('killapp') ${nc}  ||${green}  apps deployed: ${nc}"
-app_active=(`find ${gwout}/*/app*.json -mmin +3 2> /dev/null | cut -d/ -f5 | cut -d. -f1`)
+app_active=(`find ${gwout}/*/app*.json -mmin +4 2> /dev/null | cut -d/ -f5 | cut -d. -f1`)
 app_active=(`echo ${app_active[@]} | tr "\n" " "`)
 tput el
 echo -n "${app_active[@]}"
 echo ""
 tput el
 	printf "${blue}('launchapp') ${nc}||${yellow}  apps coming online: ${nc}"
-app_init=(`find ${gwout}/*/app*.json -mmin -3 2> /dev/null | cut -d/ -f6 | cut -d. -f1 | cut -d- -f2`)
+app_init=(`find ${gwout}/*/app*.json -mmin -4 2> /dev/null | cut -d/ -f6 | cut -d. -f1 | cut -d- -f2`)
 app_init=(`echo ${app_init} | tr "\n" " "`)
 tput el
 echo -n "${app_init}"
@@ -139,10 +152,10 @@ echo -n "               ${site_status[@]}"
 printf ${nc}
 echo ""
 echo "-------------------------------------------------------------------------"
-mg_up=(`find ${mgout}/*pubip -mmin +4 2> /dev/null | cut -d/ -f5 | cut -d- -f1`)
+mg_up=(`find ${mgout}/*pubip 2> /dev/null | cut -d/ -f5 | cut -d- -f1`)
 tput el
 printf "${blue}('killmg') ${nc}   ||${green}  management:${nc}"
-	if [ ! -z "$mg_up" ] ; then
+	if [ -f "${mgout}/.isready" ] ; then
 mg_loc=(`cat $mgout/.access 2> /dev/null`)
 filetime=$(date --utc -r ${mgout}/${mg_up}-pubip +%s)
 epochtime=$(date --utc +%s)
@@ -158,7 +171,11 @@ fi
 echo ""
 tput el
 	printf "${blue}('launchmg') ${nc} ||${yellow}  management coming online: ${nc}"
-mg_init=(`find ${mgout}/*pubip -mmin -21 2>/dev/null | cut -d '/' -f 5 | cut -d '-' -f 1`)
+	if [ -f "${mgout}/.islaunched" ] ; then
+	mg_init="${host} is coming online"
+		else
+	mg_init=""
+		fi
 tput el
 echo -n "${mg_init[@]}"
 echo ""
