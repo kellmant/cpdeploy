@@ -5,15 +5,16 @@ cmdtorun="cat /var/log/cloud-user-data"
 source VAR
 echo "${host} is initalizing "
 sleep 360
+echo "${host} is self configuring. "
 declare -a stat
 stat=( "starting up" "looking for first config" )
 
 if [ $use_dns = "true" ]
 then
 	while [ "${stat[-1]}" != "completed!" ] ; do
-sleep 65
+sleep 45
 declare -a stat=(`ssh -q admin@${host} "$cmdtorun"`)
-echo "${host} first time config . .  " 
+echo " . " 
 done
 sleep 165
 echo "${host} is ready: ${stat[-1]} " 

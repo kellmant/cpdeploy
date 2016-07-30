@@ -1,15 +1,15 @@
 {
-      "Comment": "gwinthesky.net DNS",
+      "Comment": "Killhup DNS",
       "Changes": [
       {
 "Action": "DELETE",
 "ResourceRecordSet": {
-"Name": "web1.gwinthesky.net",
+"Name": "smc.gwinthesky.net",
 "Type": "A",
 "TTL": 60,
 "ResourceRecords": [
      {
-"Value": "54.224.98.204"
+"Value": "52.3.242.247"
        }
       ]
      }

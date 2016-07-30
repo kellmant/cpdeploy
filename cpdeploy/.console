@@ -167,9 +167,7 @@ printf '%dh:%02dm' $((${mg_timer[@]}/3600)) $((${mg_timer[@]}%3600/60))
 	else
 tput el
 printf ${red}
-printf ${boldit}
 echo -n "OFFLINE: $host"
-printf ${nobold}
 printf ${nc}
 
 fi

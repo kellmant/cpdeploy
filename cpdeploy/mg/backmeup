@@ -25,10 +25,10 @@ then
 else
   echo "Bucket exists" 
   echo "backing up to ${BUCKET_NAME}"
-  aws s3 cp /cpdeploy/VAR s3://${BUCKET_NAME}/VAR --delete
-  aws s3 cp /cpdeploy/app/domain s3://${BUCKET_NAME}/domain --delete
-  aws s3 cp /cpdeploy/.ctrlip s3://${BUCKET_NAME}/.ctrlip --delete
-  aws s3 cp /cpdeploy/debug.output s3://${BUCKET_NAME}/debug.output --delete
+  aws s3 cp /cpdeploy/VAR s3://${BUCKET_NAME}/VAR 
+  aws s3 cp /cpdeploy/app/domain s3://${BUCKET_NAME}/domain 
+  aws s3 cp /cpdeploy/.ctrlip s3://${BUCKET_NAME}/.ctrlip 
+  aws s3 cp /cpdeploy/debug.output s3://${BUCKET_NAME}/debug.output
   aws s3 sync /root s3://${BUCKET_NAME}/root --exclude "*credentials" --delete
   aws s3 sync /cpdeploy/gw/output s3://${BUCKET_NAME}/gwoutput --delete
   aws s3 sync /cpdeploy/mg/output s3://${BUCKET_NAME}/mgoutput --delete

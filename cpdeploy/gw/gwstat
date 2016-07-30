@@ -21,13 +21,13 @@ if [ $use_dns = "true" ]
 then
 echo "${1} is running first time configuration " 
 	while [ "${stat[-9]}" != "Reboot" ] ; do
-sleep 65
+sleep 54
 declare -a stat=(`ssh -q admin@${1}.${domain} "$cmdtorun" 2> /dev/null`)
 	if [ -z "${stat}" ] ; then
 declare -a stat=( "a" "b" "c" "d" "e" "f" "g" "h" "i" )
 	echo "gateway restart detected "
 	else
-echo "${1} completing first time config . .  " 
+echo "${1} coming online " 
 	fi
 done
 echo " First time config on ${1} is complete. " 

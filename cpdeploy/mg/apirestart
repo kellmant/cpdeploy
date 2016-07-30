@@ -8,7 +8,7 @@ if [ $use_dns = "true" ]
 then
 ssh -q admin@${host} "$cmdtorun"
 echo "waiting for server to finish processinging startup"
-sleep 185
+sleep 16
 ssh -q admin@${host} "api status"
 sleep 10
 echo "Ready. If this is a new manager, run first.config.app"
