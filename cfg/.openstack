@@ -1,0 +1,77 @@
+#!/bin/bash
+#
+source $HOME/.IPS
+
+if [ -z "${1}" ] ; then
+    echo
+    echo "need target name "
+    echo -e "${BBlue} $cmdenv ${BWhite}<name>${NC}"
+    echo
+    echo -en "$BBlue $cmdenv configured servers: "
+    getcfg="$(etcdctl ls --sort $cfgenv 2> /dev/null)" || { getcfg="${BWhite} Nothing configured " ; }
+    getcfg="$(echo ${getcfg} | cut -d '/' -f 5)"
+    echo -en " $getcfg"
+    echo -e "${NC}"
+    echo
+    echo -en "${Green} running $ipscmd services: "
+    getrun="$(etcdctl ls --sort $runenv 2> /dev/null)" || { getrun=" ${BWhite}Nothing running " ; }
+    getrun="$(echo ${getrun} | cut -d '/' -f 5)"
+    echo -en " $getrun"
+    echo -e "${NC}"
+    echo
+    exit
+fi
+
+#jobstart "$$"
+#trap "jobtrace '$$'" 0 1 2 3 6
+STARTTIME=$(date +%s)
+
+export mytarget="${1}"
+mycfg="$cfgenv/${mytarget}"
+etcdctl mkdir ${mycfg}
+
+mghostname=$(etcdctl get $mycfg/hostname) || { mghostname="${mytarget}.seclab.fail" ; }
+mghost="${mytarget}"
+
+msgbus "${BUDDY} $ipscmd setting up $mghost enviroment. "
+myregion=$(etcdctl get $mycfg/region) || { myregion="ca-central-1" ; }
+
+AMI=$(aws ec2 describe-images --region $myregion --filters 'Name=name,Values=*hvm-ssd*ubuntu-xenial-16.04-testing-amd64-server*' 'Name=state,Values=available' | jq -r '.Images | sort_by(.CreationDate) | last(.[]).ImageId')
+
+mgami="$AMI"
+mgsize=$(etcdctl get $mycfg/size) || { mgsize="large" ; }
+vpc=$(aws ec2 describe-vpcs --region $myregion | jq -r '.Vpcs[].VpcId')
+etcdctl set $mycfg/region "$myregion" 2>/dev/null
+etcdctl set $mycfg/size "$mgsize" 2>/dev/null
+etcdctl set $mycfg/hostname "$mghostname" 2>/dev/null
+etcdctl set $mycfg/vpc "$vpc" 2>/dev/null
+etcdctl set $mycfg/AMI "$mgami" 2>/dev/null 
+etcdctl set $mycfg/disk "DeviceName=/dev/sda1,Ebs={VolumeSize=42,DeleteOnTermination=true,VolumeType=gp2}" 2>/dev/null
+
+msgbus "${BUDDY} $ipscmd server $mghostname in $myregion vpc $vpc "
+
+descsecgrp=$(aws ec2 describe-security-groups --region $myregion --group-name ${ipscmd}-${SKEY})
+if [ $? -eq 0 ] ; then
+descsecgrp=$(echo ${descsecgrp[@]} | jq -r '.SecurityGroups[].GroupId')
+    echo "scgroup exists $descsecgrp"
+    etcdctl set $mycfg/secgroup "$descsecgrp" 2>/dev/null 
+else
+crsecgrp=$(aws ec2 create-security-group --region $myregion --group-name ${ipscmd}-${SKEY} --description "$SKEY" --vpc-id "$vpc" | jq -r .GroupId)
+    etcdctl set $mycfg/secgroup "$crsecgrp" 2>/dev/null 
+aws ec2 authorize-security-group-ingress --region $myregion --group-id $crsecgrp --protocol all --port 1-65535 --cidr 0.0.0.0/0
+fi
+
+    msgbus "${BUDDY} $ipscmd $mghostname setup complete, $runenv to launch it. "
+skey $mycfg
+ENDTIME=$(date +%s)
+secs=$(($ENDTIME - $STARTTIME))
+elapsed="$(($secs/3600))h:$(($secs%3600/60))m: $(($secs%60))s"
+echo
+printf 'Elapsed Time %dh:%dm:%ds\n' $(($secs/3600)) $(($secs%3600/60)) $(($secs%60))
+echo
+etcdctl set $mycfg/time "$elapsed" &> /dev/null
+    echo -e "$cmdenv $mghostname setup complete, use ${BGreen}$runenv ${Bwhite}${mytarget} ${NC}to bring to life."
+    echo
+    exit
+
+

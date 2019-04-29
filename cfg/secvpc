@@ -1,0 +1,196 @@
+#!/bin/bash
+#
+source $HOME/.IPS
+
+if [ -z "${1}" ] ; then
+    echo
+    echo "Need target name "
+    echo -e "${BBlue} $cmdenv ${BWhite}<name>${NC}"
+    echo
+    echo -en "$BBlue $cfgenv ready: "
+    getcfg="$(etcdctl ls --sort $cfgenv 2> /dev/null)" || { getcfg="${On_Blue} Nothing configured in $cfgenv " ; }
+    getcfg="$(echo ${getcfg} | cut -d '/' -f 5)"
+    echo -en "${BWhite} $getcfg "
+    echo -e "${NC}"
+    echo
+    echo -en "${BBlue}$ipscmd:" 
+    getrun="$(etcdctl ls --sort $runenv 2> /dev/null)" 
+    if [ -e $getrun ] ; then
+    echo -en " ${BWhite}${On_Blue}Nothing active in $runenv"
+    else
+    echo -en " ${BWhite} $getrun "
+    fi
+    echo -e "${NC}"
+    echo
+    exit
+fi
+
+jobstart "$$"
+trap "jobtrace '$$'" 0 1 2 3 6
+
+secdomain="seclab.fail"
+export mytarget="${1}"
+mycfg="$cfgenv/${mytarget}"
+etcdctl mkdir ${mycfg}
+site=$(etcdctl get env/sites) || { site=0 ; }
+(( site++ ))
+if [ $site -ge 254 ] ; then
+	etcdctl rm --recursive env/sites
+else
+	etcdctl set env/sites "$site"
+fi
+
+etcdctl get ${mycfg}/size || { gwsize="medium" ; }
+
+#gwversion="R8020BYOLGW"
+gwversion="R7730BYOL"
+
+gw_cnf="https://s3.amazonaws.com/CloudFormationTemplate/gwinvpc.json" 
+mg_cf="https://s3.amazonaws.com/CloudFormationTemplate/r80.json"
+cpami_cf="https://s3.amazonaws.com/CloudFormationTemplate/amis.json"
+aws_cf="https://s3.amazonaws.com/CloudFormationTemplate/infrastructure.json"
+
+XARR=($(aws ec2 describe-regions | jq -r '.Regions[].RegionName'))
+for i in "${XARR[@]}" ; do
+    reg=$(echo $i | cut -d '-' -f 1)
+    if [[ "$reg" == "ap" || "$reg" == "sa" ]] ; then
+	    continue
+    else
+    	RARR+=( "$i" )
+    fi
+done
+
+MYREGION=${RARR[ $(( RANDOM % ${#RARR[@]} )) ]}
+YARR=($(aws ec2 describe-availability-zones --region $MYREGION | jq -r '.AvailabilityZones[].ZoneName'))
+for g in "${YARR[@]}" ; do
+    AZARR+=( "$g" )
+done
+MYAZ=${AZARR[ $(( RANDOM % ${#AZARR[@]} )) ]}
+echo "$MYREGION is random region and az is ${MYAZ}"
+etcdctl set $mycfg/region "$MYREGION"
+etcdctl set $mycfg/az "$MYAZ"
+etcdctl set $mycfg/site "$site"
+etcdctl set $mycfg/dom "$secdomain"
+
+keyscan="curl -s $cpami_cf"
+jqscan="jq -r .Mappings.RegionMap.\"$MYREGION\".${gwversion}"
+
+get_ami () {
+    $keyscan | $jqscan
+}
+
+msgbus "$ipscmd setup in az ${MYAZ}"
+
+#echo "Create vpc $tag in region $gwregion and availability zone $gwaz . . . . "
+vpc=$(aws ec2 create-vpc --region $MYREGION --cidr-block 10.0.${site}.0/24 | jq -r '.Vpc.VpcId')
+if [ $? -ne 0 ] ; then
+    echo "error creating vpc, bailing."
+	msgbus "$0 error creating vpc in region $MYREGION and availability zone $MYAZ  EXITING "
+    exit 1
+fi
+
+etcdctl set ${mycfg}/vpc "$vpc"
+sleep 5
+msgbus "$ipscmd vpcid set to $vpc "
+aws ec2 create-tags --region $MYREGION --tags Key=Name,Value=${mytarget}-${site} --resources $vpc
+#echo "Create external subnet . . . "
+
+msgbus "Create subnets for vpc $mytarget in $MYREGION and availability zone $MYAZ . . . "
+subnetid128=$(aws ec2 create-subnet --region $MYREGION --availability-zone $MYAZ --vpc-id $vpc --cidr-block 10.0.${site}.128/25 | jq -r '.Subnet.SubnetId')
+etcdctl set ${mycfg}/subnetid128 "$subnetid128"
+sleep 4
+#echo "Create internal subnet . . . . "
+subnetid0=$(aws ec2 create-subnet --region $MYREGION --availability-zone $MYAZ --vpc-id $vpc --cidr-block 10.0.${site}.0/25 | jq -r '.Subnet.SubnetId')
+etcdctl set ${mycfg}/subnetid0 "$subnetid0"
+sleep 4
+msgbus "Secured vpc subnet set to $subnetid0 on this run . . . ."
+sleep 2
+msgbus "internet vpc subnet set to $subnetid128 on this run . . . . "
+aws ec2 create-tags --region $MYREGION --tags Key=Name,Value=${mytarget}-${site}-internal --resources $subnetid0
+aws ec2 create-tags --region $MYREGION --tags Key=Name,Value=${mytarget}-${site}-external --resources $subnetid128
+# set external to fetch public ip
+aws ec2 modify-subnet-attribute --region $MYREGION --subnet-id $subnetid128 --map-public-ip-on-launch
+msgbus "$ipscmd external subnet $subnetid128 and internal subnet $subnetid0 created "
+sleep 4
+#echo "create default router . . . "
+inetgw=$(aws ec2 create-internet-gateway --region $MYREGION | jq -r '.InternetGateway.InternetGatewayId')
+etcdctl set ${mycfg}/igw "$inetgw"
+sleep 4
+aws ec2 create-tags --region $MYREGION --tags Key=Name,Value=${mytarget}-${site} --resources $inetgw
+sleep 4
+msgbus "$ipscmd Internet GW set to $inetgw . . . "
+aws ec2 attach-internet-gateway --region $MYREGION --internet-gateway-id $inetgw --vpc-id $vpc
+sleep 4
+#echo "create internal interface . . . . "
+eni=$(aws ec2 create-network-interface --region $MYREGION --subnet-id $subnetid0 --description "VPC-${mytarget}-int" --private-ip-address 10.0.${site}.10 | jq -r '.NetworkInterface.NetworkInterfaceId')
+etcdctl set ${mycfg}/eth1 "$eni"
+sleep 5
+msgbus "internal interface for gw-${mytarget}-${site} set to $eni . . . "
+aws ec2 create-tags --region $MYREGION --tags Key=Name,Value=${mytarget}-${site}-internal --resources $eni
+sleep 4
+#echo "turn off src/dst check on the internal interface for the sdn controller . . . "
+aws ec2 modify-network-interface-attribute --region $MYREGION --network-interface-id $eni --no-source-dest-check
+msgbus "$ipscmd network interface $eni src/dst check disabled "
+# capture route table info to file
+#echo "capturing route table . . . "
+route=$(aws ec2 describe-route-tables --region $MYREGION --filters Name=vpc-id,Values=$vpc | jq -r '.RouteTables[].RouteTableId')
+etcdctl set ${mycfg}/routes "$route"
+# pull route table id
+msgbus "$ipscmd working on route table id set to $route . . . . "
+aws ec2 create-route --region $MYREGION --route-table-id $route --destination-cidr-block 0.0.0.0/0 --gateway-id $inetgw
+sleep 4
+aws ec2 associate-route-table --region $MYREGION --subnet-id $subnetid128 --route-table-id $route
+sleep 4
+msgbus "internet gateway defined for internet subnet $subnetid128 for ${mytarget} ${site}"
+defroute=$(aws ec2 create-route-table --region $MYREGION --vpc-id $vpc | jq -r '.RouteTable.RouteTableId')
+etcdctl set ${mycfg}/defgw "$defroute"
+aws ec2 create-route --region $MYREGION --route-table-id $defroute --destination-cidr-block 0.0.0.0/0 --network-interface-id $eni
+sleep 4
+msgbus "route created to gw ${mytarget} ${site} interface $eni . . . . "
+aws ec2 associate-route-table --region $MYREGION --subnet-id $subnetid0 --route-table-id $defroute
+sleep 5
+aws ec2 create-tags --region $MYREGION --tags Key=Name,Value=${mytarget}-${site}-external --resources $route
+aws ec2 create-tags --region $MYREGION --tags Key=Name,Value=${mytarget}-${site}-internal --resources $defroute
+msgbus "$ipscmd internal route table set to $defroute "
+sleep 4
+# clean up the groups
+#echo "clean up acls, let's leave it to the big kids ;) . . . . "
+group=$(aws ec2 --region $MYREGION describe-network-interfaces --network-interface-ids $eni | jq -r '.NetworkInterfaces[].Groups[].GroupId')
+aws ec2 create-tags --region $MYREGION --tags Key=Name,Value=${mytarget}-${site} --resources $group
+sleep 4
+#echo "setting policy for $group . . . . "
+aws ec2 authorize-security-group-ingress --region $MYREGION --group-id $group --protocol tcp --port 0-65535 --cidr 0.0.0.0/0
+sleep 4
+aws ec2 authorize-security-group-ingress --region $MYREGION --group-id $group --protocol udp --port 0-65535 --cidr 0.0.0.0/0
+sleep 4
+aws ec2 authorize-security-group-ingress --region $MYREGION --group-id $group  --protocol icmp --port -1 --cidr 0.0.0.0/0
+etcdctl set ${mycfg}/secgroup "$group"
+msgbus "$ipscmd setting open $group "
+
+getdef=$(cat $HOME/bin/gwconfig_system)
+declare -A myarray
+        while IFS="=" read -r key value ; do
+            myarray[$key]="$value"
+        done < <(echo "${getdef[@]}")
+
+for key in "${!myarray[@]}" ; do
+    cleanvar=$(echo "${myarray[$key]}" | tr -d '"')
+    etcdctl set ${mycfg}/config_system/$key "${cleanvar}"
+done
+
+gwami=$(get_ami)
+gwsic=$(etcdctl get ${mycfg}/config_system/ftw_sic_key) || { gwsic=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1 ) ; }
+hostname=$(etcdctl get ${mycfg}/config_system/hostname) || { hostname="${mytarget}.${secdomain}" ; }
+host=$(echo "${hostname}" | cut -d '.' -f 1)
+etcdctl set ${mycfg}/config_system/hostname "${hostname}" 2>/dev/null
+etcdctl set ${mycfg}/config_system/ftw_sic_key "${gwsic}" 2>/dev/null
+etcdctl set ${mycfg}/size "$gwsize" 2>/dev/null
+etcdctl set ${mycfg}/AMI "$gwami" 2>/dev/null 
+etcdctl set ${mycfg}/disk "DeviceName=/dev/xvda,Ebs={VolumeSize=50,DeleteOnTermination=true,VolumeType=gp2}" 2>/dev/null
+
+
+#echo "DONE! network infrastructure deployed ${tag} ${site}. . . . "
+
+
+etcdctl set ${mycfg}/status "ready"
+msgbus "$ipscmd completed : ${mytarget} ${site} is ready for a gateway"

@@ -1,6 +1,0 @@
-tput clear
-while tput clear; do
- autodeploy $1
-        sleep 1
-done
-

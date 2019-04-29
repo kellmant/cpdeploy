@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd $HOME/example
+./noservers servers.csv
+./noredseal
+cd
+
+exit 0
+
+
+APIDOM=$(etcdctl ls ctrl/cfg/mg | cut -d '/' -f 5)

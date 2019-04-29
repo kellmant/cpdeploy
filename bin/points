@@ -1,0 +1,56 @@
+#!/bin/bash
+#set -eo pipefail
+source /.IPS
+
+echo -n " indexing instance types . "
+msgbus "Indexing instance types "
+etcdctl set /size/gw/tiny "c4.large" &>/dev/null
+etcdctl set /points/c4.large "2.4" &>/dev/null
+etcdctl set /points/cp/tiny "16.56" &>/dev/null
+etcdctl set /size/gw/small "c4.xlarge" &>/dev/null
+etcdctl set /points/c4.xlarge "4.8" &>/dev/null
+etcdctl set /points/cp/small "20.4" &>/dev/null
+ echo -n " . "
+etcdctl set /size/gw/medium "c4.2xlarge" &>/dev/null
+etcdctl set /points/c4.2xlarge "9.57" &>/dev/null
+etcdctl set /points/cp/medium "25.92" &>/dev/null
+etcdctl set /size/gw/large "c4.4xlarge" &>/dev/null
+etcdctl set /points/c4.4xlarge "19.11" &>/dev/null
+etcdctl set /points/cp/large "33.36" &>/dev/null
+etcdctl set /size/gw/insane "c4.8xlarge" &>/dev/null
+etcdctl set /points/c4.8xlarge "38.19" &>/dev/null
+etcdctl set /points/cp/insane "45.36" &>/dev/null
+ echo -n " . "
+etcdctl set /size/mg/small "m4.xlarge" &>/dev/null
+etcdctl set /points/m4.xlarge "5.16" &>/dev/null
+etcdctl set /size/mg/medium "m4.2xlarge" &>/dev/null
+etcdctl set /points/m4.2xlarge "10.35" &>/dev/null
+etcdctl set /size/mg/large "m4.4xlarge" &>/dev/null
+etcdctl set /points/m4.4xlarge "20.7" &>/dev/null
+etcdctl set /size/mg/insane "m4.10xlarge" &>/dev/null
+etcdctl set /points/m4.10xlarge "51.72" &>/dev/null
+ echo -n " . "
+etcdctl set /size/mg20/small "m5.xlarge" &>/dev/null
+etcdctl set /points/m5.xlarge "4.60" &>/dev/null
+etcdctl set /size/mg20/medium "m5.2xlarge" &>/dev/null
+etcdctl set /points/m5.2xlarge "9.22" &>/dev/null
+etcdctl set /size/mg20/large "m5.4xlarge" &>/dev/null
+etcdctl set /points/m5.4xlarge "18.43" &>/dev/null
+etcdctl set /size/mg20/insane "m5.12xlarge" &>/dev/null
+etcdctl set /points/m5.12xlarge "55.30" &>/dev/null
+echo -n " . "
+etcdctl set /size/app/small "m4.xlarge" &>/dev/null
+etcdctl set /size/app/medium "m4.2xlarge" &>/dev/null
+etcdctl set /size/app/large "m4.4xlarge" &>/dev/null
+etcdctl set /size/app/insane "m4.10xlarge" &>/dev/null
+etcdctl set /size/coreos/small "m4.large" &>/dev/null
+etcdctl set /points/m4.large "2.61" &>/dev/null
+ echo -n " . "
+etcdctl set /size/coreos/medium "m4.xlarge" &>/dev/null
+etcdctl set /size/coreos/large "m4.2xlarge" &>/dev/null
+etcdctl set /size/coreos/insane "m4.4xlarge" &>/dev/null
+etcdctl set /size/coreos/home "t2.small" &>/dev/null
+etcdctl set /points/t2.small "0.56" &>/dev/null
+etcdctl set /size/coreos/homepro "t2.medium" &>/dev/null
+etcdctl set /points/t2.medium "1.13" &>/dev/null
+echo

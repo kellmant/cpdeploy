@@ -1,0 +1,5 @@
+Name
+10.60.99.0/29  (outside)
+10.60.150.16/29  (sql-public sharepoint)
+10.60.150.24/29  (partner-RAS-support)
+10.60.199.0/29  (dmz1)

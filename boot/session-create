@@ -1,0 +1,75 @@
+#!/bin/bash
+#
+#
+# Generate random marker
+# head -c 256 /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 32
+# 32 character output
+#
+set -a
+shopt -s checkwinsize
+    if [ -z ${1} ] ; then
+        SNAME="default"
+    else
+        SNAME="${1}"
+    fi
+
+MYREGION="us-east-2"
+
+shost=$(curl -s http://169.254.169.254/latest/user-data | grep hostname | cut -d : -f 2 | tr -d \" | tr -d ' ')
+overlay=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region' | cut -d '-' -f 2- | tr -d '-')
+
+    if [ -z ${BUDDY+x} ] ; then
+        echo "trusted user not found in $overlay"
+        exit
+    fi
+keyprefix="$HOME/.ssh"
+eval mkdir -p "$keyprefix"
+BUD="$BUDDY"
+SESSIONKEY="${BUDDY}-${overlay}-${SNAME}"
+	if [ -f ~/.ssh/${SESSIONKEY}.pub ] ; then
+        echo "$BUDDY configured sessions :"
+        etcdctl ls --sort usr/${BUDDY}/session
+        echo
+	    echo "credentials config found existing key for $SNAME session"
+        echo "${SESSIONKEY}" > ~/.sessionkey
+        cp -f $keyprefix/${SESSIONKEY}.config ${keyprefix}/config
+	    echo "$SNAME session activated."
+        echo 
+	    exit
+	fi
+echo "greetings ${BUD} creating unique key on $shost in $overlay for you."
+
+
+SHASH=$(echo "${SESSIONKEY}" | sha3sum | cut -d ' ' -f 1)
+openssl genrsa 2048 > ${keyprefix}/${SESSIONKEY}.pem
+openssl rsa -in ${keyprefix}/${SESSIONKEY}.pem -pubout > ${keyprefix}/${SESSIONKEY}.pub
+
+echo "Host *" > $keyprefix/${SESSIONKEY}.config
+echo "User admin" >> $keyprefix/${SESSIONKEY}.config
+echo "IdentityFile ~/.ssh/${SESSIONKEY}.pem" >> $keyprefix/${SESSIONKEY}.config
+echo "StrictHostKeyChecking no" >> $keyprefix/${SESSIONKEY}.config
+echo "LogLevel QUIET" >> $keyprefix/${SESSIONKEY}.config
+echo "ForwardAgent yes" >> $keyprefix/${SESSIONKEY}.config
+echo "UserKnownHostsFile=/dev/null" >> $keyprefix/${SESSIONKEY}.config
+
+eval chmod -R go-rwx "$keyprefix"
+eval chmod -R u+rwx "$keyprefix"
+#eval mkdir -p /efs/session/${SHASH}
+etcdctl set usr/${BUDDY}/session/${SNAME} "${SHASH}"
+etcdctl set session/${SHASH} "${SESSIONKEY}"
+echo "${SESSIONKEY}" > ~/.sessionkey
+cp -f $keyprefix/${SESSIONKEY}.config ${keyprefix}/config
+etcdctl set score "0"
+
+~/bin/points
+
+
+~/boot/shell
+
+~/boot/namespace
+
+# session key has been generated on to the setup
+#
+
+#$HOME/init/shell
+

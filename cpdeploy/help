@@ -1,7 +1,0 @@
-...........................................................
-................................................................................................................................................
-no support or help is implied or offered do what you want 
-with this, 
-go ahead and make this your own and fork me!<= https://https://github.com/kellmant
-.....you need to use 'shellcontrol' during startup for the autodeploy of gateways and manager from this console. 
-You can backup this configuration at any time (in its running state) using 'backmeup'. There is a command, 'getmeback' that will restore a previous config, but should only be used during the startup of a new controller.

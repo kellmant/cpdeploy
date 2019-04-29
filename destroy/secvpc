@@ -1,0 +1,285 @@
+#!/bin/bash
+#
+source $HOME/.IPS
+
+echo "cfgenv $cfgenv"
+echo "ipscmd $ipscmd"
+echo "ipsenv $ipsenv"
+echo "runenv $runenv"
+
+echo
+
+declare -x nap
+errtmp="/tmp/exit.${ipscmd}"
+echo "0" > $errtmp
+geterr=$(cat "$errtmp" | tr -d '\n')
+caterr=$(echo -n $geterr | tr -d '\n')
+
+
+
+if [ -z $1 ] ; then
+    XARR=($(etcdctl ls --sort $cfgenv))
+        for i in "${XARR[@]}" ; do
+            tag=$(echo $i | cut -d '/' -f 5)
+            echo -e "${CGOOD}secvpc: ${NC} ${BPurple}$tag${NC}"
+                    stats=$(etcdctl get $i/status) 2>/dev/null
+                    region=$(etcdctl get $i/region) 2>/dev/null
+                    az=$(etcdctl get $i/az) 2>/dev/null
+                    vpcid=$(etcdctl get $i/vpc) 2>/dev/null
+                    subnetid0=$(etcdctl get $i/subnetid0) 2>/dev/null
+                    secgroup=$(etcdctl get $i/secgroup) 2>/dev/null
+                    #site=$(echo "$g" | cut -d '/' -f 6) 
+                    echo -e " ${BCyan}$az${NC} $vpcid $region $i"
+                    echo -e "|_/${CKEY}Status${NC} => ${CVAL}$stats${NC}"
+                    echo -e "|_/${CKEY}SecGroup${NC} => ${CVAL}$secgroup${NC}"
+            done
+	    echo
+    exit
+fi
+
+
+
+tag=${1}
+echo -en "${CWARN}secvpc:${NC} ${BPurple}${tag}${NC}"
+g="$cfgenv/${tag}"
+status=$(etcdctl get $g/status) 2>/dev/null
+if [ "$status" == "active" ] ; then
+    msgbus "$ipscmd can't remove active vpc $tag $BUDDY how about shutting the gateway down first?"
+    exit 1
+fi
+
+region=$(etcdctl get $g/region) 2>/dev/null
+az=$(etcdctl get $g/az) 2>/dev/null
+vpcid=$(etcdctl get $g/vpc) 2>/dev/null
+subnetid0=$(etcdctl get $g/subnetid0) 2>/dev/null
+secgroup=$(etcdctl get $g/secgroup) 2>/dev/null
+echo -e " ${BCyan}${g}${NC}"
+echo -e "|_/${CKEY}AZ${NC} => ${CVAL}$az${NC}"
+echo -e "|_/${CKEY}VPC${NC} => ${CVAL}$vpcid${NC}"
+echo -e "|_/${CKEY}$subnetid0${NC} => ${CVAL}Secure VPC Subnet${NC}"
+echo -e "|_/${CKEY}Security Group${NC} => ${CVAL}$secgroup${NC}"
+    msgbus "$BUDDY is destroying secured VPC ${tag} in $region ${NC}" 
+    status=$(etcdctl set $g/status "Destroying ENI")
+    msgbus "$ipscmd removing $tag ${NC}" 
+    tput clear
+    tput sc
+    echo -e " ${CALERT}secvpc:${NC} ${BPurple}${tag}${NC}"
+     echo -e "${BCyan}${site}${NC}"
+     echo -e "|_/${CKEY}Status${NC} => ${CVAL}$(etcdctl get $g/status &>/dev/null)${NC}"
+     echo -e "|_/${CKEY}ENI${NC} => ${CVAL}$(etcdctl get $g/eth1 &>/dev/null) ${NC}"
+     echo -e "|_/${CKEY}Secure Subnet${NC} => ${CVAL}$(etcdctl get $g/subnetid0 &>/dev/null) ${NC}"
+     echo -e "|_/${CKEY}External Subnet${NC} => ${CVAL}$(etcdctl get $g/subnetid128 &>/dev/null) ${NC}"
+     echo -e "|_/${CKEY}Internet Gateway${NC} => ${CVAL}$(etcdctl get $g/igw &>/dev/null) ${NC}"
+     echo -e "|_/${CKEY}VPC${NC} => ${CVAL}$(etcdctl get $g/vpc &>/dev/null) ${NC}"
+     echo -e "|_/${CKEY}Security Group${NC} => ${CVAL}$(etcdctl get $g/secgroup &>/dev/null) ${NC}"
+     echo -e "|_/${CKEY}Route${NC} => ${CVAL}$(etcdctl get $g/defgw &>/dev/null)${NC}"
+     nap=9
+     eni=$(aws ec2 delete-network-interface --region $region --network-interface-id $(etcdctl get $g/eth1) 2>${errtmp}) || { msgbus " $ipscmd $BUDDY $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC}" ; nap=1 ; }
+    sleep $nap
+     tput rc
+    status="Destroying secure subnet "
+    $(etcdctl set $g/status "$status")
+    tput clear
+    tput sc
+    echo -e "${CALERT}secvpc:${NC} ${BPurple}${tag}${NC}"
+    tput el
+     echo -e "${BCyan}${site}${NC}"
+    tput el
+     echo -e "|_/${CKEY}Status${NC} => ${CVAL}$status${NC}"
+    tput el
+     echo -e "|_/${CKEY}ENI${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput el
+     nap=9
+     tput rc
+     subnetid0=$(aws ec2 delete-subnet --region $region --subnet-id $(etcdctl get $g/subnetid0) 2>${errtmp}) || 
+     { msgbus " $ipscmd $BUDDY $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; nap=1; }
+    sleep $nap
+    status="Destroying External subnet" 
+    etcdctl set $g/status "$status"
+     tput sc
+    echo -e "${CALERT}secvpc:${NC} ${BPurple}${tag}${NC}"
+    tput el
+     echo -e "${BCyan}${site}${NC}"
+    tput el
+     echo -e "|_/${CKEY}Status${NC} => ${CVAL}$status${NC}"
+    tput el
+     echo -e "|_/${CKEY}ENI${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput el
+     echo -e "|_/${CKEY}Secure Subnet${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput el
+     nap=9
+     tput rc
+    subnetid128=$(aws ec2 delete-subnet --region $region --subnet-id $(etcdctl get $g/subnetid128) 2>${errtmp}) ||
+     { msgbus " $ipscmd $BUDDY $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; nap=1; }
+     sleep $nap
+    status=$(etcdctl set $g/status "Destroying Internet Gateway")
+    tput sc
+    echo -e "${CALERT}secvpc:${NC} ${BPurple}${tag}${NC}"
+    tput el
+     echo -e "${BCyan}${site}${NC}"
+    tput el
+     echo -e "|_/${CKEY}Status${NC} => ${CVAL}$status${NC}"
+    tput el
+     echo -e "|_/${CKEY}ENI${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput el
+     echo -e "|_/${CKEY}Secure Subnet${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput el
+     echo -e "|_/${CKEY}External Subnet${NC} => ${CALERT}DESTROYED  ${NC}"
+    tput el
+     nap=9
+    tput rc
+    detachigw=$(aws ec2 detach-internet-gateway --region $region --internet-gateway-id $(etcdctl get $g/igw) --vpc-id $vpcid 2>${errtmp}) ||
+     { msgbus " $ipscmd $BUDDY $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; nap=1 ; }
+     sleep $nap
+     nap=9
+    igw=$(aws ec2 delete-internet-gateway --region $region --internet-gateway-id $(etcdctl get $g/igw) 2>${errtmp}) ||
+     { msgbus " $ipscmd $BUDDY $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; nap=1; }
+     sleep $nap
+    status=$(etcdctl set $g/status "waiting for VPC dependancies to die   ")
+        tries=1
+    sleep 9
+    defgw=$(aws ec2 delete-route-table --region $region --route-table-id $(etcdctl get $g/defgw) 2>${errtmp}) ||
+     { msgbus " $ipscmd $BUDDY $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; }
+    sleep 9
+    routes=$(aws ec2 delete-route-table --region $region --route-table-id $(etcdctl get $g/routes) 2>${errtmp}) ||
+     { msgbus " $ipscmd $BUDDY $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; }
+    sleep 6
+    vpc=$(aws ec2 delete-vpc --region $region --vpc-id $(etcdctl get $g/vpc) 2>${errtmp})
+    grep -ic 'NotFound' /tmp/exit.${ipscmd} 1>/dev/null
+    checkvpc=$?
+    until [ "$checkvpc" -eq 0 ] ; do
+     msgbus " $ipscmd $BUDDY waiting $tries min. for vpc dependancies to die $checkvpc : $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " 
+    tput sc
+    echo -e "${CALERT}secvpc:${NC} ${BPurple}${tag}${NC}"
+    tput el
+     echo -e "${BCyan}${site}${NC}"
+    tput el
+     echo -e "|_/${CKEY}Status${NC} => ${CVAL}$tries min. $status${NC}"
+    tput el
+     echo -e "|_/${CKEY}ENI${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput el
+     echo -e "|_/${CKEY}Secure Subnet${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput el
+     echo -e "|_/${CKEY}External Subnet${NC} => ${CALERT} DESTROYED  ${NC}"
+    tput el
+     echo -e "|_/${CKEY}Internet Gateway${NC} => ${CALERT}DESTROYED  ${NC}"
+    tput el
+    sleep 57
+    tput rc
+    vpc=$(aws ec2 delete-vpc --region $region --vpc-id $(etcdctl get $g/vpc) 2>${errtmp})
+    (( tries++ ))
+    grep -ic 'NotFound' /tmp/exit.${ipscmd} 1>/dev/null
+    checkvpc=$?
+done
+     #nap=28
+    #vpc=$(aws ec2 delete-vpc --region $region --vpc-id $(etcdctl get $g/vpc) 2>${errtmp}) ||
+     #{ msgbus " $ipscmd $BUD $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; nap=12; }
+    #sleep $nap
+    status=$(etcdctl set $g/status "Destroy Security Group                              ")
+    tput sc
+    echo -e "${CALERT}secvpc:${NC} ${BPurple}${tag}${NC}"
+    tput el
+     echo -e "${BCyan}${site}${NC}"
+    tput el
+     echo -e "|_/${CKEY}Status${NC} => ${CVAL}$status${NC}"
+    tput el
+     echo -e "|_/${CKEY}ENI${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput el
+     echo -e "|_/${CKEY}Secure Subnet${NC} => ${CALERT}  DESTROYED   ${NC}"
+    tput el
+     echo -e "|_/${CKEY}External Subnet${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput el
+     echo -e "|_/${CKEY}Internet Gateway${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput el
+     echo -e "|_/${CKEY}VPC${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput el
+     tput rc
+     secgroup=$(aws ec2 delete-security-group --region $region --group-id $(etcdctl get $g/secgroup) 2>${errtmp}) ||
+     { msgbus " $ipscmd $BUD $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; }
+    sleep 1
+    #vpc=$(aws ec2 delete-vpc --region $region --vpc-id $(etcdctl get $g/vpc) 2>${errtmp}) ||
+    # { msgbus " $ipscmd $BUD $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; nap=120; }
+    status=$(etcdctl set $g/status "Destroy routes                ")
+    tput sc
+    echo -e "${CALERT}secvpc:${NC} ${BPurple}${tag}${NC}"
+     echo -e " ${BCyan}${site}${NC}"
+     echo -e "|_/${CKEY}Status${NC} => ${CVAL}$status${NC}"
+     echo -e "|_/${CKEY}ENI${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}Secure Subnet${NC} => ${CALERT}  DESTROYED   ${NC}"
+     echo -e "|_/${CKEY}External Subnet${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}Internet Gateway${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}VPC${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}Security Group${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput rc
+    defgw=$(aws ec2 delete-route-table --region $region --route-table-id $(etcdctl get $g/defgw) 2>${errtmp}) ||
+     { msgbus " $ipscmd $BUD $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; }
+    sleep 2
+    routes=$(aws ec2 delete-route-table --region $region --route-table-id $(etcdctl get $g/routes) 2>${errtmp}) ||
+     { msgbus " $ipscmd $BUD $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; }
+    sleep 2
+    vpc=$(aws ec2 delete-vpc --region $region --vpc-id $(etcdctl get $g/vpc) 2>${errtmp}) ||
+     { msgbus " $ipscmd $BUD $(cat /tmp/exit.${ipscmd} | tr -d '\n') ${NC} " ; }
+    tput sc
+    echo -e "${CALERT}secvpc:${NC} ${BPurple}${tag}${NC}"
+     echo -e " ${BCyan}${site}${NC}"
+     echo -e "|_/${CKEY}Status${NC} => ${CVAL}$status${NC}"
+     echo -e "|_/${CKEY}ENI${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}Secure Subnet${NC} => ${CALERT}  DESTROYED   ${NC}"
+     echo -e "|_/${CKEY}External Subnet${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}Internet Gateway${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}VPC${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}Security Group${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}Route${NC} => ${CALERT}  DESTROYED  ${NC}"
+    tput rc
+    status=$(etcdctl set $g/status "Deleted")
+    echo -e "${CALERT}secvpc:${NC} ${BPurple}${tag}${NC}"
+     echo -e "${BCyan}${site}${NC}"
+     echo -e "|_/${CKEY}Status${NC} => ${CALERT} $status ${NC}"
+     echo -e "|_/${CKEY}ENI${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}Secure Subnet${NC} => ${CALERT}  DESTROYED   ${NC}"
+     echo -e "|_/${CKEY}External Subnet${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}Internet Gateway${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}Security Group${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}VPC${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo -e "|_/${CKEY}Route${NC} => ${CALERT}  DESTROYED  ${NC}"
+     echo " "
+     etcdctl rm --recursive ${g} || exit 1 ;
+    msgbus "$ipscmd $BUDDY destroyed secure vpc $tag ${NC}" 
+
+    
+    exit
+
+#!/bin/bash
+#set -eo pipefail
+. InterdimensionalPortalService
+
+cnt=0
+INKEYS=($(etcdctl ls --sort -r $SKEY/${1}))
+for (( i=0; i<${#INKEYS[@]}; i++ )) ; do
+    tfile="${INKEYS[$i]}"
+    element=$(echo ${tfile} | cut -d '/' -f 3-)
+    vals=$(etcdctl get $tfile 2>/dev/null)
+    if [ $? -eq 0 ] ; then
+        (( cnt++ ))
+        echo "${cnt} ${element} ${vals}"
+    else
+        continue
+    fi
+done
+u_confirm "Remove $cnt keys" 
+if [ $? -eq 1 ] ; then
+msgbus "$cnt keys were spared by $BUD just now in /${1} ${NC}"
+exit 1
+else
+etcdctl rm -r $SKEY/${1}
+msgbus "$cnt keys gone at that the hands of $BUD in /${1} ${NC}" 
+fi
+
+ops-runtime
+getkey
+
+$stopjob
+
+exit 0
+
+

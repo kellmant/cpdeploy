@@ -1,6 +1,0 @@
-#!/bin/bash
-#
-source VAR
-
-ssh admin@${1}.${domain} "${2}"
-

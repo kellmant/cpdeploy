@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/usr/bin/etcdctl exec-watch backup/status -- /bin/sh -c '/ctrl/bin/backitup "$ETCD_WATCH_ACTION $ETCD_WATCH_KEY $ETCD_WATCH_VALUE"'
+

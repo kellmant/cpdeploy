@@ -1,0 +1,6 @@
+Subnet
+10.90.45.0/24  (Prod1 Apps)
+10.90.48.0/24  (Middleware Servers)
+10.90.50.0/24  (Prod2 Apps)
+10.90.56.0/24  (Database Servers)
+10.90.60.0/24  (produdction db)

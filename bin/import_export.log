@@ -1,0 +1,2382 @@
+Checking existence of package [Stage1]
+
+Exporting Access Control layers
+
+Exporting Access Layer [Stage1 Network]
+
+Getting layer information for layer [Stage1 Network]
+
+Getting information from show-access-rulebase
+
+Retrieved 50 out of 87 rules (57%)
+
+Retrieved 87 out of 87 rules (100%)
+
+##Show presented object of type RulebaseAction with name Accept
+
+##Show presented object of type group with name all-tools-nets-sdn-eds
+
+##Show presented object of type CpmiAnyObject with name Any
+
+##Show presented object of type group with name BloomBerg
+
+##Show presented object of type group with name BloomBerg-Access
+
+##Show presented object of type host with name caopbps-vma1.opca.workgroup.local
+
+##Show presented object of type service-udp with name capwapp
+
+##Show presented object of type group with name CMDB-Network_Device_Subnets_All
+
+##Show presented object of type group with name CMDB-Servers
+
+##Show presented object of type group with name Cogent-Monitored-devices
+
+##Show presented object of type group with name connex-pub-sites
+
+##Show presented object of type service-udp with name data_control
+
+##Show presented object of type service-tcp with name DerSphere
+
+##Show presented object of type service-icmp with name dest-unreach
+
+##Show presented object of type service-tcp with name DNP3
+
+##Show presented object of type service-udp with name domain-udp
+
+##Show presented object of type RulebaseAction with name Drop
+
+##Show presented object of type group with name DXC-EDS-DNS-Servers
+
+##Show presented object of type group with name DXC-EDS-Managed-Net-Devices
+
+##Show presented object of type group with name DXC-PUB-AV-Hosts
+
+##Show presented object of type group with name Dynamo-sFTP-Backup
+
+##Show presented object of type service-icmp with name echo-reply
+
+##Show presented object of type service-icmp with name echo-request
+
+##Show presented object of type group with name eds-ePCM
+
+##Show presented object of type group with name eds-internet
+
+##Show presented object of type group with name eds-mcafee-epo-servers
+
+##Show presented object of type group with name EDS-VPN
+
+##Show presented object of type service-tcp with name Entrust-Admin
+
+##Show presented object of type group with name FactSetAnalyticsAndContent
+
+##Show presented object of type group with name FactSetPortfolioUploads
+
+##Show presented object of type group with name FactSetReal-Time
+
+##Show presented object of type group with name FactSetURL
+
+##Show presented object of type service-tcp with name Freak2k
+
+##Show presented object of type service-tcp with name ftp
+
+##Show presented object of type host with name host_10.0.0.2
+
+##Show presented object of type host with name host_10.20.248.94
+
+##Show presented object of type host with name host_10.20.248.95
+
+##Show presented object of type host with name host_142.107.170.123
+
+##Show presented object of type host with name host_142.107.179.150
+
+##Show presented object of type host with name host_144.212.130.17
+
+##Show presented object of type host with name host_159.231.80.216
+
+##Show presented object of type host with name host_159.231.80.251
+
+##Show presented object of type host with name host_198.132.30.53
+
+##Show presented object of type host with name host_198.132.30.80
+
+##Show presented object of type host with name host_198.132.55.69
+
+##Show presented object of type host with name host_198.132.55.70
+
+##Show presented object of type host with name host_204.41.1.104
+
+##Show presented object of type host with name host_205.211.178.23
+
+##Show presented object of type host with name host_216.138.238.73
+
+##Show presented object of type host with name host_216.138.238.88
+
+##Show presented object of type host with name host_24.244.219.168
+
+##Show presented object of type host with name host_76.164.8.136
+
+##Show presented object of type host with name host_76.164.8.163
+
+##Show presented object of type group with name HP-Rooms-Access
+
+##Show presented object of type service-tcp with name http
+
+##Show presented object of type service-tcp with name HTTP_proxy
+
+##Show presented object of type service-tcp with name https
+
+##Show presented object of type service-other with name icmp-proto
+
+##Show presented object of type group with name imco-temp-vlan
+
+##Show presented object of type service-tcp with name ldap
+
+##Show presented object of type Track with name Log
+
+##Show presented object of type group with name malicious-block
+
+##Show presented object of type group with name MBS-Hosts
+
+##Show presented object of type group with name MBS-LDAP-Hosts
+
+##Show presented object of type group with name MBS-Nets
+
+##Show presented object of type service-udp with name mobility_traffic
+
+##Show presented object of type network with name network_192.168.55.0_24
+
+##Show presented object of type network with name network_198.132.30.0_24
+
+##Show presented object of type network with name network_198.132.31.0_24
+
+##Show presented object of type network with name network_198.132.32.0_24
+
+##Show presented object of type service-udp with name ntp-udp
+
+##Show presented object of type group with name opb-ad-servers
+
+##Show presented object of type group with name OPB-cogent-moni-test
+
+##Show presented object of type group with name OPB-EXT-RDP
+
+##Show presented object of type group with name OPB-ISP-DNS
+
+##Show presented object of type group with name OPB-Networks
+
+##Show presented object of type group with name OPB-Servers-ALL
+
+##Show presented object of type group with name OPB-Servers-EXT-RDP-TooGood
+
+##Show presented object of type group with name OPB-Servers-EXT-SFTP-OpenText
+
+##Show presented object of type group with name OPB-Terminal-Servers
+
+##Show presented object of type group with name OPB-User-Subnets
+
+##Show presented object of type Global with name Policy Targets
+
+##Show presented object of type service-tcp with name Remote_Desktop_Protocol
+
+##Show presented object of type group with name road
+
+##Show presented object of type group with name rogers-dmi-bes
+
+##Show presented object of type service-tcp with name rtsp
+
+##Show presented object of type group with name SFTP-Hosts-REAL
+
+##Show presented object of type service-udp with name snmp
+
+##Show presented object of type service-udp with name snmp-trap
+
+##Show presented object of type service-tcp with name sqlnet1
+
+##Show presented object of type service-tcp with name ssh_version_2
+
+##Show presented object of type service-udp with name syslog
+
+##Show presented object of type service-tcp with name TACACSplus
+
+##Show presented object of type service-tcp with name TCP_1024-5000
+
+##Show presented object of type service-tcp with name TCP_14414
+
+##Show presented object of type service-tcp with name TCP_1827
+
+##Show presented object of type service-tcp with name TCP_20-21
+
+##Show presented object of type service-tcp with name TCP_20001
+
+##Show presented object of type service-tcp with name TCP_3101
+
+##Show presented object of type service-tcp with name TCP_5228
+
+##Show presented object of type service-tcp with name TCP_6670
+
+##Show presented object of type service-tcp with name TCP_6671
+
+##Show presented object of type service-tcp with name TCP_6672
+
+##Show presented object of type service-tcp with name TCP_683
+
+##Show presented object of type service-tcp with name TCP_7003
+
+##Show presented object of type service-tcp with name TCP_7005
+
+##Show presented object of type service-tcp with name TCP_7007
+
+##Show presented object of type service-tcp with name TCP_7443
+
+##Show presented object of type service-tcp with name TCP_81
+
+##Show presented object of type service-tcp with name TCP_81-82
+
+##Show presented object of type service-tcp with name TCP_8194-8198
+
+##Show presented object of type service-tcp with name TCP_8194-8395
+
+##Show presented object of type service-tcp with name TCP_8209-8220
+
+##Show presented object of type service-tcp with name TCP_8280
+
+##Show presented object of type service-tcp with name TCP_8288
+
+##Show presented object of type service-tcp with name TCP_829
+
+##Show presented object of type service-tcp with name TCP_8290-8294
+
+##Show presented object of type service-tcp with name TCP_990
+
+##Show presented object of type service-tcp with name TCP_991
+
+##Show presented object of type service-tcp with name TCP_All
+
+##Show presented object of type service-tcp with name telnet
+
+##Show presented object of type service-udp with name tftp
+
+##Show presented object of type group with name TOR-CML-SAN
+
+##Show presented object of type service-udp with name UDP_1024-65534
+
+##Show presented object of type service-udp with name UDP_48129-48137
+
+##Show presented object of type service-udp with name UDP_8194-8198
+
+##Show presented object of type service-udp with name UDP_8209-8220
+
+##Show presented object of type service-udp with name UDP_8288
+
+##Show presented object of type service-udp with name UDP_8290-8294
+
+##Show presented object of type service-udp with name UDP_All
+
+##Show presented object of type network with name vlan234-New VM
+
+##Show presented object of type network with name vlan60-produdction db
+
+##Show presented object of type network with name vlan61-Dev DB
+
+##Show presented object of type network with name vlan85-Legacy VOIP Servers VLAN85
+
+##Show presented object of type group with name vm-hosts
+
+##Show presented object of type group with name WLC-Guest-Controller
+
+##Show presented object of type group with name WLC-Internal-Controllers
+
+##Show presented object of type group with name ad-srvs-vlan15
+
+##Show presented object of type group with name azure-s2s-ad
+
+##Show presented object of type service-udp with name bootp
+
+##Show presented object of type host with name caopbpamse001.opb.on.ca
+
+##Show presented object of type host with name caopbpsdfs001.mail.opb.on.ca
+
+##Show presented object of type host with name caopbpstsa207.mail.opb.on.ca
+
+##Show presented object of type group with name connex-hosts
+
+##Show presented object of type group with name connex-sal-be
+
+##Show presented object of type group with name connex-sal-fe
+
+##Show presented object of type group with name connex-sal-web
+
+##Show presented object of type network with name connex-vlan248-Connex VLAN 248
+
+##Show presented object of type group with name dell_sites
+
+##Show presented object of type group with name DM_INLINE_NETWORK_1
+
+##Show presented object of type service-tcp with name domain-tcp
+
+##Show presented object of type group with name DXC-EDS-Networks
+
+##Show presented object of type group with name eagle_access_dst
+
+##Show presented object of type group with name eagle_access_src
+
+##Show presented object of type group with name eagleDR_dest
+
+##Show presented object of type host with name host_10.0.0.3
+
+##Show presented object of type host with name host_10.20.199.2
+
+##Show presented object of type host with name host_10.20.248.85
+
+##Show presented object of type host with name host_192.168.55.65
+
+##Show presented object of type host with name host_195.22.26.248
+
+##Show presented object of type host with name host_198.132.30.107
+
+##Show presented object of type host with name host_198.132.30.147
+
+##Show presented object of type host with name host_198.132.30.40
+
+##Show presented object of type host with name host_198.132.30.79
+
+##Show presented object of type host with name host_199.228.22.1
+
+##Show presented object of type host with name host_199.228.22.4
+
+##Show presented object of type host with name host_216.138.238.72
+
+##Show presented object of type service-tcp with name imap
+
+##Show presented object of type service-tcp with name Kerberos_v5_TCP
+
+##Show presented object of type service-udp with name Kerberos_v5_UDP
+
+##Show presented object of type service-tcp with name ldap-ssl
+
+##Show presented object of type service-udp with name ldap_udp
+
+##Show presented object of type service-tcp with name microsoft-ds
+
+##Show presented object of type service-udp with name microsoft-ds-udp
+
+##Show presented object of type group with name moveit-auto-srvs
+
+##Show presented object of type service-udp with name nbdatagram
+
+##Show presented object of type service-udp with name nbname
+
+##Show presented object of type network with name network_10.10.1.0_24
+
+##Show presented object of type network with name network_155.61.42.0_24
+
+##Show presented object of type network with name network_172.16.2.0_24
+
+##Show presented object of type network with name network_204.103.139.0_24
+
+##Show presented object of type network with name network_204.103.211.0_24
+
+##Show presented object of type service-udp with name NEW-RADIUS
+
+##Show presented object of type service-udp with name NEW-RADIUS-ACCOUNTING
+
+##Show presented object of type Track with name None
+
+##Show presented object of type service-tcp with name ntp-tcp
+
+##Show presented object of type group with name OPB-Guest-Client-Network
+
+##Show presented object of type group with name opb-ipphone-subnets
+
+##Show presented object of type group with name OPB-ISE-Radius-Servers
+
+##Show presented object of type group with name OPB-Prime-Servers
+
+##Show presented object of type host with name opbps045.mail.opb.on.ca
+
+##Show presented object of type host with name opbps052.mail.opb.on.ca
+
+##Show presented object of type service-tcp with name pop-3
+
+##Show presented object of type group with name san-appliances
+
+##Show presented object of type service-tcp with name smtp
+
+##Show presented object of type service-tcp with name TCP_1024-65535
+
+##Show presented object of type service-tcp with name TCP_135
+
+##Show presented object of type service-tcp with name TCP_138
+
+##Show presented object of type service-tcp with name TCP_16113
+
+##Show presented object of type service-tcp with name TCP_3268
+
+##Show presented object of type service-tcp with name TCP_3268-3269
+
+##Show presented object of type service-tcp with name TCP_464
+
+##Show presented object of type service-tcp with name TCP_49152-65535
+
+##Show presented object of type service-tcp with name TCP_53248
+
+##Show presented object of type service-tcp with name TCP_53249
+
+##Show presented object of type service-tcp with name TCP_8443
+
+##Show presented object of type service-tcp with name TCP_9389
+
+##Show presented object of type service-tcp with name TCP_9443
+
+##Show presented object of type group with name uc4-opb-desktops
+
+##Show presented object of type service-udp with name UDP_1024-65525
+
+##Show presented object of type service-udp with name UDP_135
+
+##Show presented object of type service-udp with name UDP_137-138
+
+##Show presented object of type service-udp with name UDP_464
+
+##Show presented object of type service-udp with name UDP_5722
+
+##Show presented object of type group with name VPNNEC00-CAN
+
+Analysing rulebase items...
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with name GONET rules removed
+
+##Show presented independent rule of type access-rule with name Qualify use of DNP3 protocol as need for high ports (open service ports 20000, 20001 NOT DNP3)
+
+##Show presented independent rule of type access-rule with name connex remote support
+
+##Show presented independent rule of type access-rule with name connex remote support
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with name CONNEX CLEAN UP RULE
+
+##Show presented independent rule of type access-rule with name Allow all web
+
+##Show presented independent rule of type access-rule with name DXC to confirm for DELETE - Not seen in current managed AV
+
+##Show presented independent rule of type access-rule with name Websense Proxy confirmed
+
+##Show presented independent rule of type access-rule with name DNS access for all hosts at OPB
+
+##Show presented independent rule of type access-rule with name DNS forwarding for outside resolution
+
+##Show presented independent rule of type access-rule with name Troubleshooting, or network monitoring of hosts through icmp
+
+##Show presented independent rule of type access-rule with name Still needed DELETE? GONET related
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with name EDS/DXC IP space NEED to confirm if still active
+
+##Show presented independent rule of type access-rule with name EDS/DXC IP space NEED to confirm if still active
+
+##Show presented independent rule of type access-rule with name EDS/DXC IP space NEED to confirm if still active
+
+##Show presented independent rule of type access-rule with name EDS/DXC IP space NEED to confirm if still active
+
+##Show presented independent rule of type access-rule with name EDS/DXC IP space CONFIRMED LIVE NETWORK ACCESS
+
+##Show presented independent rule of type access-rule with name DS/DXC IP space CONFIRMED LIVE NETWORK ACCESS
+
+##Show presented independent rule of type access-rule with name Cleanup of legacy AD servers, support of Rogers BES remote VPN - source ca.opb.srdc001 10.20.150.8
+
+##Show presented independent rule of type access-rule with name Legacy VLAN Server layer
+
+##Show presented independent rule of type access-rule with name Legacy VLAN Server layer
+
+##Show presented independent rule of type access-rule with name Unrestricted access to the internet with SSH
+
+##Show presented independent rule of type access-rule with name TooGood financial outside partner access of desktop
+
+##Show presented independent rule of type access-rule with name Content Server application support from OpenText
+
+##Show presented independent rule of type access-rule with name Remote management of devices in OPB DUPLICATE of 55
+
+##Show presented independent rule of type access-rule with name TooGood Financial Services for IMCO - OPB to confirm that it is not in use?
+
+##Show presented independent rule of type access-rule with name 3rd Party Supported services FactSet
+
+##Show presented independent rule of type access-rule with name 3rd Party Supported services FactSet
+
+##Show presented independent rule of type access-rule with name 3rd Party Supported services FactSet
+
+##Show presented independent rule of type access-rule with name 3rd Party Supported services FactSet
+
+##Show presented independent rule of type access-rule with name 3rd party external company in support of application - CLEANUP SERVICE DEFINITIONS
+
+##Show presented independent rule of type access-rule with name Wireless management of guest wifi
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with name GONET rules removed
+
+##Show presented independent rule of type access-rule with name Qualify use of DNP3 protocol as need for high ports (open service ports 20000, 20001 NOT DNP3)
+
+##Show presented independent rule of type access-rule with name connex remote support
+
+##Show presented independent rule of type access-rule with name connex remote support
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with name CONNEX CLEAN UP RULE
+
+##Show presented independent rule of type access-rule with name Allow all web
+
+##Show presented independent rule of type access-rule with name DXC to confirm for DELETE - Not seen in current managed AV
+
+##Show presented independent rule of type access-rule with name Websense Proxy confirmed
+
+##Show presented independent rule of type access-rule with name DNS access for all hosts at OPB
+
+##Show presented independent rule of type access-rule with name DNS forwarding for outside resolution
+
+##Show presented independent rule of type access-rule with name Troubleshooting, or network monitoring of hosts through icmp
+
+##Show presented independent rule of type access-rule with name Still needed DELETE? GONET related
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with name EDS/DXC IP space NEED to confirm if still active
+
+##Show presented independent rule of type access-rule with name EDS/DXC IP space NEED to confirm if still active
+
+##Show presented independent rule of type access-rule with name EDS/DXC IP space NEED to confirm if still active
+
+##Show presented independent rule of type access-rule with name EDS/DXC IP space NEED to confirm if still active
+
+##Show presented independent rule of type access-rule with name EDS/DXC IP space CONFIRMED LIVE NETWORK ACCESS
+
+##Show presented independent rule of type access-rule with name DS/DXC IP space CONFIRMED LIVE NETWORK ACCESS
+
+##Show presented independent rule of type access-rule with name Cleanup of legacy AD servers, support of Rogers BES remote VPN - source ca.opb.srdc001 10.20.150.8
+
+##Show presented independent rule of type access-rule with name Legacy VLAN Server layer
+
+##Show presented independent rule of type access-rule with name Legacy VLAN Server layer
+
+##Show presented independent rule of type access-rule with name Unrestricted access to the internet with SSH
+
+##Show presented independent rule of type access-rule with name TooGood financial outside partner access of desktop
+
+##Show presented independent rule of type access-rule with name Content Server application support from OpenText
+
+##Show presented independent rule of type access-rule with name Remote management of devices in OPB DUPLICATE of 55
+
+##Show presented independent rule of type access-rule with name TooGood Financial Services for IMCO - OPB to confirm that it is not in use?
+
+##Show presented independent rule of type access-rule with name 3rd Party Supported services FactSet
+
+##Show presented independent rule of type access-rule with name 3rd Party Supported services FactSet
+
+##Show presented independent rule of type access-rule with name 3rd Party Supported services FactSet
+
+##Show presented independent rule of type access-rule with name 3rd Party Supported services FactSet
+
+##Show presented independent rule of type access-rule with name 3rd party external company in support of application - CLEANUP SERVICE DEFINITIONS
+
+##Show presented independent rule of type access-rule with name Wireless management of guest wifi
+
+##Show presented independent rule of type access-rule with name Source from VPN through MCC datacenter? NEED ANALYSIS to determine use - DXC to provide more details on source
+
+##Show presented independent rule of type access-rule with name DUPLICATE of internet access rule? Also encompass FactsSet services
+
+##Show presented independent rule of type access-rule with name Remote device management of switch in DMZ
+
+##Show presented independent rule of type access-rule with name Troubleshooting rule? Any source
+
+##Show presented independent rule of type access-rule with name Wireless device management from DXC into OPB devices
+
+##Show presented independent rule of type access-rule with name Cisco Prime and ISE management tools for wireless controller
+
+##Show presented independent rule of type access-rule with name Unchecked access to Production networks? USED BY IMCO - DXC to check if set for decom
+
+##Show presented independent rule of type access-rule with name Primary and backup AD server acess to read only DMZ AD service
+
+##Show presented independent rule of type access-rule with name large open access for specific subnets into the VoIP gateways - NOT USED? THIS RULE OPENS EXTENDED ACCESS FROM LAB - CCM REVIEW
+
+##Show presented independent rule of type access-rule with name Legacy DMZ to VoIP backend potentially for vmail to email connection
+
+##Show presented independent rule of type access-rule with name SAN support callout to Dell partner
+
+##Show presented independent rule of type access-rule with name Backup MoveIT service to callout to any host for backups
+
+##Show presented independent rule of type access-rule with name IMCO Users, should NOT BE IN USE Part of decommision project
+
+##Show presented independent rule of type access-rule with name IMCO Users, should NOT BE IN USE Part of decommision project
+
+##Show presented independent rule of type access-rule with name ISE tool for management of guest controller - Cisco appliance for access control
+
+##Show presented independent rule of type access-rule with name Websense access through PAC
+
+##Show presented independent rule of type access-rule with name Used by ASR should be part of Decommisioned objects for legacy services
+
+##Show presented independent rule of type access-rule with name Test rule for IMCO access
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with name Older application access for MoveIT service, excessive DNS destinations for lookup
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with name Questionable source access, verify not needed
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with name Access at one time for heatmaps. Question why guest controller would access inward
+
+##Show presented independent rule of type access-rule with name RADIUS authentication and NAC through ISE services
+
+##Show presented independent rule of type access-rule with name Guest client access for questionable port
+
+##Show presented independent rule of type access-rule with name DNS is open to world, guest clients can access DNS
+
+##Show presented independent rule of type access-rule with name Default block all access from guest wifi to Internal OPB Networks
+
+##Show presented independent rule of type access-rule with name Guest internet access
+
+##Show presented independent rule of type access-rule with name DXC operational rule
+
+##Show presented independent rule of type access-rule with name Connex Support of VoIP DXC has solutions document.
+
+##Show presented independent rule of type access-rule with name Connex third party support, many open service ports not defined
+
+##Show presented independent rule of type access-rule with name Excessive rule access, duplicates access inbound both DMZ frontend and backend treated same for access. Front end is internet
+
+##Show presented independent rule of type access-rule with no name
+
+##Show presented independent rule of type access-rule with name Internet access to support remote
+
+##Show presented independent rule of type access-rule with name Cleanup rule
+
+Processing rules and sections
+
+Updating data for rule #1
+
+Updating data for rule #2
+
+Updating data for rule #3
+
+Updating data for rule #4
+
+Updating data for rule #5
+
+Updating data for rule #6
+
+Updating data for rule #7
+
+Updating data for rule #8
+
+Updating data for rule #9
+
+Updating data for rule #10
+
+Updating data for rule #11
+
+Updating data for rule #12
+
+Updating data for rule #13
+
+Updating data for rule #14
+
+Updating data for rule #15
+
+Updating data for rule #16
+
+Updating data for rule #17
+
+Updating data for rule #18
+
+Updating data for rule #19
+
+Updating data for rule #20
+
+Updating data for rule #21
+
+Updating data for rule #22
+
+Updating data for rule #23
+
+Updating data for rule #24
+
+Updating data for rule #25
+
+Updating data for rule #26
+
+Updating data for rule #27
+
+Updating data for rule #28
+
+Updating data for rule #29
+
+Updating data for rule #30
+
+Updating data for rule #31
+
+Updating data for rule #32
+
+Updating data for rule #33
+
+Updating data for rule #34
+
+Updating data for rule #35
+
+Updating data for rule #36
+
+Updating data for rule #37
+
+Updating data for rule #38
+
+Updating data for rule #39
+
+Updating data for rule #40
+
+Updating data for rule #41
+
+Updating data for rule #42
+
+Updating data for rule #43
+
+Updating data for rule #44
+
+Updating data for rule #45
+
+Updating data for rule #46
+
+Updating data for rule #47
+
+Updating data for rule #48
+
+Updating data for rule #49
+
+Updating data for rule #50
+
+Updating data for rule #51
+
+Updating data for rule #52
+
+Updating data for rule #53
+
+Updating data for rule #54
+
+Updating data for rule #55
+
+Updating data for rule #56
+
+Updating data for rule #57
+
+Updating data for rule #58
+
+Updating data for rule #59
+
+Updating data for rule #60
+
+Updating data for rule #61
+
+Updating data for rule #62
+
+Updating data for rule #63
+
+Updating data for rule #64
+
+Updating data for rule #65
+
+Updating data for rule #66
+
+Updating data for rule #67
+
+Updating data for rule #68
+
+Updating data for rule #69
+
+Updating data for rule #70
+
+Updating data for rule #71
+
+Updating data for rule #72
+
+Updating data for rule #73
+
+Updating data for rule #74
+
+Updating data for rule #75
+
+Updating data for rule #76
+
+Updating data for rule #77
+
+Updating data for rule #78
+
+Updating data for rule #79
+
+Updating data for rule #80
+
+Updating data for rule #81
+
+Updating data for rule #82
+
+Updating data for rule #83
+
+Updating data for rule #84
+
+Updating data for rule #85
+
+Updating data for rule #86
+
+Updating data for rule #87
+
+Exporting services-udp from layer [Stage1 Network]
+
+Exporting service-udp with uid 71820c97-8dbf-4944-8a7a-3b9392aec3b6 named capwapp
+
+Exporting service-udp with uid 756c2154-447d-432f-9f52-dd947562127e named data_control
+
+Exporting service-udp with uid caa73e43-a53a-48d0-be27-19258783ba60 named mobility_traffic
+
+Exporting service-udp with uid 66b9a05d-ccbe-4474-8b30-f40b25f39f56 named UDP_1024-65534
+
+Exporting service-udp with uid 45cc1886-e049-4c91-b863-eed1d74651e7 named UDP_48129-48137
+
+Exporting service-udp with uid 9f2b796b-ece0-41e7-9117-536048139040 named UDP_8194-8198
+
+Exporting service-udp with uid ee5b4319-d1cb-4a3f-9519-a01c869b5658 named UDP_8209-8220
+
+Exporting service-udp with uid 2a36d0d3-6580-4b12-b4df-a0133f255c79 named UDP_8288
+
+Exporting service-udp with uid 6a8bdbe4-9d4b-4e5f-a00e-256a106a70ca named UDP_8290-8294
+
+Exporting service-udp with uid 676570c7-7a07-4cc2-a5e2-a3893fbd07d6 named UDP_All
+
+Exporting service-udp with uid efe04f42-afdb-40bb-b1c9-13690e999360 named UDP_1024-65525
+
+Exporting service-udp with uid 7ce7fa7f-7093-40d9-9951-001ff68e197e named UDP_135
+
+Exporting service-udp with uid b1221801-22d7-4e19-b8e8-4a49e49883ae named UDP_137-138
+
+Exporting service-udp with uid 51c20b95-0bce-4b7e-91e6-9ccafa8437c9 named UDP_464
+
+Exporting service-udp with uid dbea876f-3b00-46ab-8dc0-0e1fca9707b9 named UDP_5722
+
+Exporting services-tcp from layer [Stage1 Network]
+
+Exporting service-tcp with uid bc4eb7f3-4ebc-4b45-a54c-6f33d35160c9 named TCP_1024-5000
+
+Exporting service-tcp with uid 4da17a44-8b94-4394-854b-0ce3bddabdbe named TCP_14414
+
+Exporting service-tcp with uid 9de1b429-a42e-4d16-b263-e6f889427a8b named TCP_1827
+
+Exporting service-tcp with uid c6122ecf-e36f-49ee-9004-3c91e42244fe named TCP_20-21
+
+Exporting service-tcp with uid 5ccaf43c-b30d-4ff7-9966-aa0075cc9a4e named TCP_20001
+
+Exporting service-tcp with uid ceb72573-c2bc-4158-8a4e-04d9902171ff named TCP_3101
+
+Exporting service-tcp with uid a104c65e-6949-4d42-a1d4-aa5c3b777dfc named TCP_5228
+
+Exporting service-tcp with uid 2596f0ba-7e6c-45f3-b12d-fd63acfb978a named TCP_6670
+
+Exporting service-tcp with uid 423dcd8f-f5c2-458b-83c4-9e66046af5da named TCP_6671
+
+Exporting service-tcp with uid 63974df5-ee87-4a7d-950d-2f156d3e264c named TCP_6672
+
+Exporting service-tcp with uid ee4bf8d6-4c4c-45d9-b4e2-f194e9b208de named TCP_683
+
+Exporting service-tcp with uid eb0cd4f6-020c-46d3-bb3b-7d770cfeae46 named TCP_7003
+
+Exporting service-tcp with uid 1eac27ee-6a35-4e69-a9ac-a880f471e172 named TCP_7005
+
+Exporting service-tcp with uid 4bf26551-85be-4e63-ab4c-29d9bb6b7794 named TCP_7007
+
+Exporting service-tcp with uid a4167d53-4053-4889-bd1d-3d6e34933d82 named TCP_7443
+
+Exporting service-tcp with uid dec81fac-da21-47db-b6fd-5274a859eb80 named TCP_81
+
+Exporting service-tcp with uid 30c58f7d-6197-4a62-b3fc-ccb55304f9ec named TCP_81-82
+
+Exporting service-tcp with uid 589e59fb-c723-4047-8f6f-03444f76732f named TCP_8194-8198
+
+Exporting service-tcp with uid 2425583b-a5f9-4ea6-96f3-1cd92e79b4c9 named TCP_8194-8395
+
+Exporting service-tcp with uid 2fa74793-bfdc-4df7-81eb-543ee6366e8a named TCP_8209-8220
+
+Exporting service-tcp with uid 469cca4a-916b-4f6d-a07e-8a40369270ac named TCP_8280
+
+Exporting service-tcp with uid 6400bcb7-740b-4dde-a939-b16f4535849d named TCP_8288
+
+Exporting service-tcp with uid 6779353c-1440-41a4-bc20-01eeb7970fea named TCP_829
+
+Exporting service-tcp with uid ae682509-d725-486b-9f32-e5a37a332eec named TCP_8290-8294
+
+Exporting service-tcp with uid 744da7fd-31c0-4834-918d-b1fd12a11662 named TCP_990
+
+Exporting service-tcp with uid 7e2ea057-774f-4f8e-86ff-ad7b5ca223e5 named TCP_991
+
+Exporting service-tcp with uid b1916345-fa01-49e7-ab89-afe7a52d4571 named TCP_All
+
+Exporting service-tcp with uid bd21cc36-10b9-445d-9af3-fdacbacc05df named TCP_1024-65535
+
+Exporting service-tcp with uid e948e6bc-58f7-4836-b302-a4c872292ef4 named TCP_135
+
+Exporting service-tcp with uid 431e548c-de06-4155-b1f0-bce9720ac63b named TCP_138
+
+Exporting service-tcp with uid 963959b0-8683-4a65-95ee-530f3fbb5a74 named TCP_16113
+
+Exporting service-tcp with uid a0b6e76e-6c8e-4b01-964f-a58430ff58e0 named TCP_3268
+
+Exporting service-tcp with uid b9dea6c9-908b-4293-8eb9-75f7ba0795d0 named TCP_3268-3269
+
+Exporting service-tcp with uid fab40dd0-e883-4954-b094-6a1ffeb33375 named TCP_464
+
+Exporting service-tcp with uid 4efdca2c-c3c4-426f-ad2f-4fc98a734d67 named TCP_49152-65535
+
+Exporting service-tcp with uid 1b8e0387-9cdc-4a5a-94fc-e5241be9f828 named TCP_53248
+
+Exporting service-tcp with uid eeb24893-eeae-40b9-980e-847bfda2a2ff named TCP_53249
+
+Exporting service-tcp with uid 67b6587d-18fc-4279-880a-d70dca1bdae0 named TCP_8443
+
+Exporting service-tcp with uid 09186a28-7199-4415-b2fb-3e98883fde52 named TCP_9389
+
+Exporting service-tcp with uid 1854d692-4829-4846-99d7-112d6a722d46 named TCP_9443
+
+Exporting hosts from layer [Stage1 Network]
+
+Exporting host with uid 2ac8f06f-e36a-4c1c-b29e-3cad64ea798e named caopbps-vma1.opca.workgroup.local
+
+Exporting host with uid bf10f35e-8b0d-49ac-ab7d-f5ea6d9e297d named host_10.0.0.2
+
+Exporting host with uid cb88d446-c7b5-4a3a-afd4-877cc58fec27 named host_10.20.248.94
+
+Exporting host with uid 87617cea-1fa5-465e-a2de-3393a926a187 named host_10.20.248.95
+
+Exporting host with uid 51078352-e3cb-4693-aff4-68ac6ff076c2 named host_142.107.170.123
+
+Exporting host with uid ebf23aba-b4dc-4260-a7af-5b1267a7a950 named host_142.107.179.150
+
+Exporting host with uid b1edb804-b88e-46f8-8c4a-902c9e101e36 named host_144.212.130.17
+
+Exporting host with uid 44ee309e-7a66-4c2f-aeeb-fc48909c6ab8 named host_159.231.80.216
+
+Exporting host with uid 6424b09b-0dd2-4355-9eb9-be81cc970147 named host_159.231.80.251
+
+Exporting host with uid 201b1600-fbea-4525-b3e1-a438eb8c0bf5 named host_198.132.30.53
+
+Exporting host with uid 57ac9b12-b0af-4a5c-9e61-26df8d908fd5 named host_198.132.30.80
+
+Exporting host with uid ce6e16b2-a7aa-4555-8293-990a925e5fbd named host_198.132.55.69
+
+Exporting host with uid 750aa730-5a44-4a00-a32f-81fb13ec8a8e named host_198.132.55.70
+
+Exporting host with uid fb066337-8271-48eb-8edb-b3dfa2795e0a named host_204.41.1.104
+
+Exporting host with uid bf4b767b-cbb6-4497-943a-cedc985c7036 named host_205.211.178.23
+
+Exporting host with uid 335fc39d-3b89-4119-a444-a5386a739775 named host_216.138.238.73
+
+Exporting host with uid 8520d5d4-9d57-4a2c-b323-70d1e7819754 named host_216.138.238.88
+
+Exporting host with uid c275c537-d48a-4d89-9eb0-ab3ad1c05bba named host_24.244.219.168
+
+Exporting host with uid 9470092c-0dec-4d03-8632-86eb954855a4 named host_76.164.8.136
+
+Exporting host with uid ec30d9d6-4327-41c7-a8b7-fb2895d5e04a named host_76.164.8.163
+
+Exporting host with uid 4ebcc291-c7c7-4252-b7e5-0656e9ffdc16 named caopbpamse001.opb.on.ca
+
+Exporting host with uid 2a945436-195a-4bc7-a8f3-997e501cd4f9 named caopbpsdfs001.mail.opb.on.ca
+
+Exporting host with uid 4a08492b-d1ee-4a05-8576-eeeabb3e726d named caopbpstsa207.mail.opb.on.ca
+
+Exporting host with uid b71fc635-8c12-420f-ba85-60421a6b1e04 named host_10.0.0.3
+
+Exporting host with uid 4a741a7e-b9ca-46c3-8cc6-a13ed79aad45 named host_10.20.199.2
+
+Exporting host with uid 73e8156d-2cc8-4e10-839c-2a87d0089646 named host_10.20.248.85
+
+Exporting host with uid 3a98dcfe-da84-41fe-b118-a6f676ecf586 named host_192.168.55.65
+
+Exporting host with uid d8d16b95-e249-4544-bb11-37d74db2be3d named host_195.22.26.248
+
+Exporting host with uid 0fc7f810-ef5c-4973-a613-22ee9d60300b named host_198.132.30.107
+
+Exporting host with uid e85597df-0ff1-45c2-9591-1657d6766f4f named host_198.132.30.147
+
+Exporting host with uid 446490c8-31c5-42bf-b4ce-f83360962cdf named host_198.132.30.40
+
+Exporting host with uid ee7b188e-a7e7-482e-b990-994842f4f1c9 named host_198.132.30.79
+
+Exporting host with uid 1580b85e-edd7-442d-a16e-e92d84250878 named host_199.228.22.1
+
+Exporting host with uid cb0f394c-1672-4901-8366-40557aed8cc9 named host_199.228.22.4
+
+Exporting host with uid 70a1e59e-6f3e-4e0c-a660-5077dd2ab121 named host_216.138.238.72
+
+Exporting host with uid 1455f725-6881-43ac-8f11-c37fca7204bd named opbps045.mail.opb.on.ca
+
+Exporting host with uid 048d2bf5-e77a-4d43-a942-566752831cd7 named opbps052.mail.opb.on.ca
+
+Exporting groups from layer [Stage1 Network]
+
+Exporting hosts from group [all-tools-nets-sdn-eds]
+
+Exporting host with uid 11d28010-bd4c-43ec-9ef5-a53d50279284 named host_159.249.132.2
+
+Exporting host with uid 47341ad4-1993-43c6-b800-ad59c3df283a named host_204.103.127.25
+
+Exporting host with uid ce84946f-a824-4a04-94f5-bbb844056b08 named host_204.103.200.25
+
+Exporting host with uid 4a310694-dbe1-4dc3-a0ee-2a21baa0c824 named host_159.249.168.8
+
+Exporting host with uid 36d727e8-c70d-4b6e-89bd-a8e689ae70e4 named host_159.249.55.39
+
+Exporting host with uid 350e30f8-7439-4756-9b60-0ef750435ca3 named host_199.42.206.61
+
+Exporting host with uid bca50ad2-b47f-4b1c-864a-1028b1a1ffe2 named host_199.42.206.92
+
+Exporting host with uid ee6e4bd1-2426-4575-8590-510a5a7446b7 named host_198.132.55.4
+
+Exporting host with uid 5813b6dd-d6cc-41bd-bb41-e07e418f7b90 named host_159.249.84.2
+
+Exporting groups from group [all-tools-nets-sdn-eds]
+
+Exporting hosts from group [EDS-NTP-Servers]
+
+Exporting host with uid 9e195fe5-f7c7-4069-944d-749da07dea4b named host_159.249.0.75
+
+Exporting host with uid e89a5efe-35a7-4826-a070-9eb7ebf2eb84 named host_159.249.0.69
+
+Exporting host with uid 74d8281e-a1ed-4d77-bc79-ff4aac48ff03 named host_159.249.0.79
+
+Exporting host with uid c3f122c8-d0db-4d90-9d91-f97f09ee31c4 named host_205.191.24.78
+
+Exporting host with uid 9db03cc4-9c26-4f61-b392-5e7b64b1607c named host_159.249.0.68
+
+Exporting host with uid 49b8ece4-ae41-4782-9ede-b285bb2b4244 named host_205.191.22.78
+
+Exporting host with uid 8fcdc88c-d42d-44dc-9638-27d8c0a94c37 named host_159.249.0.74
+
+Exporting host with uid de3402c2-52cc-4fc0-b24f-374d878794d0 named host_159.249.0.67
+
+Exporting hosts from group [EDS-TACACS-Servers]
+
+Exporting host with uid 98ea62d2-d2db-4f9a-a4e3-7b727b7828b4 named host_199.228.162.138
+
+Exporting host with uid ff22fbad-6b6a-425c-bfa0-572f7b3fc3ac named host_159.249.8.199
+
+Exporting host with uid e3f3a9c5-d14d-4931-a080-6346ee9664c6 named host_159.249.8.215
+
+Exporting groups from group [eds-CAN-net-support-vpn-pool]
+
+Exporting networks from group [VPNNEC00-CAN]
+
+Exporting network with uid 6d2caa5a-db9e-49e3-9b3d-e6473dc0f3d4 named network_204.103.211.128_26
+
+Exporting network with uid 7afe393d-14a0-49d3-bda9-714ef4be2dee named network_204.103.139.128_26
+
+Exporting group with uid c4e02e6c-d237-4cd8-b3ac-165b7f82008b named VPNNEC00-CAN
+
+Exporting networks from group [sdn-tools-nets-all]
+
+Exporting network with uid 27d64065-fbce-44a6-9c28-7980a1a22090 named network_204.103.127.0_24
+
+Exporting network with uid 7c4fc330-89fa-4054-9d04-f553edbd3ed8 named network_204.103.200.0_24
+
+Exporting network with uid ce6207db-7792-4c0c-9b77-dcc06492ea46 named network_204.103.201.0_24
+
+Exporting network with uid 4ebe48d2-fe82-4ef7-baa2-99850ac5095d named network_204.103.128.0_24
+
+Exporting networks from group [eds-tools-nets-all]
+
+Exporting network with uid 9e17d45a-dd70-419b-a08c-ceaa8422ee36 named network_199.42.224.0_24
+
+Exporting network with uid ceebfe2c-d14a-44c3-a7c6-dedc00036a4c named network_159.249.168.0_24
+
+Exporting network with uid 9a2757cc-079a-40dc-88ac-6131fcd57f9e named network_159.249.132.0_29
+
+Exporting network with uid a13d2156-dbff-4ad4-9009-51cee56307cb named network_199.42.206.0_24
+
+Exporting group with uid 90d604c0-cc80-471a-96f4-481069644dea named EDS-NTP-Servers
+
+Exporting group with uid 0b014e91-997a-40a5-a343-13df43dad844 named EDS-TACACS-Servers
+
+Exporting group with uid e2fdd85c-9f0a-4b6f-ae3b-4269c395318c named eds-CAN-net-support-vpn-pool
+
+Exporting group with uid 0a0808a5-8097-438a-8740-d4885f85b24b named sdn-tools-nets-all
+
+Exporting group with uid d0f962f9-62f3-4e51-b9e3-db8fd4e3ffb5 named eds-tools-nets-all
+
+Exporting networks from group [all-tools-nets-sdn-eds]
+
+Exporting hosts from group [BloomBerg]
+
+Exporting host with uid 2d6f9de0-c717-4a47-bcb0-7f6bb8dfb3bb named host_198.132.32.58
+
+Exporting host with uid 5ff340bd-cd3c-4a88-82b5-13cca0842124 named host_198.132.31.10
+
+Exporting host with uid e9c1fe71-a273-45a2-8721-ccc5c1864749 named host_198.132.32.48
+
+Exporting host with uid 8b0f71ef-2f3c-4796-bcf7-503ca791513e named host_198.132.32.11
+
+Exporting host with uid a84a221e-3d2c-487e-b363-c932a5abfea8 named host_198.132.32.37
+
+Exporting host with uid d6ec742f-6ff9-4d7f-9b9e-0ef75b4fe016 named host_198.132.32.33
+
+Exporting host with uid ad02ea41-3fbe-415d-a499-ccaa8a96ae12 named host_198.132.32.10
+
+Exporting host with uid cc0f8e3a-41d6-420d-9766-0b41c9103c02 named host_198.132.32.27
+
+Exporting host with uid b066cd60-11f8-40a4-b99a-a439cc13e0b6 named caopbpsmit003.mail.opb.on.ca
+
+Exporting groups from group [BloomBerg]
+
+Exporting hosts from group [SFTP-Hosts-REAL]
+
+Exporting host with uid ae7e66ed-a68d-4305-8c14-edc91e50acb1 named host_10.0.0.11
+
+Exporting networks from group [imco-temp-vlan]
+
+Exporting network with uid b7527883-534a-40bc-8395-fef7aef20d5c named network_10.20.118.0_24
+
+Exporting network with uid a3f2de77-b26f-4dc1-ae7d-12652152fbb5 named vlan187-IMCO WLAN
+
+Exporting network with uid fad4c9e1-7389-4f39-a202-0962dd3a694e named vlan125-OTE 121 King data vlan
+
+Exporting group with uid 02e358e2-995e-418c-bc85-6b60b9170260 named SFTP-Hosts-REAL
+
+Exporting group with uid 43f13587-5ed7-4d8a-a34b-35985d9a08c0 named imco-temp-vlan
+
+Exporting networks from group [BloomBerg]
+
+Exporting network with uid 5a9a662c-83ac-4010-89ba-75a10607288b named network_198.132.30.0_24
+
+Exporting network with uid 3a78aa7c-3823-4027-a557-a6e2c2b7c8a3 named vlan228-Internal WiFi Vlan
+
+Exporting network with uid a263fb72-ff69-4452-a917-a40eea66d49a named vlan119-19th floor user VLAN 119
+
+Exporting network with uid 1acddd5d-b021-4099-a5a7-89271c7d2704 named vlan121-21st flr User vlan
+
+Exporting network with uid e6d8fe87-d790-457f-9b9e-08e378c23226 named vlan122-22nd flr User vlan
+
+Exporting network with uid 563d121d-4091-465f-9774-26fe72141be5 named vlan123-23rd flr User vlan
+
+Exporting network with uid 0932cf96-5b98-49f0-8ae7-8d3f70330ede named vlan185-Internal WiFi Vlan
+
+Exporting network with uid 1ccb1985-0e92-4c98-8b26-7198aadecd26 named vlan186-Internal WiFi Vlan
+
+Exporting network with uid 7f41e657-1526-4125-9e67-9aeda1fd6b49 named AccessVPN 192.168.55.128/25
+
+Exporting networks from group [BloomBerg-Access]
+
+Exporting network with uid 03c5bc1b-8733-4281-b2cd-47790824e41c named network_160.43.250.0_24
+
+Exporting network with uid cf357386-8c02-4a70-b430-3b62c54e11dc named network_206.156.53.0_24
+
+Exporting network with uid 03639117-b28c-4acf-921f-381785cfd111 named network_69.191.176.0_21
+
+Exporting network with uid eb08d276-7a41-4d30-bc2c-8f9aa10700bc named network_208.22.57.0_24
+
+Exporting network with uid f3946759-79eb-4373-9754-ae5b1a76f2ee named network_160.43.252.0_24
+
+Exporting network with uid 347bf37d-ff1c-48e1-8c50-3317bc565129 named network_205.183.246.0_24
+
+Exporting network with uid e32902db-e04b-40e3-a48d-71b2c3def21e named network_199.105.176.0_21
+
+Exporting network with uid 66e43b2d-d2e5-4d24-a46c-4599b273c407 named network_69.187.16.0_20
+
+Exporting network with uid 022ea9b4-7e03-4116-913a-32fdf25c3bfe named network_69.191.176.128_27
+
+Exporting network with uid e9d5fa9a-4316-4d16-aa01-ead631cb1858 named network_208.22.56.0_24
+
+Exporting network with uid 8fc9fdb2-4812-4401-b9bb-c6b4c5082bdd named network_69.187.32.0_19
+
+Exporting network with uid 8a8ec940-ff21-46b4-98d2-ac33e8532d1a named network_69.191.192.0_18
+
+Exporting network with uid 4d52c40d-6bf9-4fdd-bd52-39cb09765d00 named network_160.43.253.0_24
+
+Exporting network with uid 5866fc74-eaf2-41a6-847a-4498f9b66cc6 named network_69.187.25.0_26
+
+Exporting network with uid b7092d62-7cb0-4cfe-b08a-c0bec89ba3df named network_208.134.161.0_24
+
+Exporting network with uid 3951e716-8161-420f-9558-2ce6f3afce6d named network_199.105.184.0_23
+
+Exporting network with uid 53f37f89-1e20-43cb-a957-732c3ba2755e named network_160.43.251.0_24
+
+Exporting network with uid 24704a77-169d-4438-979a-75eaaee3fd6b named network_69.191.250.0_26
+
+Exporting network with uid ca5350c8-670b-448a-b724-f4c70b2f9feb named network_208.105.184.0_23
+
+Exporting network with uid bb6a3f09-0da1-4c99-803e-a3b421137c3c named network_205.216.112.0_24
+
+Exporting network with uid 97310d40-5b4a-415d-801c-463be18d4992 named network_69.191.228.0_24
+
+Exporting network with uid e6ac7556-0cb0-4192-8423-ea0b7fb5277a named network_69.191.178.128_27
+
+Exporting hosts from group [CMDB-Network_Device_Subnets_All]
+
+Exporting groups from group [CMDB-Network_Device_Subnets_All]
+
+Exporting networks from group [CMDB-Network_Device_Subnets-GONET]
+
+Exporting network with uid cfb9a667-efae-49e4-b2cd-f5eaaaac9f5d named network_199.228.22.104_29
+
+Exporting networks from group [CMDB-Network_Device_Subnets-OPBLAN]
+
+Exporting network with uid 4b18b5f6-a790-43de-acc1-680bb25ac6ad named Leagacy_2Firewall
+
+Exporting hosts from group [WLC-Guest-Controller]
+
+Exporting host with uid 0bca7d6a-f763-4f7c-830f-2eb0b8ca0dc1 named Guest_Anchor1
+
+Exporting host with uid 501e4358-c3dc-498f-8a39-37b6672ca109 named Guest_Anchor2
+
+Exporting group with uid 513ce874-f596-464c-bd50-7985cea805af named CMDB-Network_Device_Subnets-GONET
+
+Exporting group with uid 78f6dff3-abe8-41f5-bf31-23e1dffcde95 named CMDB-Network_Device_Subnets-OPBLAN
+
+Exporting group with uid ff6245d2-a0e7-4a64-8859-7f12f2f5b388 named WLC-Guest-Controller
+
+Exporting networks from group [CMDB-Servers]
+
+Exporting network with uid 5963b011-1274-4ff8-8d87-a4ac454e51b8 named network_138.35.216.0_24
+
+Exporting network with uid 6143ff87-8f22-4f4b-b65e-ce62ed55136c named network_138.35.219.0_24
+
+Exporting hosts from group [Cogent-Monitored-devices]
+
+Exporting host with uid 2ac9ebaa-92de-44fc-bc26-b328e70033eb named host_66.28.0.45
+
+Exporting networks from group [Cogent-Monitored-devices]
+
+Exporting network with uid 573342e2-cdfe-4f9b-b7a5-153d800b043f named network_66.250.250.0_23
+
+Exporting network with uid 1e06391c-2dd7-49a6-a78f-7543b3e4201a named network_66.28.3.0_24
+
+Exporting hosts from group [connex-pub-sites]
+
+Exporting host with uid 52ba0b66-1026-4982-a8c4-47aea9cf6e1f named host_135.11.105.106
+
+Exporting host with uid 69b5cefb-d1f8-4742-9c5c-d014e8c8e866 named host_135.11.105.107
+
+Exporting host with uid 2e27b970-c439-450b-807f-c30ba110be13 named host_135.10.203.5
+
+Exporting host with uid ad67c9e7-22de-47d1-9c87-b3c373a95581 named host_135.10.203.6
+
+Exporting host with uid e7848cbb-f35e-44b0-bf10-f65252834e59 named host_135.11.107.20
+
+Exporting host with uid 8923c0aa-429c-4c9d-b7ce-8e0ee6a33712 named host_135.11.105.105
+
+Exporting host with uid 17754607-3836-440d-aba5-b54577e3bf13 named host_198.152.220.247
+
+Exporting host with uid 1ed89e75-e13f-4c53-a4a4-1e736b56863a named host_198.152.76.5
+
+Exporting host with uid 9705f2f1-fa38-4023-abec-a76c95354f76 named host_135.11.105.109
+
+Exporting host with uid 439db7ef-5b31-491b-9baa-fe2999131c64 named host_198.152.76.6
+
+Exporting host with uid d6910dc0-e2c7-4bd7-9313-ea906be861e4 named host_135.11.105.108
+
+Exporting hosts from group [DXC-EDS-DNS-Servers]
+
+Exporting host with uid 5284a6c8-2013-4135-b795-f391ada9d505 named host_159.249.55.103
+
+Exporting host with uid 9941e403-028d-4c41-b543-1d80bcc9c1a6 named host_159.249.112.114
+
+Exporting host with uid bb731d58-4ab9-423c-bab4-1c4866e6ceb0 named host_159.249.31.230
+
+Exporting host with uid 6f1d02e6-ef5d-4495-90dd-473b69439333 named host_192.85.154.78
+
+Exporting host with uid e998e99a-80c2-44dc-ab0f-fd07ab9ae259 named host_199.228.142.78
+
+Exporting host with uid b912676b-b217-4085-befa-4ea22ce93d33 named host_159.249.92.22
+
+Exporting host with uid f4bbb995-2952-4c8b-a8ce-877da75653ed named host_198.132.30.41
+
+Exporting host with uid d6058447-8a69-4c12-895c-1708752426ae named caopbpsadc001.mail.opb.on.ca
+
+Exporting host with uid 2d53e0b2-4779-496b-8fdc-9b50ab4aff4f named caopbpsadc002.mail.opb.on.ca
+
+Exporting host with uid 6107e469-9c53-4895-a56d-1a5cf8f3fc3b named caopbdsosb042.mail.opb.on.ca
+
+Exporting host with uid ff264905-b31e-47a7-97b6-7220b921670d named caopbpsmdk069.mail.opb.on.ca
+
+Exporting hosts from group [DXC-EDS-Managed-Net-Devices]
+
+Exporting host with uid 2a9d422e-9cbf-43d7-a2a8-b88c3cf4b04a named host_199.228.22.108
+
+Exporting host with uid 5db4a1b6-cc1d-438b-99a8-5b18a1526315 named host_199.228.22.106
+
+Exporting host with uid c110b39c-f072-4b8c-938b-110952e01248 named host_199.228.22.105
+
+Exporting host with uid 93901397-c60b-4257-9de2-64be07ad3442 named host_199.228.22.107
+
+Exporting hosts from group [DXC-PUB-AV-Hosts]
+
+Exporting host with uid 07fae30e-d0fe-41e7-83fc-88c390c595a7 named host_69.22.137.39
+
+Exporting host with uid fd1d6f1b-0f75-4641-bde9-a4c817479107 named host_209.170.96.82
+
+Exporting host with uid 1db2d24c-77f7-4f76-81fe-d583d4f04537 named host_213.35.101.4
+
+Exporting host with uid edf8a702-a390-4325-baf7-bd293291a949 named host_64.42.217.73
+
+Exporting host with uid 2c7bc3ef-8ab4-46da-87bf-3975441652ed named host_69.31.121.35
+
+Exporting host with uid 3f3ad983-3c1f-4f51-bc49-5d96deb90cda named host_72.246.28.43
+
+Exporting hosts from group [Dynamo-sFTP-Backup]
+
+Exporting host with uid 1a555971-c644-42d3-b380-e70178ac24b5 named host_63.128.19.153
+
+Exporting hosts from group [eds-ePCM]
+
+Exporting host with uid 0c945f6a-af80-45e4-99ad-4e69dbffbc16 named host_148.94.85.78
+
+Exporting host with uid 4b2efa36-d26d-41e1-8f7d-18ea2a069c18 named host_148.94.85.77
+
+Exporting hosts from group [eds-internet]
+
+Exporting host with uid 32e8a157-d917-4a2a-aaf7-c02fc77b9bea named host_207.37.170.9
+
+Exporting host with uid f2629d20-8d20-4885-a69f-c798a23b2a67 named host_159.249.11.20
+
+Exporting hosts from group [eds-mcafee-epo-servers]
+
+Exporting host with uid 27c51be9-0ca7-4010-bf0b-d10a34a4429a named host_155.61.9.13
+
+Exporting host with uid 48072da7-a586-494b-83bd-d9da8a3da26f named host_155.61.83.78
+
+Exporting host with uid 7265ee47-600c-40d3-89c7-30e20e84bdf0 named host_192.57.29.68
+
+Exporting host with uid 34141d62-4a76-4832-b85c-25475fbf61fb named host_155.61.83.76
+
+Exporting hosts from group [EDS-VPN]
+
+Exporting host with uid ddd568f3-6f7a-4d67-9256-331e8021c782 named host_204.103.226.246
+
+Exporting host with uid cfc832b8-87fd-4e64-9cb6-e7a6ac07e7f7 named host_204.103.133.246
+
+Exporting host with uid 34e07b71-769d-4498-b1bd-087755230e56 named host_216.240.206.140
+
+Exporting hosts from group [FactSetAnalyticsAndContent]
+
+Exporting host with uid 5570a290-da36-49cb-b022-cdd7b939ba45 named host_192.234.235.1
+
+Exporting host with uid 66428dd0-1960-41b6-8faa-b7c170699c83 named host_64.209.89.1
+
+Exporting host with uid 27f11d4e-1ffd-438f-80c8-fef216fff8d0 named host_192.234.235.2
+
+Exporting host with uid 18953c66-bf91-4f43-a223-60bacd6186c2 named host_64.209.89.2
+
+Exporting networks from group [FactSetPortfolioUploads]
+
+Exporting network with uid 8aaa8f48-dff0-4943-aa2c-b8185db714f1 named network_64.209.89.0_24
+
+Exporting network with uid 4b7ce16c-cba0-4715-b1fd-43799be726ee named network_192.234.235.0_24
+
+Exporting networks from group [FactSetReal-Time]
+
+Exporting network with uid 77e5551b-8774-4074-b033-c2951ccb4d51 named network_64.95.112.160_27
+
+Exporting network with uid 181e95ac-97c7-42ad-a743-6a23ddb604e9 named network_202.58.139.0_29
+
+Exporting network with uid 2bfe9da0-c48e-4b9e-a31c-8bd3344c94c5 named network_208.184.40.0_24
+
+Exporting network with uid 1de8d77a-532e-4c5a-b1da-dc8501b508a0 named network_202.177.200.64_28
+
+Exporting network with uid a1030ad9-d21c-43ee-a13e-2bf121b80f13 named network_217.111.111.128_29
+
+Exporting network with uid cc0a72a8-e09c-4ea2-b901-f19079499ae9 named network_70.42.57.192_28
+
+Exporting network with uid 66252cc6-d801-4bfd-a963-2bd552963d90 named network_62.80.98.144_29
+
+Exporting network with uid c254733f-51d8-437b-90ac-b2e5e1b2cfc0 named network_84.233.158.64_28
+
+Exporting network with uid 034c5606-2512-4dca-9624-5132fb1d6aad named network_38.86.173.96_29
+
+Exporting network with uid 7d10ccf7-5c63-4e21-9b5f-bd664e4bffc3 named network_173.205.61.56_29
+
+Exporting network with uid 2fc7d39e-74c4-4d2b-ae8a-f2aed19af23f named network_208.44.129.192_27
+
+Exporting network with uid 84335297-58fa-4825-a399-9b1cf39407d1 named network_119.27.58.0_28
+
+Exporting network with uid 4094bef2-7a38-45dd-a6ec-cbc3d0b6da46 named network_206.165.137.224_28
+
+Exporting network with uid d5161f1e-7e95-4b41-983b-3bdaf6b54e75 named network_64.124.108.192_28
+
+Exporting networks from group [FactSetURL]
+
+Exporting networks from group [HP-Rooms-Access]
+
+Exporting network with uid de96690f-87cb-4907-a675-b1ac9abff979 named network_15.0.0.0_8
+
+Exporting networks from group [imco-temp-vlan]
+
+Exporting hosts from group [malicious-block]
+
+Exporting host with uid 5aa9b606-160b-449e-8f6c-a04d49ace294 named host_87.106.190.153
+
+Exporting host with uid 1201d273-3887-4e92-a2b3-67c1d56570a9 named host_194.87.239.99
+
+Exporting host with uid 57f3ef8a-a3b4-453a-b1ae-ba76568c182d named host_46.165.254.208
+
+Exporting hosts from group [MBS-Hosts]
+
+Exporting host with uid 7444d042-7ed9-4fac-bd8e-b913dd8729fb named host_142.107.247.7
+
+Exporting host with uid f67655da-93a4-4214-82d7-d80b64664001 named host_142.107.247.50
+
+Exporting host with uid 9ca8da43-e3e7-4bbd-85f5-5f44e4ba0330 named host_142.107.247.3
+
+Exporting host with uid 35396345-13cc-4de7-ba9c-4a08a5c0dcd8 named host_142.108.184.54
+
+Exporting hosts from group [MBS-LDAP-Hosts]
+
+Exporting host with uid 0f189f7c-6f8c-459b-b2fa-706d3b4f768a named host_142.107.134.31
+
+Exporting host with uid 636023bc-675e-46d3-b75e-35ed6d542e43 named host_142.107.134.140
+
+Exporting host with uid 4066b777-07e0-4fbc-89bb-2ba856ce4b69 named host_142.107.134.30
+
+Exporting host with uid 1a2651b8-92f3-4a27-bd30-968661a3e4d4 named host_142.108.28.131
+
+Exporting networks from group [MBS-Nets]
+
+Exporting network with uid 7d811008-d7c6-47aa-98d4-dc234bccbb0c named network_142.106.0.0_16
+
+Exporting network with uid a4d4dd65-c5de-4daf-9bc1-51df0a2f8be2 named network_142.107.0.0_16
+
+Exporting network with uid 8505b95a-dcfb-4b9b-93ca-a6fb4e494a23 named network_142.108.0.0_16
+
+Exporting network with uid e93c6f3a-5a29-44e2-a6f5-5448d65a8093 named network_10.86.0.0_16
+
+Exporting network with uid bb55e548-ad88-40ad-b18a-6a532bc69f1e named network_10.101.0.0_16
+
+Exporting hosts from group [opb-ad-servers]
+
+Exporting groups from group [opb-ad-servers]
+
+Exporting hosts from group [mcc-ad-srvs]
+
+Exporting host with uid 96b15ee8-fd98-4bd0-8381-49e9015cd55f named cammdopb001.mail.opb.on.ca
+
+Exporting host with uid 477784c1-d6a9-42be-b12f-97e557b928f5 named cammdopb002.mail.opb.on.ca
+
+Exporting hosts from group [ad-srvs-vlan15]
+
+Exporting host with uid f77865c0-4197-46c9-8b5a-58f7218b7700 named caopbpstsp111.mail.opb.on.ca
+
+Exporting group with uid 4cb966d6-7e8d-4d6d-b57e-a8855bcf03ed named mcc-ad-srvs
+
+Exporting group with uid b892e1ac-b57b-483a-8478-147147bc89b3 named ad-srvs-vlan15
+
+Exporting hosts from group [OPB-cogent-moni-test]
+
+Exporting host with uid 64a7fab9-1824-4570-b43a-4dcf13097c3f named host_198.132.30.139
+
+Exporting host with uid 13ba0267-d56c-4a9f-93b5-c331bbfafe6a named host_198.132.31.48
+
+Exporting hosts from group [OPB-EXT-RDP]
+
+Exporting hosts from group [OPB-ISP-DNS]
+
+Exporting host with uid ead1127b-6839-44f1-a850-a1ecee71342e named host_64.71.255.198
+
+Exporting host with uid 9729c467-23f0-4f6a-9884-50c61561c87d named host_66.28.0.61
+
+Exporting host with uid c4ea02d7-6531-4168-9eea-4f55b240ba84 named host_64.71.255.202
+
+Exporting networks from group [OPB-Networks]
+
+Exporting network with uid 4ab94536-be0d-442d-a605-ecc1ace85cf3 named network_192.168.55.0_24
+
+Exporting network with uid 3e979861-d0c5-4a39-a3a3-118de358ac99 named network_10.20.0.0_16
+
+Exporting network with uid a4397cc6-825d-475c-be59-97017ba97259 named network_199.228.22.0_24
+
+Exporting network with uid 8b6ff209-9259-4c99-b33b-205d0d2836f1 named network_198.132.0.0_16
+
+Exporting networks from group [OPB-Servers-ALL]
+
+Exporting hosts from group [OPB-Servers-EXT-RDP-TooGood]
+
+Exporting host with uid 2dbd26e4-ae52-4abb-8f4a-f687d04a28a1 named host_198.132.30.68
+
+Exporting host with uid 5b348700-a54b-4e97-9129-46284ef67e49 named host_138.132.30.111
+
+Exporting host with uid b0663fd9-9d74-463a-ba57-8b52ec5477d6 named host_10.20.45.47
+
+Exporting host with uid d1803730-dd54-4915-a296-5bcc79c9260c named host_10.20.45.48
+
+Exporting host with uid 8d87f051-995c-4e7a-9fef-06df9c5d6c46 named opbps135.mail.opb.on.ca
+
+Exporting host with uid 011de250-23d9-44dd-be5c-cca47fae3fb5 named opbps136.mail.opb.on.ca
+
+Exporting hosts from group [OPB-Servers-EXT-SFTP-OpenText]
+
+Exporting hosts from group [OPB-Terminal-Servers]
+
+Exporting networks from group [OPB-User-Subnets]
+
+Exporting network with uid 42122ef7-3e1d-434a-a336-87d848ffe11a named network_198.132.31.0_24
+
+Exporting network with uid 0647ffdf-97ea-40ce-a820-5ea48fabe67d named network_198.132.32.0_24
+
+Exporting hosts from group [road]
+
+Exporting host with uid 91e93a3b-d58b-4e85-862d-40e647488054 named caopbpsrdc001.mail.opb.on.ca
+
+Exporting host with uid 19cc8202-ea09-4333-a8d0-7df34e064f11 named caopbpsadc003.mail.opb.on.ca
+
+Exporting hosts from group [rogers-dmi-bes]
+
+Exporting host with uid 32453e11-9e6b-4df9-bb4a-bfc3cebbd309 named host_10.55.197.12
+
+Exporting host with uid 72cce0d0-7ea8-4f8e-89ab-fa5a3b8fd91a named host_10.55.197.13
+
+Exporting hosts from group [SFTP-Hosts-REAL]
+
+Exporting hosts from group [TOR-CML-SAN]
+
+Exporting host with uid e11b060b-0f3b-4636-9c9b-4a8ab96f0f22 named host_198.132.55.67
+
+Exporting host with uid 3845a7fb-954c-4cb5-ac00-ad8905e41f3e named host_198.132.30.66
+
+Exporting host with uid 1e7161f2-6259-4625-92ff-ef6896e8c3e5 named host_198.132.55.71
+
+Exporting host with uid ac7bff16-ef32-4661-95f3-bca4895974b9 named host_198.132.30.65
+
+Exporting host with uid c7245358-9c7d-4b41-8cff-ca87bcdce648 named host_198.132.30.60
+
+Exporting hosts from group [vm-hosts]
+
+Exporting host with uid e64e165e-0ff3-4669-b69c-a64e48d01d0c named host_10.20.234.11
+
+Exporting host with uid b11e745b-227a-43e8-83c5-240e16db51b0 named host_10.20.234.12
+
+Exporting hosts from group [WLC-Guest-Controller]
+
+Exporting hosts from group [WLC-Internal-Controllers]
+
+Exporting host with uid 954fd5bc-fabd-4003-9f7b-8979e5f99fd5 named OPB-WLC1
+
+Exporting host with uid 92668922-2198-45dc-a5ec-37bab75131d4 named OPB-WLC2
+
+Exporting hosts from group [ad-srvs-vlan15]
+
+Exporting networks from group [azure-s2s-ad]
+
+Exporting network with uid 8e9e41d5-2f33-4d91-a025-b8a7bae2baab named network_172.16.8.48_28
+
+Exporting hosts from group [connex-hosts]
+
+Exporting host with uid 88852e46-5145-454d-a025-6637ee9f2a86 named host_10.20.248.86
+
+Exporting host with uid 773700aa-7d8a-4db2-bd03-2e330b2c16b8 named host_10.20.248.79
+
+Exporting host with uid 1d67eace-f547-442c-a721-41bea12e61b2 named host_10.20.248.62
+
+Exporting host with uid e49972ef-828e-4b22-b394-ce885f98df5d named host_10.20.248.73
+
+Exporting host with uid 9b0a3a42-452c-4c4b-87f4-bf5bd0f361b6 named host_10.20.248.80
+
+Exporting host with uid 8d77d8f1-d211-4615-9b28-bca4d198e6d0 named host_10.20.248.61
+
+Exporting host with uid a9a6b471-040a-46c4-8974-95b574ef01f0 named host_10.20.248.89
+
+Exporting host with uid a669f2d5-71aa-43c2-b975-863134ac2834 named host_10.20.248.36
+
+Exporting host with uid b92ea588-ff80-4659-8350-f07dbe35caef named host_10.20.248.84
+
+Exporting host with uid 6848403c-3211-4223-838c-c68f036e7c22 named host_10.20.248.93
+
+Exporting host with uid 6f8ddb4c-551b-4492-a832-0dab0a3a8b61 named host_10.20.248.30
+
+Exporting host with uid b5483b8b-579a-4547-906d-ae2a2dd63445 named host_10.20.248.71
+
+Exporting host with uid c0a3e81e-5eee-48e5-baaf-7a4ef662e1bf named host_10.20.248.72
+
+Exporting host with uid 2887b241-92ad-49a2-a72b-475cda14b0a1 named host_10.20.248.33
+
+Exporting host with uid 97ae7504-06fc-4b68-9d9f-01b036aaaa68 named host_10.20.248.51
+
+Exporting host with uid d4031e61-6494-49d1-9372-b5d539489e5e named host_10.20.248.87
+
+Exporting host with uid e4960299-275d-4236-b096-807bd544cdd5 named host_10.20.248.38
+
+Exporting host with uid d1b3dc51-da9d-42ef-b867-f3b8bfb70ae4 named host_10.20.248.81
+
+Exporting host with uid 119bf09a-cd12-4914-a761-660b478ec1fc named host_10.20.248.52
+
+Exporting host with uid 6ff80042-2a37-419c-aa19-57644dfbcaf6 named host_10.20.248.37
+
+Exporting host with uid 7da8fd03-756a-4b53-98c7-70369c5bbdd9 named host_10.20.248.39
+
+Exporting host with uid 3cb6787b-be71-42ef-9e10-55d2a9219f52 named host_10.20.248.78
+
+Exporting host with uid f56dea92-a9f3-4ff2-a276-5d8d5e0d6f6a named host_10.20.248.96
+
+Exporting host with uid b3474290-faf3-400d-a95e-6682a533c1a0 named host_10.20.248.32
+
+Exporting host with uid fd686d11-8f47-4a9d-b73c-e4371c942195 named host_10.20.248.50
+
+Exporting host with uid 6d887be9-5e41-4de2-bddc-7984d3aacbda named host_10.20.248.31
+
+Exporting host with uid 64110a49-e663-43ec-97d4-54eab7ee8ceb named host_10.20.248.92
+
+Exporting host with uid 0428d059-205e-43f5-8e4c-bb79b5343936 named host_10.20.248.74
+
+Exporting host with uid 9861a8ce-36d2-42c3-8ea8-464d27712687 named host_10.20.248.60
+
+Exporting host with uid 32319771-d2c9-4a1b-8626-4b8b9adaae8b named host_10.20.248.83
+
+Exporting host with uid 147add68-5914-4db3-8847-db1758509f1a named host_10.20.248.70
+
+Exporting host with uid 55800c8f-92cf-4abc-85e7-01e00ef9a8b2 named host_10.20.248.75
+
+Exporting host with uid 62727a0a-a12b-4098-908b-25caf2e8a653 named host_10.20.248.88
+
+Exporting host with uid a496e4e4-6f73-4b7d-9f54-28b49d2c7c82 named host_10.20.248.98
+
+Exporting host with uid bfae72c3-be28-411d-b48f-1cd26b85f1b3 named host_10.20.248.91
+
+Exporting host with uid 12d7aa57-3277-4264-a7bf-411ca0760032 named host_10.20.248.76
+
+Exporting host with uid c211dd8b-b583-4546-929d-4d2a5cc4ec16 named host_10.20.248.34
+
+Exporting host with uid 30b6f23e-be8e-4086-8e16-79c4b0702898 named host_10.20.248.35
+
+Exporting host with uid a6611d3e-8cbb-4191-905c-506397928063 named host_10.20.248.82
+
+Exporting host with uid 16a74362-ed94-4936-bc91-6af69c20165b named host_10.20.248.97
+
+Exporting host with uid b8004ed7-394c-4160-a14e-6c406e65cc2c named host_10.20.248.77
+
+Exporting host with uid f2d84ffd-408c-4a2f-85ee-2a7c268cb166 named host_10.20.248.90
+
+Exporting hosts from group [connex-sal-be]
+
+Exporting host with uid 6b499318-755a-4008-8a7e-b2595e43814c named host_10.20.170.27
+
+Exporting hosts from group [connex-sal-fe]
+
+Exporting host with uid 5cf7dbce-7394-47f1-9f29-ce8d9402db99 named caopbpscim001.mail.opb.on.ca
+
+Exporting hosts from group [connex-sal-web]
+
+Exporting hosts from group [dell_sites]
+
+Exporting host with uid 78501f85-7fba-4ada-aa7e-dac947923e8c named host_76.164.8.160
+
+Exporting host with uid 2b25f423-1517-4562-aacc-1f78a58ea3e5 named host_76.164.8.175
+
+Exporting host with uid a961dfa2-2fe4-45e7-be2e-fbeea60a4777 named host_76.164.8.161
+
+Exporting host with uid da40802f-b56f-4420-9a72-39d2cbf08e8d named host_76.164.8.173
+
+Exporting host with uid 9b3a6d6f-949b-427b-be15-c420314f7ed0 named host_76.164.8.174
+
+Exporting groups from group [DM_INLINE_NETWORK_1]
+
+Exporting networks from group [OPB-Subnets-All]
+
+Exporting network with uid 26378852-49a5-439f-a560-4e6a7eccfc3a named SFTP-DMZ-network
+
+Exporting network with uid 947f85e3-e71b-4bd1-ad7f-e5f771b66b14 named network_198.132.30.0_23
+
+Exporting group with uid 12ed06af-cc77-4485-bee7-8c9ba044084b named OPB-Subnets-All
+
+Exporting networks from group [DXC-EDS-Networks]
+
+Exporting network with uid a4b8492f-6088-485c-8d6a-eb9f4869699f named network_192.57.23.0_24
+
+Exporting network with uid e3113c7d-841d-4fd3-93b3-e7229df976ee named network_130.175.220.0_24
+
+Exporting network with uid bc90d985-831a-4769-a42a-06c6f1fb4399 named network_199.228.199.0_24
+
+Exporting network with uid 0e2a948f-09d9-4d65-a319-f0de87ff09a9 named network_148.97.0.0_16
+
+Exporting network with uid 66a11a62-8fb9-4ecc-8db0-aeef05f3c3f3 named network_199.228.74.0_24
+
+Exporting network with uid ea20a797-249e-4fee-a024-3b0afedf15fc named network_159.249.0.0_16
+
+Exporting network with uid bbf3ec92-fcd4-4400-a2c5-7005f0197bc6 named network_192.85.208.0_24
+
+Exporting network with uid 5565a62d-d5d0-4cdd-b254-06b16fde486f named network_205.191.24.0_24
+
+Exporting network with uid a4e8ecb2-ca11-4d4c-873c-1b11316896f1 named network_199.228.72.0_24
+
+Exporting network with uid 5cbc77ef-8e49-462c-9ed8-bcf708eddc00 named network_199.228.185.0_24
+
+Exporting network with uid 8442b14b-ed6f-4306-ab4b-10793d5cf4b6 named network_148.91.0.0_16
+
+Exporting network with uid e1a7c497-3efd-4c04-8e69-75a493156aa8 named network_148.92.0.0_16
+
+Exporting network with uid bc59ddf2-58d2-4472-b091-1a148b9e44ef named network_148.94.0.0_16
+
+Exporting network with uid d4b8314a-747c-4327-98a3-2e4db0549aac named network_205.191.22.0_24
+
+Exporting networks from group [eagle_access_dst]
+
+Exporting network with uid 34787b4b-b085-41c5-9ab9-c436b92dbf91 named network_10.70.40.0_22
+
+Exporting network with uid fdf4976d-f4af-42aa-92dc-48989d2b5cb1 named network_10.70.38.0_23
+
+Exporting network with uid b59714ea-df22-46ae-aa47-c6dbfa5b91a4 named network_10.70.140.0_22
+
+Exporting network with uid c0c3c7bf-449a-4366-94a3-d16caaaaf506 named network_10.70.144.0_22
+
+Exporting network with uid 2277e708-3f41-4cc8-a068-788760e5870a named network_10.70.138.0_23
+
+Exporting network with uid 633c6d35-802e-4898-a066-b8f13794c2f1 named network_10.70.44.0_22
+
+Exporting hosts from group [eagle_access_src]
+
+Exporting host with uid 52ed3a16-2368-4b9e-9de7-9551cd191bcf named host_10.20.71.11
+
+Exporting host with uid a73327ce-94ef-4025-9f10-ce61fa799e68 named host_10.20.70.11
+
+Exporting groups from group [eagle_access_src]
+
+Exporting networks from group [imco-temp-vlan]
+
+Exporting networks from group [eagle_access_src]
+
+Exporting network with uid 6a289c73-ba89-48cd-81f8-0ffc50c5c92b named AccessVPN 10.20.200.2/25
+
+Exporting networks from group [eagleDR_dest]
+
+Exporting network with uid 3533ec47-880c-4aa8-96ac-10b8bd964b81 named network_10.60.102.0_24
+
+Exporting network with uid 36758241-d60a-439c-b94a-940e57e80bcd named network_10.60.105.0_24
+
+Exporting network with uid eec11567-f11b-4a8a-9f1b-a906d6408a6c named network_10.60.2.0_24
+
+Exporting network with uid 485fc437-8ab6-43a7-ac34-4220438f30e8 named network_10.60.53.0_24
+
+Exporting network with uid 87d3eb16-7242-4b12-b8cf-18dff18acee2 named network_10.60.52.0_24
+
+Exporting network with uid 62c36af0-4421-4bf7-a979-d8845fd1b696 named network_10.60.5.0_24
+
+Exporting hosts from group [moveit-auto-srvs]
+
+Exporting networks from group [OPB-Guest-Client-Network]
+
+Exporting network with uid c52ae725-175c-405b-a68a-02a5f77cf1f5 named OPB-Guest-Network
+
+Exporting networks from group [opb-ipphone-subnets]
+
+Exporting network with uid 9e925e99-f793-4dc8-9805-1207b0eee96a named vlan221-21st flr Voip vlan
+
+Exporting network with uid 9ba9d6f7-e537-47cc-9b0f-a9a56b57295e named vlan222-22nd flr Voip vlan
+
+Exporting network with uid 6acbdd94-05da-406f-8379-12a222cc5d54 named vlan223-23rd flr Voip vlan
+
+Exporting hosts from group [OPB-ISE-Radius-Servers]
+
+Exporting host with uid 7af54413-3289-4c76-8080-c509b95ccbfa named caopbpaise005.opb.on.ca
+
+Exporting host with uid 1ce61976-917f-4f01-b508-5dd0c8c3ef48 named camkvopbise114.opb.on.ca
+
+Exporting hosts from group [OPB-Prime-Servers]
+
+Exporting host with uid 226d3438-e55e-467d-a26c-3730ee709182 named caopbpapri001.opb.on.ca
+
+Exporting hosts from group [san-appliances]
+
+Exporting networks from group [uc4-opb-desktops]
+
+Exporting network with uid cd0bec2f-ff57-4a3c-a18a-02619b87443c named network_10.20.120.0_24
+
+Exporting networks from group [VPNNEC00-CAN]
+
+Exporting group with uid 0e6a8515-55e2-410b-b4aa-48e42a3b9fe5 named all-tools-nets-sdn-eds
+
+Exporting group with uid 6ea9fd5b-c93a-4dbd-9b0b-ee029004a067 named BloomBerg
+
+Exporting group with uid b35cff0a-1114-447f-b596-6a37abe96060 named BloomBerg-Access
+
+Exporting group with uid ca4230e9-e9c4-4874-9608-1dda7c588691 named CMDB-Network_Device_Subnets_All
+
+Exporting group with uid 973d139d-1c08-4189-ad33-e6d28441481d named CMDB-Servers
+
+Exporting group with uid 02556490-f0ae-4de9-9fae-75326d7ab703 named Cogent-Monitored-devices
+
+Exporting group with uid 55f55f2e-f2b3-4cf3-9158-b219b8f7bac8 named connex-pub-sites
+
+Exporting group with uid d3bbddbe-97ce-4d42-a4f1-e6e28b9618f6 named DXC-EDS-DNS-Servers
+
+Exporting group with uid 89a85b36-378e-4fcb-a34c-eb747f80ad35 named DXC-EDS-Managed-Net-Devices
+
+Exporting group with uid 66a46c44-ac10-409e-864d-4f35fb672110 named DXC-PUB-AV-Hosts
+
+Exporting group with uid 7a17884b-e311-4d6a-9df9-7c551df060b7 named Dynamo-sFTP-Backup
+
+Exporting group with uid 2a4a7143-83d2-4dea-aa06-b591681565c6 named eds-ePCM
+
+Exporting group with uid e5ec2427-17bc-447c-990e-c3cbb22c44cb named eds-internet
+
+Exporting group with uid a06c1bc0-65ae-4ac6-801f-48d974e2b272 named eds-mcafee-epo-servers
+
+Exporting group with uid a0640736-b697-472d-b44b-84693a63bf52 named EDS-VPN
+
+Exporting group with uid b15005bb-b779-4b21-9415-c968b1292cae named FactSetAnalyticsAndContent
+
+Exporting group with uid 4bbc89dc-d01f-4948-b353-35fbeda5a627 named FactSetPortfolioUploads
+
+Exporting group with uid 469a5cec-1b28-42eb-9469-edfcc20d9db5 named FactSetReal-Time
+
+Exporting group with uid 3f14deb1-1428-44b3-bc04-44d99da0b997 named FactSetURL
+
+Exporting group with uid 69c8235b-1a4d-4d8c-8721-08e97eafbddc named HP-Rooms-Access
+
+Exporting group with uid 7667f523-96d5-48d2-afa6-0446c3920b4b named malicious-block
+
+Exporting group with uid 0aa89c4d-9a9c-4573-93ec-d005e71ad7d4 named MBS-Hosts
+
+Exporting group with uid 26e742a8-514e-4f22-8367-7c9e35361ff6 named MBS-LDAP-Hosts
+
+Exporting group with uid 3bcba618-e9ff-43e2-be33-adfa78750faa named MBS-Nets
+
+Exporting group with uid 9830ed9c-9d59-4ce3-952a-ebe39318fb3e named opb-ad-servers
+
+Exporting group with uid c2add544-a3b2-458b-b388-5c139d87bf63 named OPB-cogent-moni-test
+
+Exporting group with uid dbe7e7b3-5e02-4ed0-afe6-f28981dc8afa named OPB-EXT-RDP
+
+Exporting group with uid 1bdbaad8-5cdb-477d-a7b6-be5170d66730 named OPB-ISP-DNS
+
+Exporting group with uid 59c60226-a470-4655-9bba-4953996f9b7b named OPB-Networks
+
+Exporting group with uid 17395f23-786b-4055-9c08-4b51be3df0af named OPB-Servers-ALL
+
+Exporting group with uid 82827c6e-6d08-4a33-bdf1-c7407ff7d47c named OPB-Servers-EXT-RDP-TooGood
+
+Exporting group with uid 3ae3bd85-ad2d-4730-9042-15ae98b1c0ab named OPB-Servers-EXT-SFTP-OpenText
+
+Exporting group with uid 0e8f4d37-84a4-4ada-9bba-ed3e118a4dbc named OPB-Terminal-Servers
+
+Exporting group with uid d7c53470-e74e-4586-b45b-d7c9edb0b93b named OPB-User-Subnets
+
+Exporting group with uid 5deec998-9f7c-480e-9a65-871d4b6f2a91 named road
+
+Exporting group with uid f4b5e0aa-6a1d-4caf-8caa-9851c25c57db named rogers-dmi-bes
+
+Exporting group with uid b9cb2dbb-7bc9-4348-b151-da89096e9b6d named TOR-CML-SAN
+
+Exporting group with uid e24fc081-329d-4dfc-b2fe-7b4416098610 named vm-hosts
+
+Exporting group with uid c7dafb1c-e497-468b-a4f7-bdd9897921ba named WLC-Internal-Controllers
+
+Exporting group with uid 3fd8e402-59ee-4083-b5f9-8988e696cbfb named azure-s2s-ad
+
+Exporting group with uid 2f4b9bc7-446a-4796-a225-ff3c7f672375 named connex-hosts
+
+Exporting group with uid e96efe08-1d9c-424f-a707-323fe5ac54b0 named connex-sal-be
+
+Exporting group with uid bd1212b1-06af-4afb-88e6-97e076a06fce named connex-sal-fe
+
+Exporting group with uid 0b787f71-6b86-4c62-8ac9-7795dfb63ace named connex-sal-web
+
+Exporting group with uid ad159bcf-9aa0-4a8b-a111-5df72d0328dc named dell_sites
+
+Exporting group with uid 69441384-1bda-435b-bf91-255beb3c03c2 named DM_INLINE_NETWORK_1
+
+Exporting group with uid 6d1a95a2-055c-4dca-97e7-8b2c71a2695d named DXC-EDS-Networks
+
+Exporting group with uid 7dcb30f5-5a74-465e-b5bb-678b46a2c846 named eagle_access_dst
+
+Exporting group with uid ceee90f2-4beb-4364-97e4-2bb6cb1f81c6 named eagle_access_src
+
+Exporting group with uid d39d67b2-d143-4577-b0f5-18ce3556e748 named eagleDR_dest
+
+Exporting group with uid ac51e428-6b6a-4600-9dba-ccda7be98a8b named moveit-auto-srvs
+
+Exporting group with uid 64308147-9fd3-4aa4-85e3-d3a8a4d37918 named OPB-Guest-Client-Network
+
+Exporting group with uid f37189cd-990f-411e-a03c-51a4212ec47e named opb-ipphone-subnets
+
+Exporting group with uid dc71f57e-916e-4819-a765-b6fdb3f89340 named OPB-ISE-Radius-Servers
+
+Exporting group with uid 03c88ac1-9f7d-4411-9d3d-98c69483cca1 named OPB-Prime-Servers
+
+Exporting group with uid be7ad73b-bffb-4afc-a880-6a740a8b511f named san-appliances
+
+Exporting group with uid 36420ed2-465d-45aa-9b72-98df85cb714d named uc4-opb-desktops
+
+Exporting networks from layer [Stage1 Network]
+
+Exporting network with uid 7c7f9529-c2a3-476a-9318-6b926bd300c9 named vlan234-New VM
+
+Exporting network with uid 85192633-b920-481d-8257-e7a18e177be0 named vlan60-produdction db
+
+Exporting network with uid 37cd2ffb-5291-484f-acc8-7bd8ac626d35 named vlan61-Dev DB
+
+Exporting network with uid 53916425-db8e-48c1-844a-74f3716dcc90 named vlan85-Legacy VOIP Servers VLAN85
+
+Exporting network with uid da7fb785-ee58-495a-9a72-53e6deed1459 named connex-vlan248-Connex VLAN 248
+
+Exporting network with uid 46a14a9b-6fc5-4c2b-bcce-db9399c56e66 named network_10.10.1.0_24
+
+Exporting network with uid 2859c3ba-ff77-4315-a8e1-6e7fd05a552f named network_155.61.42.0_24
+
+Exporting network with uid c0e9326c-66d6-4983-bea8-4eb12101c576 named network_172.16.2.0_24
+
+Exporting network with uid e85f95e8-dda5-45a3-8aa5-d46e148eb4bc named network_204.103.139.0_24
+
+Exporting network with uid a6526cde-a351-4d36-83d8-92ca00cbf57a named network_204.103.211.0_24
+
+Exporting access rules from layer [Stage1 Network]
+
+Exporting access-rule with uid 1c1ffe5f-bca4-4d9b-bc9f-18c2541af17e
+
+Exporting access-rule with uid 7895961e-0740-4e4c-8e44-4f4f6dcea8ed named GONET rules removed
+
+Exporting access-rule with uid 83d83fb6-2577-4820-86fb-363d8b8a2612 named Qualify use of DNP3 protocol as need for high ports (open service ports 20000, 20001 NOT DNP3)
+
+Exporting access-rule with uid 0cf6df89-47d6-4b21-bc54-d68e9831f698 named connex remote support
+
+Exporting access-rule with uid d57b03bd-dca3-4de5-877a-aab02e8c5866 named connex remote support
+
+Exporting access-rule with uid b33b5caa-b375-4eae-9ed1-a2bc6f64a6f0
+
+Exporting access-rule with uid 7310a85d-b76e-4698-ad22-b0ae8df7cfd9 named CONNEX CLEAN UP RULE
+
+Exporting access-rule with uid 8f087727-85eb-4424-93c1-c4d55f392e68 named Allow all web
+
+Exporting access-rule with uid 98d3bddb-b631-457b-86a6-2cf4348853bf named DXC to confirm for DELETE - Not seen in current managed AV
+
+Exporting access-rule with uid 468c4a9f-57b7-4fe2-8484-4fc019cf31f0 named Websense Proxy confirmed
+
+Exporting access-rule with uid 4b511201-0d00-41e9-9478-0b209559d361 named DNS access for all hosts at OPB
+
+Exporting access-rule with uid 7db499a8-f7bc-4b33-92c3-d7183be99719 named DNS forwarding for outside resolution
+
+Exporting access-rule with uid 80f6870c-de6f-4240-a873-1745cae28672 named Troubleshooting, or network monitoring of hosts through icmp
+
+Exporting access-rule with uid bc498955-c67a-483c-9e59-e307e9f48d69 named Still needed DELETE? GONET related
+
+Exporting access-rule with uid 281b9eba-4a2e-405f-a5c7-5998e2940d77
+
+Exporting access-rule with uid 40d1cae1-612d-465c-94c6-aab16229292b
+
+Exporting access-rule with uid 56273470-3c8b-40b4-85a5-d2d638e4cfcb
+
+Exporting access-rule with uid a79a0983-abac-4314-b5fc-68b49bf8877b
+
+Exporting access-rule with uid c59ff9ba-b7ad-45d0-ac8d-7650544fd36a
+
+Exporting access-rule with uid 4ee492a9-674d-4f40-bbe9-49c41e6aa144
+
+Exporting access-rule with uid ca1655dd-3f19-4ad4-a19a-d7877070b4e6
+
+Exporting access-rule with uid b6cfd653-08e7-4530-b51f-19d72d41ab59
+
+Exporting access-rule with uid 9b0fe628-38d2-4483-8103-8b346ac3802e
+
+Exporting access-rule with uid 67b331e0-a015-4690-808d-20af2785dde5
+
+Exporting access-rule with uid 47d75f56-4870-400c-ae7d-2ac315e7ad63
+
+Exporting access-rule with uid 324d1c02-a355-41d1-802a-c61c3aa5f4c0
+
+Exporting access-rule with uid 8df6146e-86ba-41ae-9c6a-3b769f84d065
+
+Exporting access-rule with uid e3197811-efcf-4d12-8d1e-318c67ff192f
+
+Exporting access-rule with uid 03978587-2356-4152-b236-4272ad4e7b79
+
+Exporting access-rule with uid c3181006-81d7-40c0-93d2-a276b13cf612
+
+Exporting access-rule with uid e0a46a4f-a454-4951-9f7b-5251c3586d3c named EDS/DXC IP space NEED to confirm if still active
+
+Exporting access-rule with uid c9eee877-ac19-4c88-b66c-ecd1aa50d479 named EDS/DXC IP space NEED to confirm if still active
+
+Exporting access-rule with uid 22eab15f-2873-41e9-92db-0a1cd91eff8b named EDS/DXC IP space NEED to confirm if still active
+
+Exporting access-rule with uid 66729273-05a7-4257-bd94-3c150f7ef5e6 named EDS/DXC IP space NEED to confirm if still active
+
+Exporting access-rule with uid 782dff4b-3040-4a40-905d-18ee32627c64 named EDS/DXC IP space CONFIRMED LIVE NETWORK ACCESS
+
+Exporting access-rule with uid 59b9ef3c-46eb-4ee1-9b90-de18d21d48c2 named DS/DXC IP space CONFIRMED LIVE NETWORK ACCESS
+
+Exporting access-rule with uid 69e07c59-27a2-46bc-b8b2-6a77203c34f2 named Cleanup of legacy AD servers, support of Rogers BES remote VPN - source ca.opb.srdc001 10.20.150.8
+
+Exporting access-rule with uid 25038a39-bc44-44ae-9af7-457adb8d3346 named Legacy VLAN Server layer
+
+Exporting access-rule with uid 4e6efdd9-8740-44c5-a37c-5877affa04df named Legacy VLAN Server layer
+
+Exporting access-rule with uid 6900f7c4-9839-46b0-a620-9c13f4edbb24 named Unrestricted access to the internet with SSH
+
+Exporting access-rule with uid 92c00dc5-b20a-4cc1-913d-cb7482fc7ac2 named TooGood financial outside partner access of desktop
+
+Exporting access-rule with uid 9c4179d0-0c3f-41a0-ab43-a816dacef957 named Content Server application support from OpenText
+
+Exporting access-rule with uid e9a4a575-5fea-43bc-a59a-96a20d2018c3 named Remote management of devices in OPB DUPLICATE of 55
+
+Exporting access-rule with uid 1973b2ba-4264-41ae-b88c-169787c9b0ad named TooGood Financial Services for IMCO - OPB to confirm that it is not in use?
+
+Exporting access-rule with uid b0200670-256c-4ea2-bdd9-03ac3e28ef24 named 3rd Party Supported services FactSet
+
+Exporting access-rule with uid 91940cd3-0b60-4be4-8671-d6ebd2bbd8f7 named 3rd Party Supported services FactSet
+
+Exporting access-rule with uid 85ff0f5b-e025-4eeb-a07d-ab4dd1d3633c named 3rd Party Supported services FactSet
+
+Exporting access-rule with uid 9a6208f0-0dc7-4f6e-a559-42c0aeca58c6 named 3rd Party Supported services FactSet
+
+Exporting access-rule with uid 3d67db9b-4fc3-406b-abe4-9629c933a198 named 3rd party external company in support of application - CLEANUP SERVICE DEFINITIONS
+
+Exporting access-rule with uid fa560662-628e-4f3a-88b0-e35bab8c6ae8 named Wireless management of guest wifi
+
+Exporting access-rule with uid 1c1ffe5f-bca4-4d9b-bc9f-18c2541af17e
+
+Exporting access-rule with uid 7895961e-0740-4e4c-8e44-4f4f6dcea8ed named GONET rules removed
+
+Exporting access-rule with uid 83d83fb6-2577-4820-86fb-363d8b8a2612 named Qualify use of DNP3 protocol as need for high ports (open service ports 20000, 20001 NOT DNP3)
+
+Exporting access-rule with uid 0cf6df89-47d6-4b21-bc54-d68e9831f698 named connex remote support
+
+Exporting access-rule with uid d57b03bd-dca3-4de5-877a-aab02e8c5866 named connex remote support
+
+Exporting access-rule with uid b33b5caa-b375-4eae-9ed1-a2bc6f64a6f0
+
+Exporting access-rule with uid 7310a85d-b76e-4698-ad22-b0ae8df7cfd9 named CONNEX CLEAN UP RULE
+
+Exporting access-rule with uid 8f087727-85eb-4424-93c1-c4d55f392e68 named Allow all web
+
+Exporting access-rule with uid 98d3bddb-b631-457b-86a6-2cf4348853bf named DXC to confirm for DELETE - Not seen in current managed AV
+
+Exporting access-rule with uid 468c4a9f-57b7-4fe2-8484-4fc019cf31f0 named Websense Proxy confirmed
+
+Exporting access-rule with uid 4b511201-0d00-41e9-9478-0b209559d361 named DNS access for all hosts at OPB
+
+Exporting access-rule with uid 7db499a8-f7bc-4b33-92c3-d7183be99719 named DNS forwarding for outside resolution
+
+Exporting access-rule with uid 80f6870c-de6f-4240-a873-1745cae28672 named Troubleshooting, or network monitoring of hosts through icmp
+
+Exporting access-rule with uid bc498955-c67a-483c-9e59-e307e9f48d69 named Still needed DELETE? GONET related
+
+Exporting access-rule with uid 281b9eba-4a2e-405f-a5c7-5998e2940d77
+
+Exporting access-rule with uid 40d1cae1-612d-465c-94c6-aab16229292b
+
+Exporting access-rule with uid 56273470-3c8b-40b4-85a5-d2d638e4cfcb
+
+Exporting access-rule with uid a79a0983-abac-4314-b5fc-68b49bf8877b
+
+Exporting access-rule with uid c59ff9ba-b7ad-45d0-ac8d-7650544fd36a
+
+Exporting access-rule with uid 4ee492a9-674d-4f40-bbe9-49c41e6aa144
+
+Exporting access-rule with uid ca1655dd-3f19-4ad4-a19a-d7877070b4e6
+
+Exporting access-rule with uid b6cfd653-08e7-4530-b51f-19d72d41ab59
+
+Exporting access-rule with uid 9b0fe628-38d2-4483-8103-8b346ac3802e
+
+Exporting access-rule with uid 67b331e0-a015-4690-808d-20af2785dde5
+
+Exporting access-rule with uid 47d75f56-4870-400c-ae7d-2ac315e7ad63
+
+Exporting access-rule with uid 324d1c02-a355-41d1-802a-c61c3aa5f4c0
+
+Exporting access-rule with uid 8df6146e-86ba-41ae-9c6a-3b769f84d065
+
+Exporting access-rule with uid e3197811-efcf-4d12-8d1e-318c67ff192f
+
+Exporting access-rule with uid 03978587-2356-4152-b236-4272ad4e7b79
+
+Exporting access-rule with uid c3181006-81d7-40c0-93d2-a276b13cf612
+
+Exporting access-rule with uid e0a46a4f-a454-4951-9f7b-5251c3586d3c named EDS/DXC IP space NEED to confirm if still active
+
+Exporting access-rule with uid c9eee877-ac19-4c88-b66c-ecd1aa50d479 named EDS/DXC IP space NEED to confirm if still active
+
+Exporting access-rule with uid 22eab15f-2873-41e9-92db-0a1cd91eff8b named EDS/DXC IP space NEED to confirm if still active
+
+Exporting access-rule with uid 66729273-05a7-4257-bd94-3c150f7ef5e6 named EDS/DXC IP space NEED to confirm if still active
+
+Exporting access-rule with uid 782dff4b-3040-4a40-905d-18ee32627c64 named EDS/DXC IP space CONFIRMED LIVE NETWORK ACCESS
+
+Exporting access-rule with uid 59b9ef3c-46eb-4ee1-9b90-de18d21d48c2 named DS/DXC IP space CONFIRMED LIVE NETWORK ACCESS
+
+Exporting access-rule with uid 69e07c59-27a2-46bc-b8b2-6a77203c34f2 named Cleanup of legacy AD servers, support of Rogers BES remote VPN - source ca.opb.srdc001 10.20.150.8
+
+Exporting access-rule with uid 25038a39-bc44-44ae-9af7-457adb8d3346 named Legacy VLAN Server layer
+
+Exporting access-rule with uid 4e6efdd9-8740-44c5-a37c-5877affa04df named Legacy VLAN Server layer
+
+Exporting access-rule with uid 6900f7c4-9839-46b0-a620-9c13f4edbb24 named Unrestricted access to the internet with SSH
+
+Exporting access-rule with uid 92c00dc5-b20a-4cc1-913d-cb7482fc7ac2 named TooGood financial outside partner access of desktop
+
+Exporting access-rule with uid 9c4179d0-0c3f-41a0-ab43-a816dacef957 named Content Server application support from OpenText
+
+Exporting access-rule with uid e9a4a575-5fea-43bc-a59a-96a20d2018c3 named Remote management of devices in OPB DUPLICATE of 55
+
+Exporting access-rule with uid 1973b2ba-4264-41ae-b88c-169787c9b0ad named TooGood Financial Services for IMCO - OPB to confirm that it is not in use?
+
+Exporting access-rule with uid b0200670-256c-4ea2-bdd9-03ac3e28ef24 named 3rd Party Supported services FactSet
+
+Exporting access-rule with uid 91940cd3-0b60-4be4-8671-d6ebd2bbd8f7 named 3rd Party Supported services FactSet
+
+Exporting access-rule with uid 85ff0f5b-e025-4eeb-a07d-ab4dd1d3633c named 3rd Party Supported services FactSet
+
+Exporting access-rule with uid 9a6208f0-0dc7-4f6e-a559-42c0aeca58c6 named 3rd Party Supported services FactSet
+
+Exporting access-rule with uid 3d67db9b-4fc3-406b-abe4-9629c933a198 named 3rd party external company in support of application - CLEANUP SERVICE DEFINITIONS
+
+Exporting access-rule with uid fa560662-628e-4f3a-88b0-e35bab8c6ae8 named Wireless management of guest wifi
+
+Exporting access-rule with uid a1e433df-34f1-4d11-8e86-b1ee383654d7 named Source from VPN through MCC datacenter? NEED ANALYSIS to determine use - DXC to provide more details on source
+
+Exporting access-rule with uid cf46cc36-c058-4fc5-85ad-cac8a6a02ead named DUPLICATE of internet access rule? Also encompass FactsSet services
+
+Exporting access-rule with uid 6216836c-c7f7-4f10-93e4-c679ef5c53c4 named Remote device management of switch in DMZ
+
+Exporting access-rule with uid ddb804c8-cfc4-499b-a0c5-9e529202052e named Troubleshooting rule? Any source
+
+Exporting access-rule with uid f2265b71-640a-405c-b3ec-5f79ad6c73c8 named Wireless device management from DXC into OPB devices
+
+Exporting access-rule with uid 675dadb4-ed68-44bc-9391-e20516bbf397 named Cisco Prime and ISE management tools for wireless controller
+
+Exporting access-rule with uid af166b21-15c2-480e-93e8-2f94d6a431cf named Unchecked access to Production networks? USED BY IMCO - DXC to check if set for decom
+
+Exporting access-rule with uid c90dc8ad-cb6b-4e17-8b99-891877a5d65d named Primary and backup AD server acess to read only DMZ AD service
+
+Exporting access-rule with uid 99de996f-65e0-458e-9dfe-6dbfaa165d1c named large open access for specific subnets into the VoIP gateways - NOT USED? THIS RULE OPENS EXTENDED ACCESS FROM LAB - CCM REVIEW
+
+Exporting access-rule with uid 82c0fda7-9096-43bb-a9f9-74dd833e9873 named Legacy DMZ to VoIP backend potentially for vmail to email connection
+
+Exporting access-rule with uid 019fb3e4-92a3-48b0-9ca6-38f541c52719 named SAN support callout to Dell partner
+
+Exporting access-rule with uid c355d6fe-de2f-437b-ad8e-5d8fa2e97a6c named Backup MoveIT service to callout to any host for backups
+
+Exporting access-rule with uid 6c4772b7-13a4-40f5-8c76-3e1ddfd94d40 named IMCO Users, should NOT BE IN USE Part of decommision project
+
+Exporting access-rule with uid 838dbf9f-41b4-4e6f-a871-1ef732ffeee7 named IMCO Users, should NOT BE IN USE Part of decommision project
+
+Exporting access-rule with uid 6a4d45b0-58d3-400f-9b69-3a0b7762fa28 named ISE tool for management of guest controller - Cisco appliance for access control
+
+Exporting access-rule with uid df672d27-f626-4fd8-9c9d-36ffeb6c75e9 named Websense access through PAC
+
+Exporting access-rule with uid cde08523-18de-4b70-adb4-4e5b29415891 named Used by ASR should be part of Decommisioned objects for legacy services
+
+Exporting access-rule with uid 0d9641d9-b6f0-4778-a3b9-10e8d6dead46 named Test rule for IMCO access
+
+Exporting access-rule with uid f3d31f0e-d255-4609-b129-d9a908e5ce2b
+
+Exporting access-rule with uid d085cbdd-5e4d-4249-9ec4-fe4ec5dfdf06 named Older application access for MoveIT service, excessive DNS destinations for lookup
+
+Exporting access-rule with uid 6b059a46-e4e3-4564-9f6e-0e148eda0b3a
+
+Exporting access-rule with uid 51436a07-1e7d-4c5e-b481-9a19950320d7
+
+Exporting access-rule with uid ca69ccf5-9b07-43fd-bd7b-5c1a14d7f8f2 named Questionable source access, verify not needed
+
+Exporting access-rule with uid 21f06e08-b995-45c3-bab8-a9e1ab6c5f31
+
+Exporting access-rule with uid fbeeacf8-2e9c-4cf4-bec4-11302b607282 named Access at one time for heatmaps. Question why guest controller would access inward
+
+Exporting access-rule with uid 52985617-d363-4fcf-b728-869acac1199e named RADIUS authentication and NAC through ISE services
+
+Exporting access-rule with uid 72a76320-3376-44de-9b84-ec99cc9ac0b8 named Guest client access for questionable port
+
+Exporting access-rule with uid 6f20db3e-712d-44f6-bd9a-cbd763d47393 named DNS is open to world, guest clients can access DNS
+
+Exporting access-rule with uid cf0af0a0-dfb5-4944-9eea-ed821ec7dc61 named Default block all access from guest wifi to Internal OPB Networks
+
+Exporting access-rule with uid 2ec36571-8b27-4cfe-adf4-bc29dcd5cad9 named Guest internet access
+
+Exporting access-rule with uid 9e392a93-7f9c-41a3-8e19-45abe4f226ea named DXC operational rule
+
+Exporting access-rule with uid dfac5e29-7333-46da-a38a-04c4bebb8928 named Connex Support of VoIP DXC has solutions document.
+
+Exporting access-rule with uid 9c82b026-66cd-48fa-9552-3379b11d83d8 named Connex third party support, many open service ports not defined
+
+Exporting access-rule with uid 7d5386be-432a-4496-99a8-0bf47d363bee named Excessive rule access, duplicates access inbound both DMZ frontend and backend treated same for access. Front end is internet
+
+Exporting access-rule with uid f2b53d6d-5b55-4c4b-8284-eb745766ae42
+
+Exporting access-rule with uid 6026329c-7a9b-468d-bd5e-10d7cdb81957 named Internet access to support remote
+
+Exporting access-rule with uid 8ac649ff-fd23-4be8-a6b8-c317d7cfbe02 named Cleanup rule
+
+Exporting access sections from layer [Stage1 Network]
+
+Exporting placeholders for unexportable objects from layer [Stage1 Network]
+
+Exporting layer settings of layer [Stage1 Network]
+
+Exporting access-layer with uid 751fe45a-4527-480b-81f0-2f63d7beee8b named Stage1 Network
+
+Done exporting layer 'Stage1 Network'.
+
+
+Exporting NAT policy
+
+Getting information from show-nat-rulebase
+
+Retrieved 2 out of 2 rules (100%)
+
+##Show presented object of type CpmiAnyObject with name All
+
+##Show presented object of type CpmiAnyObject with name Any
+
+##Show presented object of type network with name CP_default_Office_Mode_addresses_pool
+
+##Show presented object of type Global with name Original
+
+##Show presented object of type Global with name Policy Targets
+
+Analysing rulebase items...
+
+Processing rules and sections
+
+Exporting networks
+
+Exporting network with uid 77b5ba71-51a6-403a-8c19-e977c6e59f65 named CP_default_Office_Mode_addresses_pool
+
+Exporting NAT rules
+
+Exporting placeholders for unexportable objects from NAT rulebase
+
+Done exporting NAT rulebase.
+
+
+Exporting Threat-Prevention layers
+
+Exporting Threat Layer [IPS]
+
+Getting layer information for layer [IPS]
+
+Getting information from show-threat-rulebase
+
+Analysing rulebase items...
+
+Processing rules and exceptions
+
+Exporting threat rules from layer [IPS]
+
+Exporting Exception-Groups used in layer [IPS]
+
+Exporting placeholders for unexportable objects from layer [IPS]
+
+Exporting layer settings of layer [IPS]
+
+Exporting threat-layer with uid 598fd9ab-93e4-465b-9725-d228f3905cae named IPS
+
+Done exporting layer 'IPS'.
+
+
+Exporting Threat Layer [Stage1 Threat Prevention]
+
+Getting layer information for layer [Stage1 Threat Prevention]
+
+Getting information from show-threat-rulebase
+
+Retrieved 1 out of 1 rules (100%)
+
+##Show presented object of type CpmiAnyObject with name Any
+
+##Show presented object of type Global with name Log
+
+##Show presented object of type threat-profile with name Optimized
+
+##Show presented object of type Global with name Policy Targets
+
+##Show presented object of type ThreatExceptionRulebase with name ThreatStandardSubRulebase
+
+Analysing rulebase items...
+
+##Show presented independent rule of type threat-rule with no name
+
+Processing rules and exceptions
+
+Updating data for rule #1
+
+Exporting threat rules from layer [Stage1 Threat Prevention]
+
+Exporting threat-rule with uid 272cf90b-f8d0-48a0-a721-3eea463e1ad9
+
+Exporting Exception-Groups used in layer [Stage1 Threat Prevention]
+
+Exporting placeholders for unexportable objects from layer [Stage1 Threat Prevention]
+
+Exporting layer settings of layer [Stage1 Threat Prevention]
+
+Exporting threat-layer with uid 82f511d3-7f16-4366-b2bc-c0a254cbbe84 named Stage1 Threat Prevention
+
+Done exporting layer 'Stage1 Threat Prevention'.
+
+
+Exporting general objects to TAR...
+

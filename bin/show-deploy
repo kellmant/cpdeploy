@@ -1,0 +1,102 @@
+#!/bin/bash
+#
+source $HOME/.IPS
+
+    echo
+    echo -en "$BBlue ctrl/cfg ready: "
+    getcfg="$(etcdctl ls --sort ctrl/cfg 2> /dev/null)" || { getcfg="${On_Blue} Nothing configured " ; }
+    echo -en "${BWhite} $getcfg "
+    echo -e "${NC}"
+    echo
+    echo -e "${Green}Running instances: " 
+    RUNTIME=($(etcdctl ls --sort ctrl/create)) 
+    for (( i=0; i<${#RUNTIME[@]}; i++ )) ; do
+            getrun="$(etcdctl ls --sort ${RUNTIME[$i]})" 
+            if [ -z "$getrun" ] ; then
+                echo -e "${BWhite} ${RUNTIME[$i]} ${On_Green}Nothing Running ${NC}"
+            else
+                echo -e " ${BWhite} $getrun ${NC}"
+            fi
+        done
+        echo -e "${NC}"
+        echo
+    exit
+
+#jobstart "$$"
+#trap "jobtrace '$$'" 0 1 2 3 6
+STARTTIME=$(date +%s)
+
+export mytarget="${1}"
+mycfg="$cfgenv/${mytarget}"
+etcdctl mkdir ${mycfg}
+
+gw_cf="https://s3.amazonaws.com/CloudFormationTemplate/gwinvpc.json" 
+mg_cf="https://s3.amazonaws.com/CloudFormationTemplate/r80.json"
+cpami_cf="https://s3.amazonaws.com/CloudFormationTemplate/amis.json"
+aws_cf="https://s3.amazonaws.com/CloudFormationTemplate/infrastructure.json"
+mghostname=$(etcdctl get $mycfg/config_system/hostname) || { mghostname="${1}.seclab.fail" ; }
+mghost="${mytarget}"
+
+msgbus "${BUDDY} $ipscmd setting up $mghost enviroment. "
+myregion=$(etcdctl get $mycfg/region) || { myregion="ca-central-1" ; }
+myversion=$(etcdctl get $mycfg/version) || { myversion="R8010" ; }
+
+keyscan="curl -s $cpami_cf"
+jqscan="jq -r .Mappings.RegionMap.\"$myregion\".${myversion}BYOL"
+get_ami () {
+    $keyscan | $jqscan
+}
+
+getdef=$(cat ~/bin/config_system)
+declare -A myarray
+        while IFS="=" read -r key value ; do
+            myarray[$key]="$value"
+        done < <(echo "${getdef[@]}")
+
+for key in "${!myarray[@]}" ; do
+    cleanvar=$(echo "${myarray[$key]}" | tr -d '"')
+    etcdctl set $mycfg/config_system/$key "${cleanvar}" 2>/dev/null
+done
+
+mgami=$(get_ami)
+mgsize=$(etcdctl get $mycfg/size) || { mgsize="medium" ; }
+vpc=$(aws ec2 describe-vpcs --region $myregion | jq -r '.Vpcs[].VpcId')
+mgadminname=$(etcdctl get $mycfg/config_system/mgmt_admin_name) || { mgadminname="apiadmin" ; }
+adminpass=$(etcdctl get $mycfg/config_system/mgmt_admin_passwd) || { adminpass=$(xkcdpass) ; }
+etcdctl set $mycfg/region "$myregion" 2>/dev/null
+etcdctl set $mycfg/version "$myversion" 2>/dev/null
+etcdctl set $mycfg/config_system/mgmt_admin_name "$mgadminname" 2>/dev/null
+etcdctl set $mycfg/config_system/mgmt_admin_passwd "$adminpass" 2>/dev/null
+etcdctl set $mycfg/config_system/hostname "$mghostname" 2>/dev/null
+etcdctl set $mycfg/size "$mgsize" 2>/dev/null
+etcdctl set $mycfg/vpc "$vpc" 2>/dev/null
+etcdctl set $mycfg/AMI "$mgami" 2>/dev/null 
+etcdctl set $mycfg/disk "DeviceName=/dev/xvda,Ebs={VolumeSize=100,DeleteOnTermination=true,VolumeType=io1,Iops=900}" 2>/dev/null
+
+msgbus "${BUDDY} $ipscmd security management console $mghostname in $myregion vpc $vpc "
+
+descsecgrp=$(aws ec2 describe-security-groups --region $myregion --group-name ${ipscmd}-${SKEY})
+if [ $? -eq 0 ] ; then
+descsecgrp=$(echo ${descsecgrp[@]} | jq -r '.SecurityGroups[].GroupId')
+    echo "scgroup exists $descsecgrp"
+    etcdctl set $mycfg/secgroup "$descsecgrp" 2>/dev/null 
+else
+crsecgrp=$(aws ec2 create-security-group --region $myregion --group-name ${ipscmd}-${SKEY} --description "$SKEY" --vpc-id "$vpc" | jq -r .GroupId)
+    etcdctl set $mycfg/secgroup "$crsecgrp" 2>/dev/null 
+aws ec2 authorize-security-group-ingress --region $myregion --group-id $crsecgrp --protocol all --port 1-65535 --cidr 0.0.0.0/0
+fi
+
+    msgbus "${BUDDY} $ipscmd $mghostname setup complete, $runenv to launch it. "
+skey $mycfg
+ENDTIME=$(date +%s)
+secs=$(($ENDTIME - $STARTTIME))
+elapsed="$(($secs/3600))h:$(($secs%3600/60))m: $(($secs%60))s"
+echo
+printf 'Elapsed Time %dh:%dm:%ds\n' $(($secs/3600)) $(($secs%3600/60)) $(($secs%60))
+echo
+etcdctl set $mycfg/time "$elapsed" &> /dev/null
+    echo -e "$cmdenv $mghostname setup complete, use ${BGreen}$runenv ${Bwhite}${mytarget} ${NC}to bring to life."
+    echo
+    exit
+
+

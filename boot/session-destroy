@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+#
+# Generate random marker
+# head -c 256 /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 32
+# 32 character output
+#
+set -a
+source $HOME/.IPS
+
+#backmeup
+
+IFS=$'\n'
+#if [ -f $HOME/.sessionkey ] ; then
+#	echo "Session already active."
+#	for i in {3..1} ; do
+#		echo -n "${i}"
+#		sleep .03 ; echo -n "." ; sleep .03 ; echo -n "." ; sleep .03
+#		done
+#	read -p 'Do you want to kill it? <yes/no>: ' dokill
+#		if [ "$dokill" == "yes" ] ; then
+# This is the kill code for the session
+#
+# cleanup efs files for this session
+# get the list of domains 
+#
+echo "currently dead." > $HOME/.status
+#
+# Destroy session info
+# Generate random marker
+# head -c 256 /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 32
+# 32 character output
+#
+# the basics
+
+SESSIONKEY=(`cat ~/.sessionkey`)
+SNAME=$(echo $SESSIONKEY | cut -d '-' -f 3)
+#aws s3 rb s3://${SESSIONKEY} --force
+#sleep 10
+#secpolicy=$(etcdctl get ${SESSIONKEY}/env/mg/secgroup 2>/dev/null) 
+#if [ $? -eq 0 ] ; then
+#region=$(etcdctl get ${SESSIONKEY}/env/mg/region 2>/dev/null) 
+#	echo "removing mg $secgrpid in $region"
+#	aws ec2 delete-security-group --region $region --group-id $secpolicy
+#fi
+
+$HOME/boot/shell off
+keyprefix="$HOME/.ssh"
+rm -rf $keyprefix/${SESSIONKEY}*
+rm -rf ${HOME}/.sessionkey
+rm -rf ${HOME}/.status
+SHASH=$(etcdctl get usr/${BUDDY}/session/${SNAME})
+etcdctl rm session/${SHASH}
+etcdctl rm usr/${BUDDY}/session/${SNAME}
+echo "Exit to reset enviroment,"
+etcdctl set stream "$(hostname) session ${SESSIONKEY} has been destroyed."
+
+exit
+# end of kill code

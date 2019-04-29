@@ -1,0 +1,19 @@
+#!/bin/bash
+. /.IPS
+reset
+resize &>/dev/null
+echo
+echo "Message Bus attached"
+echo "messages streaming live"
+echo
+echo -e "|_/$(hostname) ${BGreen}stream of ${BYellow}$ETCDCTL_ENDPOINTS${NC} started on $(date) "
+
+kwatch="etcdctl exec-watch --recursive"
+msgkeys="stream"
+
+echo -e "   |_/=> \e[1;36m $(etcdctl get stream) \e[m "
+${kwatch} ${msgkeys} -- bash -c 'echo -e "   |_/=> \e[1;36m ${ETCD_WATCH_VALUE} \e[m "'
+
+exit 0
+
+

@@ -1,0 +1,40 @@
+#!/bin/bash
+#. $HOME/.IPS
+# check pep clients
+# fw tab -t pep_client_db -s 
+
+# clean out pep client table on gw
+# fw tab -t pep_client_db -x -y
+
+mygw="admin@gwa.seclab.fail"
+
+echo "Start $(date)"
+last=0
+    stat=$(ssh $mygw "pep show user all")
+while true ; do
+    chkit=$(ssh $mygw "pep show user all")
+    echo -en "${BRed}"
+    diff -bia <( printf "%s\n" "${stat[@]}" ) <( printf "%s\n" "${chkit[@]}" ) | grep "\-127.0.0.1"
+    echo -en "${NC}"
+    sleep 1
+    echo -en "${BGreen}"
+    diff -bia <( printf "%s\n" "${stat[@]}" ) <( printf "%s\n" "${chkit[@]}" ) | grep "\+127.0.0.1"
+    echo -en "${NC}"
+    tput sc
+            echo -en "${BWhite} $(date) ==> $cnt ${NC}objects in gw table"
+            tput el
+    tput rc
+    sleep 2
+    stat=$chkit
+    cnt=$(ssh $mygw "pep show user all" | tail -n +4 | wc -l)
+    (( cnt-- ))
+        if [ $cnt -eq $last ] ; then
+            continue
+        else
+            echo -e "${BWhite} $(date) ==> $cnt ${NC}objects in gw table, was ${last}"
+            ssh $mygw "pep show pdp all"
+            last=$cnt
+        fi
+    sleep 1
+done
+

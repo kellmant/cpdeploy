@@ -1,0 +1,70 @@
+#!/bin/bash
+
+if [ -z ${1} ] ; then
+	echo
+	echo "$0 <management domain>"
+	echo
+	echo "management domains available:"
+    	etcdctl ls --sort ctrl/cfg/mg | cut -d '/' -f 5
+	echo
+	exit 1
+fi
+
+if [ ! -d $HOME/ExportImportPolicyPackage ] ; then
+	cd $HOME
+	git clone --recursive https://github.com/CheckPoint-APIs-Team/ExportImportPolicyPackage
+fi
+
+#PACKAGE="ASA5515_policy"
+mgenv="ctrl/cfg/mg/${1}"
+username=$(etcdctl get $mgenv/config_system/mgmt_admin_name)
+password=$(etcdctl get $mgenv/config_system/mgmt_admin_passwd)
+mghost=$(etcdctl get $mgenv/config_system/hostname)
+host=$(echo "$mghost" | cut -d '.' -f 1)          
+baseurl=https://$mghost/web_api
+curl_cmd="curl --silent --insecure -X POST"
+
+SID=`${curl_cmd} -H "Content-Type: application/json" -d @- $baseurl/login <<. | awk -F\" '/sid/ {print $4}'
+{
+  "user":"$username" ,
+  "password":"$password" ,
+  "session-name":"$0 list"
+}
+.`
+# Login complete, add objects, rules and such here.
+################################################################################################
+
+SHOWPKGS=`${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/show-packages`
+
+ALLPKGS=($(jq -r '.packages[].name' <<< "$SHOWPKGS"))
+
+echo "Found ${#ALLPKGS[@]} policy packages in $mghost domain"
+
+# Logout
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/logout
+echo
+echo
+
+for PACKAGE in "${ALLPKGS[@]}" 
+do
+	echo
+	echo "$host policy package: $PACKAGE available for processing . . . "
+
+mkdir -p $HOME/export/$mghost
+
+python /ctrl/ExportImportPolicyPackage/import_export_package.py -op export -n $PACKAGE --all -o /ctrl/export/$mghost/$PACKAGE -u $username -p $password -m $mghost --unsafe --unsafe-auto-accept
+
+#-op import -n $PACKAGE --all -f /ctrl/export/${PACKAGE}.tar.gz -u $username -p $password -m $mghost --unsafe --unsafe-auto-accept
+
+if [ -f $HOME/export_error_log.elg ] ; then
+cat $HOME/export_error_log.elg 2> /dev/null
+cat $HOME/export_error_log.elg > $HOME/export/$mghost/${PACKAGE}.export.elg 2> /dev/null
+fi
+
+rm -rf $HOME/export_error_log.elg
+rm -rf $HOME/import_export.log
+
+tree $HOME/export/$mghost 2> /dev/null
+
+done
+

@@ -1,0 +1,335 @@
+#!/bin/bash
+source $HOME/.IPS
+
+if [ -z "${1}" ] ; then
+    echo
+    echo "need configured target to run "
+    echo -e "${BGreen} $cmdenv ${BWhite}<name> ${NC}"
+    echo
+    echo -en "${BWhite}Configured:${NC} "
+    echo -en "$BBlue"
+    confrun=($(etcdctl ls --sort $cfgenv 2> /dev/null))
+    for c in ${confrun[@]}; do
+        echo -en " $(echo $c | cut -d '/' -f 5)"
+    done
+    echo -en "${NC}"
+    echo
+    echo -e "${On_Blue}${BGreen}    - $cmdenv running services -   ${NC}"
+    echo -en "$BGreen"
+    runners=($(etcdctl ls --sort $runenv 2> /dev/null)) || { runners="${BWhite} No Running Instances found " ; }
+  for i in ${runners[@]}; do
+      runstate=$(etcdctl get $i/State 2> /dev/null)
+    echo -en "$(echo $i | cut -d '/' -f 5) "
+    echo -en "${NC}"
+    echo -en "${Bwhite} $runstate"
+    echo -en "${NC}"
+    echo
+done
+    echo
+    exit
+fi
+
+mgstate="$(etcdctl get $runenv/${1}/State 2> /dev/null)"
+if [ $? -eq 0 ] ; then
+    echo
+    echo -e " ${1} State: ${BYellow} ${mgstate} ${NC}"
+    echo -e " ${BUDDY} can run ${BGreen} $killenv ${1}${NC} to remove"
+    echo -e " or wait for it to shutdown if you already have. "
+    echo
+    exit 1
+fi
+
+etcdctl ls --sort $cfgenv/${1} 2> /dev/null
+if [ $? -ne 0 ] ; then
+    echo
+    echo -e "no control setup for ${1}, run ${BGreen} $cfgenv ${1}${NC} first"
+    echo
+    exit 1
+fi
+
+
+STARTTIME=$(date +%s)
+#jobstart "$$"
+#trap "jobtrace '$$'" 0 1 2 3 6
+
+roadmin="fwops"
+ropass="$(perfectstranger)"
+export mytarget="${1}"
+
+declare -A ENVS
+# string for the vars
+environmentVariables=""
+export tmpfile="/tmp/${ipscmd}.${mytarget}.$$"
+echo "#!/bin/bash" > $tmpfile
+##
+##
+# Take a key value array and add that into the $environmentVariables string
+# $1 = array of data
+generateEnvString(){
+  msgbus "${cmdenv} generating the environment variables from keystore"
+
+  for i in ${!ENVS[@]}; do
+    val="${ENVS[$i]}"
+    key="$i"
+    echo "echo \"$key=$val\" >> /home/admin/firstconfig" >> $tmpfile
+    environmentVariables="${environmentVariables} echo \"$key=$val\" >> /home/admin/firstconfig"
+  done
+#  echo "environment string: $environmentVariables"
+echo "clish -c 'set timezone America / Toronto' -s" >> $tmpfile
+echo "clish -c 'set ntp server primary 0.pool.ntp.org version 4' -s" >> $tmpfile
+echo "clish -c 'set ntp server secondary 1.pool.ntp.org version 4' -s" >> $tmpfile
+echo "clish -c 'set ntp active on' -s" >> $tmpfile
+echo "clish -c 'set user admin shell /bin/bash' -s" >> $tmpfile
+echo "config_system -f /home/admin/firstconfig" >> $tmpfile
+}
+
+##
+# fetch the data from the segment of etcd specified and convert into a key value array
+# presumes the segment is under /env/
+# $1 = segment to use on etcd
+environmentDataFromEtcd(){
+  # check the env segment exists
+  local notFound=$(etcdctl ls ${cfgenv}/${mytarget}/config_system | grep 'Key not found' | wc -l)
+  # return error if not found
+  if [[ "$notFound" -gt "1" ]]; then
+    msgbus "${cfgenv} Environment segment not set, returning with nothing from the keystore for $BUDDY"
+    return 2
+  fi
+  msgbus " ${cmdenv} fetching data from keystore"
+  # loop over the env vars and fetch the data
+  for i in `etcdctl ls ${cfgenv}/${mytarget}/config_system`; do
+    #key=$(echo $i | sed -r "s#/${cfgenv}/${mytarget}/config_system/##gi")
+    key=$(echo $i | cut -d '/' -f 7)
+    # fetch the env var
+    sleep 1
+    val=$(etcdctl get ${i});
+    if [ -z $val ]; then
+      msgbus "${BUDDY} ${ipscmd} Could not retrive $i, possibly a directory, ignoring"
+    else
+      ENVS[$key]=${val};
+      echo -n " . "
+    fi
+  done
+msgbus "${ipscmd} has fetched config from keystore session $SKEY for ${BUDDY}"
+}
+
+# fetch from a test area in the etcd env vars
+environmentDataFromEtcd 
+generateEnvString
+# output the result:
+msgbus "${BUDDY} $cmdenv config_system file created for launch of instance."
+gzip $tmpfile
+
+# launch script
+#
+#
+msgbus "$cmdenv $mytarget started by $BUDDY"
+mgenv="$cfgenv/$mytarget"
+region=$(etcdctl get $mgenv/region) || { echo "No region set, run $cfgenv first " ; exit 1 ; }
+AMI=$(etcdctl get $mgenv/AMI) || { echo "No AMI defined, run $cfgenv first " ; exit 1 ; }
+disk=$(etcdctl get $mgenv/disk) || { echo "No ebs storage, run $cfgenv first " ; exit 1 ; }
+myver=$(etcdctl get $mgenv/version) || { echo "Version of instance not set, run $cfgenv first " ; exit 1 ; }
+sizeing=$(etcdctl get $mgenv/size) || { echo "Size of instance not set, run $cfgenv first " ; exit 1 ; }
+if [ "$myver" == "R8020" ] ; then
+	size=$(etcdctl get size/mg20/${sizeing})
+else
+	size=$(etcdctl get size/mg/${sizeing})
+fi
+points=$(etcdctl get points/${size})
+vpc=$(etcdctl get $mgenv/vpc)
+secgroup=$(etcdctl get $mgenv/secgroup) || { echo "no security group setup, run $cfgenv first" ; exit 1 ; }
+hostname=$(etcdctl get $mgenv/config_system/hostname)
+username=$(etcdctl get $mgenv/config_system/mgmt_admin_name)
+password=$(etcdctl get $mgenv/config_system/mgmt_admin_passwd)
+host=$(echo "$hostname" | cut -d '.' -f 1)
+
+echo "LAUNCH CODE: run-instances --region $region --image-id $AMI --key-name $SKEY --security-group-ids $secgroup --user-data $tmpfile --instance-type $size --block-device-mappings $disk"
+
+InstanceId=$(aws ec2 run-instances --region $region --image-id $AMI --key-name $SKEY --security-group-ids $secgroup --user-data fileb://${tmpfile}.gz --instance-type $size --block-device-mappings ${disk}  | jq -r '.Instances[].InstanceId') || { echo "instance not started" ; msgbus "$ipscmd could not start instance in region $region vpc $vpc,  exiting $BUDDY from this mess." ; exit 1 ; }
+#
+echo "Initalizing."
+	msgbus "$runenv initalizing instance $InstanceId in region $region vpc $vpc,  congrats $BUDDY"
+	sleep 20
+getdef=$(aws ec2 describe-instances --region $region --instance-ids $InstanceId | jq '.Reservations[].Instances[]') || { msgbus "$ipscmd can't find evidence of instance starting." ; exit 1 ; }
+declare -A myarray
+        while IFS="=" read -r key value ; do
+            myarray[$key]="$value"
+        done < <(echo "${getdef[@]}" | jq -cr 'to_entries | map("\(.key)=\(.value)") | flatten[]')
+
+for key in "${!myarray[@]}"
+do
+            if [ "$key" == "NetworkInterfaces" ] ; then
+                continue
+            else
+                echo -n " $key => "
+                etcdctl set ${runenv}/${mytarget}/$key "${myarray[$key]}"
+                sleep .4
+                echo
+            fi
+done
+
+#
+# tag the instances so we can identify it
+#
+aws ec2 create-tags --region $region --tags Key=Name,Value=$host --resources $InstanceId
+msgbus " Tagging $InstanceId as $host for $BUDDY"
+aws ec2 create-tags --region $region --tags Key=session,Value=$SKEY --resources $InstanceId
+echo " Waiting for public IP."
+sleep 5
+blastoff=$(date)
+
+#
+# Set DNS record
+#
+IP=$(etcdctl get ${runenv}/${mytarget}/PublicIpAddress) || { msgbus "Can't get Public IP for ${host} bailing." ; exit 1 ; }
+msgbus "${BUDDY} $hostname is $InstanceId at $IP setting name to resolve."
+dnsid=$(echo "$hostname" | cut -d '.' -f 2-)
+zoneid=$(etcdctl get zone/${dnsid}.) 
+mkdir -p $HOME/names
+dns=$HOME/names/DNS.${host}.${dnsid}
+
+echo "dns injection to resolve $host to $IP"
+echo "{" > $dns
+echo "      \"Comment\": \"${hostname} DNS\"," >> $dns
+echo "      \"Changes\": [" >> $dns
+echo "      {" >> $dns
+echo "\"Action\": \"UPSERT\"," >> $dns
+echo "\"ResourceRecordSet\": {" >> $dns
+echo "\"Name\": \"${hostname}\"," >> $dns
+echo "\"Type\": \"A\"," >> $dns
+echo "\"TTL\": 60," >> $dns
+echo "\"ResourceRecords\": [" >> $dns
+echo "     {" >> $dns
+echo "\"Value\": \"$IP\"" >> $dns
+echo "       }" >> $dns
+echo "      ]" >> $dns
+echo "     }" >> $dns
+echo "    }" >> $dns
+echo "   ]" >> $dns
+echo "  }" >> $dns
+
+aws route53 change-resource-record-sets --hosted-zone-id $zoneid --change-batch file://$dns | jq .
+
+#
+# let the user know whats happened
+#
+echo " "
+sleep 5
+#
+# set launch time and cleanup before exit
+#
+land=$(date)
+msgbus "${BUDDY} $cmdenv $InstanceId launched at $blastoff, and should be landed in 15 minutes from $land"
+
+echo "" > $HOME/.SMC
+echo "Security Management Center" >> $HOME/.SMC
+echo " " >> $HOME/.SMC
+echo -e "${BBlue} ElasticIP${NC}: ${BGreen}${IP}${NC}" >> $HOME/.SMC
+echo -e " ${BBlue}Hostname:${NC} ${BGreen}${hostname}${NC}" >> $HOME/.SMC
+echo -en "SmartConsole Install available here: " >> $HOME/.SMC
+echo -e "${BYellow} https://hack.securinglabs.online/${BUDDY}/SmartConsole.exe ${NC}" >> $HOME/.SMC
+echo -e "READ ONLY username: $roadmin password: $ropass " >> $HOME/.SMC
+echo " " >> $HOME/.SMC
+echo -e " API Login to security management console with credentials: " >> $HOME/.SMC
+echo -e "${On_Blue}${BYellow}username:${NC} ${BWhite}${username}${NC}" >> $HOME/.SMC
+echo -e "${On_Red}${BYellow}password:${NC} ${BWhite}${password}${NC}" >> $HOME/.SMC
+echo -e "${BWhite}Hostname:${NC} ${BGreen}${hostname}${NC}" >> $HOME/.SMC
+echo " " >> $HOME/.SMC
+echo -e "To see this information again run '${BGreen}apirestart${NC}' " >> $HOME/.SMC
+
+echo " " >> $HOME/.SMC
+#
+curscore=$(etcdctl get score)
+newscore=$(echo "$curscore + $points" | bc)
+etcdctl set score "$newscore" &>/dev/null
+
+msgbus " SCORE ${scoreit} $BUDDY has scored $points points"
+msgbus " COFFEE BREAK !! Take 15 minutes $BUDDY"
+
+skey $runenv/${mytarget}
+
+noexit () {
+    echo "Do not interrupt $host startup, waiting for config to complete"
+}
+
+trap 'noexit' SIGINT
+
+cmdtorun="cat /var/log/cloud-user-data"
+
+echo "$cmdenv deploying resources for $hostname "
+echo
+sleep 120
+msgbus "$ipscmd ${host} is initalizing resources"
+echo "$cmdenv initalizing resources for $hostname at $(date)"
+echo
+sleep 180
+msgbus "$ipscmd ${host} is installing"
+echo "$cmdenv installing $hostname at $(date)"
+sleep 360
+msgbus "$ipscmd ${host} is self configuring "
+echo "$cmdenv $hostname first config at $(date)"
+echo
+sleep 240
+declare -a stat
+stat=( "${host} start up" "looking for config completion signal" )
+msgbus " $ipscmd $host ${stat[@]}"
+sleep 30
+	while [ "${stat[-1]}" != "completed!" ] ; do
+sleep 24
+declare -a stat=(`ssh -q admin@${hostname} "$cmdtorun"`)
+msgbus "$ipscmd ${host} status: ${stat[@]} " 
+echo "$cmdenv ${host} status: ${stat[@]} " 
+done
+sleep 15
+echo "$cmdenv ${host} Check Point management station installation finished  with status: ${stat[-1]} " 
+sleep 3
+ENDTIME=$(date +%s)
+secs=$(($ENDTIME - $STARTTIME))
+elapsed="$(($secs/3600))h:$(($secs%3600/60))m:$(($secs%60))s"
+echo
+printf 'Elapsed Time %dh:%dm:%ds\n' $(($secs/3600)) $(($secs%3600/60)) $(($secs%60))
+echo
+ssh -q admin@${hostname} "mgmt_cli login user ${username} password ${password} domain \"System Data\" > id.txt"
+ssh -q admin@${hostname} "mgmt_cli set api-settings accepted-api-calls-from \"All IP addresses\" -s id.txt"
+ssh -q admin@${hostname} "mgmt_cli publish -s id.txt"
+ssh -q admin@${hostname} "mgmt_cli add administrator name \"$roadmin\" password \"$ropass\" must-change-password false email \"$roadmin@gmail.com\" authentication-method \"INTERNAL_PASSWORD\" permissions-profile \"read only all\" -s id.txt"
+ssh -q admin@${hostname} "mgmt_cli publish -s id.txt"
+ssh -q admin@${hostname} "mgmt_cli logout -s id.txt"
+
+ssh -q admin@${hostname} 'echo "_cpprof_add NGM_WEB_API_MAX_MEMORY 4096 0 0" >> /opt/CPshared/5.0/tmp/.CPprofile.sh'
+ssh -q admin@${hostname} 'echo "_cpprof_add NGM_WEB_API_JRE_64 1 0 0" >> /opt/CPshared/5.0/tmp/.CPprofile.sh'
+
+
+etcdctl set $runenv/${host}/time "$elapsed"
+
+msgbus " New SMC ${hostname} first time api activation " 
+
+cmdtorun="api restart"
+
+ssh admin@${hostname} "$cmdtorun"
+echo "waiting for server to finish processinging startup"
+sleep 15
+ssh admin@${hostname} "api status"
+sleep 10
+echo "activating vsec controller"
+ssh admin@${hostname} "vsec on"
+echo "Ready. This is a new manager."
+sleep 2
+echo "installing sk113955 ghost buster script"
+echo
+ssh admin@${hostname} "curl_cli -s -k -o file.tar https://s3.amazonaws.com/cdn.seclab.cloud/sk113955.tar"
+sleep 3
+ssh admin@${hostname} "tar xf file.tar"
+sleep 3
+ssh admin@${hostname} "mv discard_web_api_no_changes.sh ghostbuster.sh"
+msgbus " $ipscmd of $host complete for new manager "
+
+smcon="/sysimg/CPwrapper/linux/windows/SmartConsole.exe"
+svcon="/web/SmartConsole.exe"
+scp admin@${hostname}:${smcon} $svcon
+chmod a+r $svcon
+
+cat $HOME/.SMC
+
+exit 0
+

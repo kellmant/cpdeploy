@@ -1,9 +1,0 @@
-{
-    "Vpc": {
-        "InstanceTenancy": "default", 
-        "State": "pending", 
-        "VpcId": "vpc-0ff1c365", 
-        "CidrBlock": "10.0.3.0/24", 
-        "DhcpOptionsId": "dopt-d05843b2"
-    }
-}

@@ -1,0 +1,39 @@
+#!/bin/bash
+#set -eo pipefail
+set -a
+source /.IPS
+
+
+IFS=$'\n'
+domains=($(aws route53 list-hosted-zones | jq -r '.HostedZones[] | "\(.Name) \(.Id) \(.Config.PrivateZone)"'))
+echo
+echo -n "Indexing zones for namespace . "
+msgbus  " Indexing zones for namespace . "
+    for (( i=0; i<${#domains[@]}; i++ )) ; do
+        domain=$(echo ${domains[$i]} | cut -d ' ' -f 1)
+        zoneid=$(echo ${domains[$i]} | cut -d ' ' -f 2)
+        priv=$(echo ${domains[$i]} | cut -d ' ' -f 3)
+        zoneid=$(echo ${zoneid} | cut -d '/' -f 3)
+        etcdctl set zone/${domain} "${zoneid}" &>/dev/null
+        msgbus " Indexing domain ${domain} "
+    done
+echo
+etcdctl ls zone
+exit
+
+
+echo -n "dev zone? "
+read devzone
+etcdctl set env/global/dev "$devzone"
+echo
+
+echo -n "uat zone? "
+read uatzone
+etcdctl set env/global/uat "$uatzone"
+echo
+
+echo -n "prod zone? "
+read prodzone
+etcdctl set env/global/prod "$prodzone"
+echo
+

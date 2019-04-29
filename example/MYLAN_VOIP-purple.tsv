@@ -1,0 +1,10 @@
+Subnet
+10.60.0.0/24  (VOIP Servers 80)
+10.60.4.0/24  (VOIP Servers 84)
+10.60.5.0/24  (VOIP Servers 85)
+10.60.219.0/24  (VoIP Phones 9th flr)
+10.60.221.0/24  (VoIP Phones 12th flr)
+10.60.222.0/24  (VoIP Phones 13th flr)
+10.60.223.0/24  (VoIP Phones 14th flr)
+10.60.224.0/24  (VoIP Phones test vlan)
+10.60.236.0/24  (CallCenter Gateways)

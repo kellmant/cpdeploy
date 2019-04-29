@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+#
+source $HOME/.IPS
+
+
+    if [ "$1" == "off" ] ; then
+        SKEY=$(cat ~/.sessionkey)
+        regions=($(aws ec2 describe-regions | jq -r '.Regions[].RegionName'))
+            for (( r=0; r<${#regions[@]}; r++ )) ; do
+                #region=$(echo "${regions[$r]}" | cut -d '/' -f 4)
+                aws ec2 delete-key-pair --region ${regions[$r]} --key-name $SKEY
+                if [ $? -eq 0 ] ; then
+                    echo "Removed $KEY key in region ${regions[$r]}"
+                else
+                    echo "none 0 exit removing key $SKEY in region ${regions[$r]}"
+                fi
+            done
+        etcdctl set score " Want to play a game? " ; 
+        exit
+
+    else
+
+        PUBKEY=(`cat ${HOME}/.ssh/${SKEY}.pub | grep -v PUBLIC | tr -d '\n'`)
+        regions=($(aws ec2 describe-regions | jq -r '.Regions[].RegionName'))
+            for (( r=0; r<${#regions[@]}; r++ )) ; do
+                #region=$(echo "${regions[$r]}" | cut -d '/' -f 4)
+                eval "aws ec2 import-key-pair --region ${regions[$r]} --key-name ${SKEY} --public-key-material ${PUBKEY[@]}"
+            done
+            score=$(etcdctl get score) || { score=0 ; etcdctl set score "$score" ; }
+        exit
+    fi
+

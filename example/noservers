@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [ -z $1 ] ; then
+	ls *.csv
+	echo "$0 <file>.csv"
+	echo
+	exit 1
+fi
+
+APIDOM=$(etcdctl ls ctrl/cfg/mg | cut -d '/' -f 5)
+
+dos2unix $1
+MYGROUP="MY_SERVERFARM"
+i=1
+comments=$(echo "$1" | cut -d '.' -f 1)
+afile="$comments.sh"
+echo "#!/bin/bash" > $afile
+echo "mgmt_cli login -r true > id.txt" >> $afile
+echo "mgmt_cli ServerBackout -s id.txt > /dev/null 2>&1" >> $afile
+while IFS=, read -r NAME IP DESC DEPLOY OS IMPACT SEV MANAGE ; do
+	test $i -eq 1 && ((i=i+1)) && continue
+echo "mgmt_cli delete host name \"$NAME\" ignore-warnings true -s id.txt --user-agent csvhosts" >> $afile
+	echo "echo -n \".\"" >> $afile
+	echo "$NAME"
+  done <$1
+echo "mgmt_cli delete group name \"$MYGROUP\" ignore-warnings true -s id.txt --user-agent csvhost" >> $afile
+echo "mgmt_cli publish -s id.txt" >> $afile
+echo "mgmt_cli logout -s id.txt" >> $afile
+chmod a+x $afile
+scp $afile admin@$APIDOM.seclab.fail:
+ssh admin@$APIDOM.seclab.fail ./$afile
+rm -rf $afile
+

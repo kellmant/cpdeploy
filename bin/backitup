@@ -1,0 +1,54 @@
+#!/bin/bash
+
+unset ETCDKEY
+
+read -a ETCDKEY <<<"$@"
+ACTION="${ETCDKEY[0]}"
+KEY="${ETCDKEY[1]}"
+VALUE="${ETCDKEY[@]:2}"
+
+keydir="backup/last"
+keystat="backup/status"
+
+
+#echo "Action: $ACTION"
+#echo "Key: $KEY"
+#echo "Value: $VALUE"
+echo
+
+if [ "$VALUE" == "completed" ] || [ "$VALUE" == "waiting" ] ; then
+	echo "Status: $VALUE"
+	exit 0
+fi
+
+$HOME/bin/connected
+if [ $? -ne 0 ] ; then
+	echo "Unable to complete backup request due to connected administrators"
+	echo
+	etcdctl set --ttl 840 $keystat "waiting"
+	retry=$(date -d@"$(( `date +%s`+840))")
+	echo "Retry backup request on $retry"
+	exit 0
+fi
+
+APIDOM=$(etcdctl ls ctrl/cfg/mg | cut -d '/' -f 5)
+mgenv="/ctrl/cfg/mg/${APIDOM}" 
+myhost=$(etcdctl get $mgenv/config_system/hostname) || { exit 1 ; }
+
+target="admin@$myhost"
+now=$(date +"%m_%d_%Y")
+sshto="ssh $target"
+
+echo "Starting $now backup of $myhost . . please wait. . "
+$sshto "/opt/CPsuite-R80/fw1/bin/upgrade_tools/migrate export -n ${myhost}_backup_$now"
+echo "Export of $myhost data finished"
+echo "Retrieving ${myhost}_backup_$now.tgz . . . "
+scp $target:${myhost}_backup_$now.tgz /ctrl/export/
+
+etcdctl set $keydir "$(date) ${myhost}_backup_$now.tgz"
+etcdctl set $keystat "completed"
+
+$HOME/bin/BucketSync
+
+exit 0
+

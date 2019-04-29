@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+source $HOME/.IPS
+
+if [ -z ${1} ] ; then
+    echo
+    echo "who?"
+    echo
+    etcdctl ls ctrl/cfg/mg 2> /dev/null | cut -d '/' -f 5
+    echo
+    exit 1
+fi
+
+if [ -z ${2} ] ; then
+    echo
+    echo "What?"
+    echo
+    echo "command to run?"
+    exit 1
+fi
+
+slurp="$@"
+mgsys=$(echo "$slurp" | cut -d " " -f 1)
+mgcmd=$(echo "$slurp" | cut -d " " -f 2-)
+
+ mgenv="/ctrl/cfg/mg/${mgsys}" 
+ hostname=$(etcdctl get $mgenv/config_system/hostname) || { exit 1 ; }
+ host=$(echo "$hostname" | cut -d '.' -f 1)
+
+echo "Connecting to ${mysys} to run $mgcmd . . . "
+echo
+echo -en "${BGreen} "
+ssh admin@${hostname} "$mgcmd"
+echo -en "${NC}"
+echo
+echo
+echo "disconnected from ${mgsys}"
+echo
+

@@ -1,0 +1,228 @@
+#!/bin/bash
+# create global ENVS associated array
+source $HOME/.IPS
+
+echo "cfgenv $cfgenv"
+echo "ipscmd $ipscmd"
+echo "ipsenv $ipsenv"
+echo "runenv $runenv"
+
+echo
+echo
+echo "$ipscmd creation"
+echo
+
+
+
+if [ -z $1 ] ; then
+	etcdctl ls --sort $cfgenv
+    exit 1
+fi
+
+etcdctl ls $cfgenv/${1} 2>/dev/null
+if [ $? -ne 0 ] ; then
+	echo
+	echo "No secure VPC setup for gw ${1}"
+	echo
+	etcdctl ls --sort $cfgenv
+	echo
+	exit 1
+fi
+
+
+declare -A ENVS
+# string for the vars
+environmentVariables=""
+tag="${1}"
+gwhost="${tag}"
+# string for the vars
+tmpfile=/tmp/${ipscmd}.${gwhost}
+echo "#!/bin/bash" > $tmpfile
+##
+##
+# Take a key value array and add that into the $environmentVariables string
+# $1 = array of data
+generateEnvString(){
+  echo "generating the environment"
+
+  for i in ${!ENVS[@]}; do
+    val="${ENVS[$i]}"
+    key="$i"
+    echo "echo \"$key=$val\" >> /home/admin/firstconfig" >> $tmpfile
+   #environmentVariables="${environmentVariables} echo \"$key=$val\" >> /home/admin/firstconfig"
+  done
+#echo "$environmentVariables" >> $tmpfile
+echo "clish -c 'set timezone America / Toronto' -s" >> $tmpfile
+echo "clish -c 'set ntp server primary 0.pool.ntp.org version 4' -s" >> $tmpfile
+echo "clish -c 'set ntp server secondary 1.pool.ntp.org version 4' -s" >> $tmpfile
+echo "clish -c 'set ntp active on' -s" >> $tmpfile
+echo "clish -c 'set user admin shell /bin/bash' -s" >> $tmpfile
+echo "config_system -f /home/admin/firstconfig" >> $tmpfile
+echo "shutdown -r now" >> $tmpfile
+}
+
+##
+# fetch the data from the segment of etcd specified and convert into a key value array
+# presumes the segment is under /env/
+# $1 = segment to use on etcd
+environmentDataFromEtcd(){
+  # if no arg passed, return erro
+  #if [[ -z $1 ]]; then
+  #  echo "No arugment passed, returning."
+  #  return 1
+  #fi
+  tag=${1}
+  # check the env segment exists
+  local notFound=$(etcdctl ls ${cfgenv}/${tag}/config_system | grep 'Key not found' | wc -l)
+  # return error if not found
+  if [[ "$notFound" -gt "1" ]]; then
+    echo "Environment segment not set, returning."
+    return 2
+  fi
+  echo "fetching data from keystore"
+  # loop over the env vars and fetch the data
+  for i in `etcdctl ls ${cfgenv}/${tag}/config_system`; do
+    key=$(echo $i | sed -r "s#${cfgenv}/${tag}/config_system/##gi")
+    # fetch the env var
+    val=$(etcdctl get ${i});
+    if [ -z $val ]; then
+      echo "Could not retrive $i, possibly a directory, ignoring"
+    else
+      ENVS[$key]=${val};
+    fi
+  done
+  echo "fetched"
+}
+
+# create some test data
+#generateTestEnvData
+# fetch from a test area in the etcd env vars
+environmentDataFromEtcd ${tag}
+generateEnvString
+# output the result:
+msgbus "$ipscmd config_system file created for launch of gw instance $tag "
+rm -rf ${tmpfile}.gz
+gzip $tmpfile
+
+# launch script
+#
+#
+msgbus "$ipscmd started gw in $tag $site from $BUD"
+mgenv="ctrl/cfg/mg/smc"
+gwenv="${cfgenv}/${tag}"
+region=$(etcdctl get $gwenv/region)
+az=$(etcdctl get $gwenv/az)
+AMI=$(etcdctl get $gwenv/AMI)
+disk=$(etcdctl get $gwenv/disk)
+sizeing=$(etcdctl get $gwenv/size)
+size=$(etcdctl get size/gw/${sizeing})
+points=$(etcdctl get points/${size})
+vpcid=$(etcdctl get $gwenv/vpc)
+subid=$(etcdctl get $gwenv/subnetid128)
+eth1=$(etcdctl get $gwenv/eth1)
+site=$(etcdctl get $gwenv/site)
+secgroup=$(etcdctl get $gwenv/secgroup)
+hostname=$(etcdctl get $gwenv/config_system/hostname)
+sic=$(etcdctl get $gwenv/config_system/ftw_sic_key)
+password=$(etcdctl get $mgenv/config_system/mgmt_admin_passwd)
+host=$(echo "$hostname" | cut -d '.' -f 1)
+InstanceId=$(aws ec2 run-instances --region $region --image-id $AMI --key-name $SKEY --user-data fileb://${tmpfile}.gz --instance-type $size --subnet-id $subid --private-ip-address 10.0.${site}.250 --block-device-mappings ${disk} | jq -r '.Instances[].InstanceId')
+if [ "$InstanceId" == "" ] ; then
+    echo "couldn't start instance."
+	msgbus "$ipscmd could not start instance in region $region vpc $vpcid,  exiting $BUD from this mess."
+    #kill-ops $host
+    #kill-secvpc $tag $site
+    exit 1
+fi
+#
+	msgbus "$ipscmd initalizing instance $InstanceId in region $region vpc $vpcid,  congrats "
+	sleep 44
+getdef=$(aws ec2 describe-instances --region $region --instance-ids $InstanceId | jq '.Reservations[].Instances[]')
+declare -A myarray
+        while IFS="=" read -r key value ; do
+            myarray[$key]="$value"
+        done < <(echo "${getdef[@]}" | jq -cr 'to_entries | map("\(.key)=\(.value)") | flatten[]')
+
+for key in "${!myarray[@]}" ; do
+        etcdctl set ${runenv}/${host}/$key "${myarray[$key]}"
+    done
+
+#
+# tag the instances so we can identify it
+#
+ENI=$(etcdctl get ${runenv}/${host}/NetworkInterfaces | jq -r '.[].NetworkInterfaceId')
+aws ec2 create-tags --region $region --tags Key=Name,Value=$host --resources $InstanceId
+msgbus "Tagging $InstanceId as $host "
+aws ec2 create-tags --region $region --tags Key=session,Value=$SKEY --resources $InstanceId
+echo "Waiting for public IP."
+sleep 8
+blastoff=$(date)
+sleep 24
+
+chkeni=$(aws ec2 modify-network-interface-attribute --region $region --network-interface-id $ENI --no-source-dest-check) ||
+{ msgbus " $ipscmd $BUDDY failed to set interface src/dst check: ${NC}${chkeni} " ; exit 1 ; }
+
+sleep 9
+#
+attachid=$(aws ec2 attach-network-interface --region $region --network-interface-id $eth1 --instance-id $InstanceId --device-index 1) ||
+{ msgbus " ${TAGIPS} $ipscmd $BUD failed to attach: ${NC}${attachid} " ; exit 1 ; }
+# Set DNS record
+#
+msgbus "$ipscmd $BUD additional ENI attached: ${attachid} ${NC} " 
+sleep 9
+
+chketh=$(aws ec2 modify-network-interface-attribute --region $region --network-interface-id $eth1 --no-source-dest-check) ||
+{ msgbus " $ipscmd $BUD failed to attach: ${NC}${attachid} " ; exit 1 ; }
+IP=$(etcdctl get ${runenv}/${host}/PublicIpAddress)
+sleep 3
+msgbus "$hostname is $InstanceId at $IP "
+dnsid=$(echo "$hostname" | cut -d '.' -f 2-)
+zoneid=$(etcdctl get zone/${dnsid}.) 
+dns=$HOME/names/DNS.${host}.${dnsid}
+
+echo "dns injection to resolve $1 to $IP"
+echo "{" > $dns
+echo "      \"Comment\": \"${hostname} DNS\"," >> $dns
+echo "      \"Changes\": [" >> $dns
+echo "      {" >> $dns
+echo "\"Action\": \"UPSERT\"," >> $dns
+echo "\"ResourceRecordSet\": {" >> $dns
+echo "\"Name\": \"${hostname}\"," >> $dns
+echo "\"Type\": \"A\"," >> $dns
+echo "\"TTL\": 60," >> $dns
+echo "\"ResourceRecords\": [" >> $dns
+echo "     {" >> $dns
+echo "\"Value\": \"$IP\"" >> $dns
+echo "       }" >> $dns
+echo "      ]" >> $dns
+echo "     }" >> $dns
+echo "    }" >> $dns
+echo "   ]" >> $dns
+echo "  }" >> $dns
+
+aws route53 change-resource-record-sets --hosted-zone-id $zoneid --change-batch file://$dns
+
+#
+# let the user know whats happened
+#
+echo " "
+sleep 5
+echo "deployed"
+#
+# set launch time and cleanup before exit
+#
+land=$(date)
+msgbus "$InstanceId launched at $blastoff, and should be landed in 10 minutes from $land time for a break? "
+echo ""
+echo "Please leave the gateway alone to self-configure."
+echo " ElasticIP: $IP"
+echo " Hostname: $hostname"
+echo ""
+echo ""
+echo " "
+curscore=$(etcdctl get score)
+newscore=$(echo "$curscore + $points" | bc)
+etcdctl set score "$newscore" &>/dev/null
+msgbus "SCORE ${scoreit} $BUDDY has scored $points points"
+etcdctl set ${gwenv}/status "launched" &>/dev/null
+#/ips/ops/gwstat $tag $site &>>/dev/null &!

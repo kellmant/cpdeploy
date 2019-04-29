@@ -1,0 +1,57 @@
+#!/bin/bash
+#
+source $HOME/.IPS
+
+if [ -z "${1}" ] ; then
+    echo
+    echo -e "${BRed}       x|x ${NC}"
+    echo -e "${BRed}        o "
+    echo -e "${BRed}       +++ "
+    echo -e "${Red}        * "
+    echo -e "${ALERT} - $cmdenv targets - ${NC}"
+    killitplease="$(etcdctl ls --sort ctrl/create/secvpc/ 2> /dev/null)" || { killitplease="X" ; }
+    if [ "$killitplease" == "X" ] ; then
+        echo -en "${BWhite} Nothing to destroy here ${NC}"
+        echo
+        exit 1
+    else
+        echo -en "$(echo $killitplease | cut -d '/' -f 5)"
+        echo -e "${NC}"
+        echo
+        exit
+    fi
+fi
+
+killtarget="${1}"
+ipsenv="ctrl/cfg/secvpc/$killtarget"
+runenv="ctrl/create/secvpc/${killtarget}"
+InstanceId=$(etcdctl get $runenv/InstanceId 2> /dev/null) || { echo ; echo -e "${ALERT}    - No running instance called $killtarget -  ${NC} " ; echo ; exit 1 ; }
+region="$(etcdctl get $ipsenv/region)"
+sizeing="$(etcdctl get $ipsenv/size)"
+size=$(etcdctl get size/gw/${sizeing})
+points=$(etcdctl get points/${size})
+curscore=$(etcdctl get score)
+newscore=$(echo "$curscore - $points" | bc)
+etcdctl set score "$newscore" &>/dev/null
+
+echo "Killing $InstanceId in $region "
+aws ec2 create-tags --region $region --tags Key=Name,Value=DEAD --resources $InstanceId
+deathstat=$(aws ec2 terminate-instances --region $region --instance-ids $InstanceId)
+echo " $cmdenv $deathstat"
+sleep 15
+getdef=$(aws ec2 describe-instances --region $region --instance-id $InstanceId | jq '.Reservations[].Instances[]')
+declare -A myarray
+    while IFS="=" read -r key value ; do
+        myarray[$key]="$value"
+    done < <(echo "${getdef[@]}" | jq -cr 'to_entries | map("\(.key)=\(.value)") | flatten[]')
+    for key in "${!myarray[@]}" ; do
+        etcdctl set --ttl 185 $runenv/$key "${myarray[$key]}"
+        etcdctl updatedir --ttl 260 $runenv 
+    done
+    sleep 8
+dns_rm ${killtarget} 
+msgbus "$killtarget gone at that the hands of $BUDDY " 
+sleep 10
+msgbus " Instance destruction completed by $cmdenv" 
+
+

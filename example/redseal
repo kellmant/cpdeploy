@@ -1,0 +1,37 @@
+#!/bin/bash
+
+APIDOM=$(etcdctl ls ctrl/cfg/mg | cut -d '/' -f 5)
+
+if [ -z $2 ] ; then
+	MYARR=( $(ls *.tsv) )
+	for r in "${MYARR[@]}" ; do
+	dos2unix $r
+	MYOUTPUT=$(echo "$r" | cut -d '.' -f 1)
+	MYCOLOR=$(echo "$MYOUTPUT" | cut -d '-' -f 2)
+	MYZONE=$(echo "$MYOUTPUT" | cut -d '_' -f 1)
+	MYGROUP=$(echo "$MYOUTPUT" | cut -d '_' -f 2 | cut -d '-' -f 1)
+	afile="$r.sh"
+	echo "#!/bin/bash" > $afile
+	echo "mgmt_cli login -r true > id.txt" >> $afile
+	echo "mgmt_cli RedSealNets -s id.txt > /dev/null 2>&1" >> $afile
+  	echo "mgmt_cli add group name \"$MYZONE\" comments \"$MYZONE NETWORK ZONE\" color \"$MYCOLOR\" ignore-warnings true -s id.txt --user-agent redseal" >> $afile
+  	echo "mgmt_cli add group name \"$MYZONE $MYGROUP\" comments \"$MYZONE NETWORK $MYGROUP GROUP\" color \"$MYCOLOR\" ignore-warnings true -s id.txt --user-agent redseal" >> $afile
+	i=1
+	while read NET NAME ; do
+		test $i -eq 1 && ((i=i+1)) && continue
+		fullname=$(echo "$NAME" | sed 's/^.*(\(.*\)).*$/\1/g')
+		net=$(echo "$NET" | cut -d '/' -f 1)
+		mask=$(echo "$NET" | cut -d '/' -f 2)
+  		echo "mgmt_cli add network name \"$fullname\" subnet \"$net\" mask-length4 \"$mask\" comments \"$MYZONE $MYGROUP Network\" color \"$MYCOLOR\" groups.1 \"$MYZONE\" groups.2 \"$MYZONE $MYGROUP\" ignore-warnings true -s id.txt --user-agent redseal" >> $afile
+		echo "echo -n \".\"" >> $afile
+	done <$r
+	echo "mgmt_cli publish -s id.txt" >> $afile
+	echo "mgmt_cli logout -s id.txt" >> $afile
+	chmod a+x $afile
+	scp $afile admin@$APIDOM.seclab.fail:
+	ssh admin@$APIDOM.seclab.fail ./$afile
+	rm -rf $afile
+done
+	exit 1
+fi
+

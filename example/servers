@@ -1,0 +1,40 @@
+#!/bin/bash
+
+if [ -z $2 ] ; then
+	ls *.csv
+	echo "$0 <file>.csv <color>"
+	echo
+	exit 1
+fi
+
+APIDOM=$(etcdctl ls ctrl/cfg/mg | cut -d '/' -f 5)
+
+dos2unix $1
+MYGROUP="MY_SERVERFARM"
+i=1
+comments=$(echo "$1" | cut -d '.' -f 1)
+afile="$comments.sh"
+color="$2"
+echo "#!/bin/bash" > $afile
+echo "mgmt_cli login -r true > id.txt" >> $afile
+echo "mgmt_cli ServerExport -s id.txt > /dev/null 2>&1" >> $afile
+echo "mgmt_cli add group name \"$MYGROUP\" comments \"MY SERVER NETWORK GROUP\" color \"$color\" ignore-warnings true -s id.txt --user-agent redseal" >> $afile
+#  echo "mgmt_cli add group name \"$mygroup\" comments \"$comments\" color \"$color\" ignore-warnings true -s id.txt --user-agent redseal" >> $afile
+count=0
+while IFS=, read -r NAME IP DESC DEPLOY OS IMPACT SEV MANAGE ; do
+	test $i -eq 1 && ((i=i+1)) && continue
+echo "mgmt_cli add host name \"$NAME\" ipv4-address \"$IP\" comments \"$DESC\" color \"$color\" groups.1 \"$MYGROUP\" tags.1 \"$DEPLOY\" tags.2 \"$OS\" tags.3 \"$IMPACT\" tags.4 \"$SEV\" tags.5 \"$MANAGE\" ignore-warnings true -s id.txt --user-agent csvhosts" >> $afile
+	echo "echo -n \".\"" >> $afile
+	echo "$NAME"
+    (( count++ ))
+    if [ $count -eq 50 ] ; then
+        count=0
+        echo "mgmt_cli publish -s id.txt" >> $afile
+    fi
+  done <$1
+echo "mgmt_cli publish -s id.txt" >> $afile
+echo "mgmt_cli logout -s id.txt" >> $afile
+chmod a+x $afile
+scp $afile admin@$APIDOM.seclab.fail:
+ssh admin@$APIDOM.seclab.fail ./$afile
+rm -rf $afile

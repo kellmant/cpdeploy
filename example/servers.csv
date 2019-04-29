@@ -1,0 +1,149 @@
+﻿System Name,IP Address,Application/Function,Environment,OS Class,Impact,Security Class,Managed By
+caacmabcmat01.myhome.net,10.90.46.25,lab SQL Dev Server ,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+caacmepsmat01.myhome.net,10.90.45.35,SQL Investment Prod Server ,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrksxyzb002.myhome.net,192.168.30.147,Media Server for non DMZ Servers,Production,Windows,3 - Multiple Users,baseline,Web Hosting
+svrksxyzvi01.myhome.net,192.168.101.13,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX
+svrksxyzvi02.myhome.net,192.168.101.14,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX
+svrksxyzvi03.myhome.net,192.168.101.15,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX
+svrksxyzvi04.myhome.net,192.168.101.16,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX
+svrksxyzvi05.myhome.net,192.168.101.17,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX
+svrksvuop005.myhome.net,192.168.101.109,Middleware App for Liferay,Production,Windows,3 - Multiple Users,stringent,Canada Web Hosting
+svrksvuop006.myhome.net,192.168.101.112,Middleware App for Liferay,Development,Windows,3 - Multiple Users,stringent,Canada Web Hosting
+svrksvuop007.myhome.net,192.168.101.72,Middle Tier for xyz Web Portal PROD,Production,Windows,3 - Multiple Users,stringent,Canada Web Hosting
+svrksvuop008.myhome.net,192.168.101.73,Middle Tier for xyz Web Portal PROD,Production,Windows,3 - Multiple Users,stringent,Canada Web Hosting
+svrksvuop009.myhome.net,192.168.101.117,Apache for the web front end to liferay or myxyz,Production,Windows,3 - Multiple Users,baseline,Canada Web Hosting
+svrksvuop010.myhome.net,192.168.101.118,Apache for the web front end to liferay or myxyz,Development,Windows,3 - Multiple Users,baseline,Canada Web Hosting
+svrksvuop-vma2.myhome.net,192.168.101.110,Vmware VMA Appliance (used for monitoring ESXi Hosts) PROD,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+svrkvxyzise114.xyz.myhome.net,192.168.101.114,,Production,Linux,3 - Multiple Users,stringent,unsupported
+svrmdxyz001.myhome.net,10.60.10.11,Domain Controller,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrmdxyz002.myhome.net,10.60.10.12,Domain Controller,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrmmxyz001.myhome.net,10.60.24.11,Exchange Server,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrmsopdf001.myhome.net,10.60.11.11,POC DFS Hot Site,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrmsopora001.myhome.net,10.60.8.23,,Production,Linux,3 - Multiple Users,baseline,unsupported
+svrmsopvc001.myhome.net,192.168.101.105,Vmware vCenter 5.5,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrmsopwem001.myhome.net,10.60.24.22,WEM Prod Server,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrmsopwem002.myhome.net,10.60.24.23,WEM Prod Server,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzdsefm001.myhome.net,10.90.46.13,DEV eForm Server ,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzdskfx001.myhome.net,10.90.46.14,Kofax DEV,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzdslea001.myhome.net,10.90.46.22,LEA DEV ,Development,Windows,3 - Multiple Users,stringent,Wintel 4
+svrxyzdslss001.myhome.net,10.90.46.15,Livelink DEV Sandbox01 ,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzdslss002.myhome.net,10.90.46.16,Livelink DEV Sandbox2,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzdslss003.myhome.net,10.90.46.17,Livelink DEV Sandbox3,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzdsmdk001.myhome.net,10.90.46.23,WSUS Server for Windows 10,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzdsnav001.myhome.net,10.90.46.33,NAVision DEV,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzdsora001.myhome.net,10.90.60.16,Oracle DEV Server,Development,Linux,3 - Multiple Users,baseline,UNIX Canada
+svrxyzdsosb042.myhome.net,192.168.30.42,DEV/SIT Server,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzdsotd001.myhome.net,10.90.46.27,Document Server DEV,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzdswem001.myhome.net,10.90.46.34,Oracle WebCenter Enterprise Mgmt,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzdswlp129.myhome.net,192.168.30.129,Web Logic Portal DEV,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpafst005.xyz.myhome.net,10.90.233.5,No Description,Production,Linux,2 - Site/Dept,stringent,unsupported
+svrxyzpaise005.xyz.myhome.net,10.90.128.5,No Description,Production,Linux,2 - Site/Dept,stringent,unsupported
+svrxyzpamse001.xyz.myhome.net,10.90.128.25,No Description,Production,Linux,3 - Multiple Users,stringent,unsupported
+svrxyzpapri001.xyz.myhome.net,10.90.128.10,No Description,Production,Linux,2 - Site/Dept,stringent,unsupported
+svrxyzpazen001.xyz.myhome.net,192.168.30.101,Zenworks Appliance,Production,Linux,3 - Multiple Users,stringent,Unix Canada
+svrxyzpsadc001.myhome.net,10.90.15.11,No Description,Production,Windows,3 - Multiple Users,stringent,unsupported
+svrxyzpsadc002.myhome.net,10.90.15.12,No Description,Production,Windows,3 - Multiple Users,stringent,unsupported
+svrxyzpsadc003.myhome.net,10.90.150.12,No Description,Production,Windows,3 - Multiple Users,stringent,unsupported
+svrxyzpsadp001.myhome.net,10.90.45.44,Payroll,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsapm001.myhome.net,10.90.45.45,No Description,Production,Windows,3 - Multiple Users,baseline,unsupported
+svrxyzpsasc011.myhome.net,10.90.233.11,Monitoring server,Production,Linux,3 - Multiple Users,stringent,Wintel 4
+svrxyzpsbla001.myhome.net,10.90.45.23,Arcsight,Production,Windows,3 - Multiple Users,baseline,Unix Canada
+svrxyzpsbla002.myhome.net,10.90.45.24,Backend Agent PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsbla003.myhome.net,10.90.45.25,Backend Agent PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsbls001.myhome.net,10.90.45.19,Backend Agent PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsbls002.myhome.net,10.90.45.20,Backend Index PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsbls003.myhome.net,10.90.45.21,Backend Index PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsbls004.myhome.net,10.90.45.22,Backend Index PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsbur002.myhome.net,10.90.45.40,Backend Index PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsbur003.myhome.net,10.90.205.16,Media Server,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsbur159.myhome.net,192.168.30.159,Media Server,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpscim001.myhome.net,10.90.150.27,Monitoring Server,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsdfs001.myhome.net,10.90.11.11,Distributed FileSystem,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsefm001.myhome.net,10.90.45.31,PROD,Production,Windows,3 - Multiple Users,stringent,Wintel 4
+svrxyzpseng248.myhome.net,192.168.30.248,Telephony Server PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsfax054.myhome.net,10.90.112.54,FAX Server PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsffi001.myhome.net,10.90.45.26,Livelink Frontend PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsffi002.myhome.net,10.90.45.27,Livelink Frontend PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsfla001.myhome.net,10.90.45.28,Livelink Frontend Application PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsfla002.myhome.net,10.90.45.29,Livelink Frontend Application PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpslea001.myhome.net,10.90.45.30,Livelink LEA Prod,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsmdk069.myhome.net,192.168.30.69,MISUS PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsmit001.myhome.net,10.90.170.35,ShareIT File Transfer ,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsmit002.myhome.net,10.90.45.42,ShareIT SQL DB,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsmit003.myhome.net,10.90.45.43,ShareIT Intranet,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsosb237.myhome.net,192.168.30.237,OPS PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsosb238.myhome.net,192.168.30.238,OPS PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpspfs053.myhome.net,10.90.112.53,Print and Scan Server PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpspki001.myhome.net,10.90.45.12,PKI Root Certificate Authority PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpspki002.myhome.net,10.90.45.13,PKI Certificate Issuing Authority  PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpspki003.myhome.net,10.90.45.14,PKI SCEP  - PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpspki004.myhome.net,10.90.45.15,PKI Radius Authentication Server  PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpsrdc001.myhome.net,10.90.150.11,DMZ Domain Controller,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpssch070.myhome.net,192.168.30.70,Scheduling Server PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpssev001.myhome.net,10.90.45.16,Storage Server PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpssev003.myhome.net,10.90.45.18,SQL Database Server  PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpstsa207.myhome.net,192.168.30.207,Admin Terminal Jump Server PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpstsp111.myhome.net,192.168.30.111,User Terminal Jump Server PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzps-vma1.myhome.net,192.168.30.126,Vmware VMA Appliance (used for monitoring ESXi Hosts) PROD,Production,VMware,3 - Multiple Users,stringent,Unix Canada
+svrxyzpswem001.myhome.net,10.90.45.46,No Description,Production,Windows,3 - Multiple Users,baseline,unsupported
+svrxyzpswlp232.myhome.net,192.168.30.232,Web Logic Staging PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzpswlp233.myhome.net,192.168.30.233,Apache Web Server Staging PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzssbls001.myhome.net,10.90.50.11,Livelink Backend,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzssefm001.myhome.net,10.90.50.14,Form IN,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzssfla001.myhome.net,10.90.50.12,Livelink Frontend SIT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzsslea001.myhome.net,10.90.50.13,Livelink LEA SIT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzsswem001.myhome.net,10.90.50.22,Oracle WebCenter Enterprise Mgmt - Staging (connects to Dev Oracle),Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzsswlp145.myhome.net,192.168.30.145,Web Logic Portal,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyztswlp205.myhome.net,192.168.30.205,Web Logic Portal UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyztswlp206.myhome.net,192.168.30.206,Web Logic Portal UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyztswlp225.myhome.net,192.168.30.225,Apache Web Server UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzusbla001.myhome.net,10.90.51.14,Backend Livelink Agent UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzusbla002.myhome.net,10.90.51.15,Backend Livelink Agent UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzusbls001.myhome.net,10.90.51.11,Backend Livelink Server UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzusbls002.myhome.net,10.90.51.12,Backend Livelink Server UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzusbls003.myhome.net,10.90.51.13,Backend Livelink Server UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzusefm001.myhome.net,10.90.51.20,eForm UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzusfla001.myhome.net,10.90.51.16,Frontend Livelink Application UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzusfla002.myhome.net,10.90.51.17,Frontend Livelink Application UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzuslea001.myhome.net,10.90.51.18,Livelink LEA UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzuswem001.myhome.net,10.90.51.22,Oracle WebCenter Enterprise Mgmt UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+svrxyzuswem002.myhome.net,10.90.51.23,Oracle WebCenter Enterprise Mgmt UAT,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+cwhtorwin045.myhome.net,10.11.20.107,Web portal,Production,Windows,3 - Multiple Users,baseline,Canada Web Hosting
+cwhtorwin046.myhome.net,10.11.2.108,Web portal DMZ BUR Media Server,Production,Windows,3 - Multiple Users,baseline,Canada Web Hosting
+xyzps045.myhome.net,192.168.30.45,Domain Controller,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps051.myhome.net,192.168.30.51,URL Filter,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps052.myhome.net,192.168.30.52,Terminal Jump Server PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps077-NetScaler VPX,192.168.30.77,Netscaler VPX,Production,Linux,3 - Multiple Users,stringent,Network Security
+xyzps081.xyz.myhome.net,192.168.30.81,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps082.xyz.myhome.net,192.168.30.82,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps083.xyz.myhome.net,192.168.30.83,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps084.xyz.myhome.net,192.168.30.188,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps085.xyz.myhome.net,192.168.30.85,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps086.xyz.myhome.net,192.168.30.86,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps087.xyz.myhome.net,192.168.30.87,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps088.xyz.myhome.net,192.168.30.88,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps089.xyz.myhome.net,192.168.30.89,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps090.xyz.myhome.net,192.168.30.90,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps091.xyz.myhome.net,192.168.30.91,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps092.xyz.myhome.net,192.168.30.92,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps093.xyz.myhome.net,192.168.30.93,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps094.xyz.myhome.net,192.168.30.94,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps095.xyz.myhome.net,192.168.30.95,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps096.xyz.myhome.net,192.168.30.96,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps097.xyz.myhome.net,192.168.30.97,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps098.xyz.myhome.net,192.168.30.98,VMWare Farm,Production,VMware,3 - Multiple Users,stringent,UNIX Canada
+xyzps124.myhome.net,192.168.30.124,Exchange PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps125.myhome.net,192.168.30.125,Exchange PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps135.myhome.net,192.168.30.135,Zenworks PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps136.myhome.net,192.168.30.136,SOD PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps137.myhome.net,192.168.30.137,File Cluster PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps138.myhome.net,192.168.30.138,File Cluster PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps147.myhome.net,192.168.30.147,Domain Controller PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps224.myhome.net,192.168.30.224,Vmware vSPhere ,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps240.myhome.net,192.168.30.240,Zenworks PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzps-ls.myhome.net,192.168.30.109,Legal PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzpvkc1.myhome.net,192.168.30.128,Livelink Knowledge Centre PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+xyzwcg025,192.168.30.025,URL Filter,Production,Linux,3 - Multiple Users,stringent,Network Security
+xyzzensql.myhome.net,192.168.30.246,Zenworks PROD,Production,Windows,3 - Multiple Users,baseline,Wintel 4
+vsitcs10adm1.myhome.net,192.168.30.112,Staging,Development,Windows,3 - Multiple Users,baseline,Wintel 4
+vsitcs10adm2.myhome.net,192.168.30.253,Staging,Development,Windows,3 - Multiple Users,baseline,Wintel 4

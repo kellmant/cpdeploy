@@ -1,0 +1,55 @@
+#!/bin/bash
+source /.IPS
+
+if [ -z ${1} ] ; then
+    echo ""
+    exit
+fi
+
+mgenv="/env/ips/mg"
+
+username=$(etcdctl get $mgenv/config_system/mgmt_admin_name)
+password=$(etcdctl get $mgenv/config_system/mgmt_admin_passwd)
+mghost=$(etcdctl get $mgenv/config_system/hostname)
+host=$(echo "$mghost" | cut -d '.' -f 1)          
+ctrlip=$(curl -s ipecho.net/plain)
+ctrlname=$(hostname)
+baseurl=https://$mghost/web_api
+curl_cmd="curl --silent --insecure -X POST"
+
+SID=`${curl_cmd} -H "Content-Type: application/json" -d @- $baseurl/login <<. | awk -F\" '/sid/ {print $4}'
+{
+  "user":"$username" ,
+  "password":"$password" ,
+  "session-name":"$BUDDY $ipscmd $SKEY"
+}
+.`
+# Login complete, add objects, rules and such here.
+
+
+################################################################################################
+
+objhosts=`${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d @- $baseurl/show-${1} <<.
+{ "limit" : 500,  "offset" : 0, "details-level" : "full" }   
+.`
+
+OLDIFS=$IFS
+IFS=$'\n'
+echo $objhosts > dump
+OBJARR=($(echo "$objhosts" | jq -r '.[]? | .[]? | "\(.type) \(.name) \(.uid)"'))
+        for i in "${OBJARR[@]}" ; do
+        echo "$i"
+    done
+
+IFS=$OLDIFS
+
+################################################################################################
+# Publish and get out of here
+#${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/publish
+
+#sleep 5
+
+#Logout
+${curl_cmd} -H "Content-Type: application/json" -H "X-chkp-sid: $SID" -d "{}" $baseurl/logout
+
+

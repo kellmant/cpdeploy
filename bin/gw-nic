@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+source ~/.IPS
+if [ -z "$1" ] ; then
+    exit
+fi
+tag="$1"
+gwhost="${tag}"
+gwenv="ctrl/cfg/secvpc/${tag}"
+region=$(etcdctl get $gwenv/region)
+az=$(etcdctl get $gwenv/az)
+AMI=$(etcdctl get $gwenv/AMI)
+disk=$(etcdctl get $gwenv/disk)
+size=$(etcdctl get $gwenv/size)
+vpcid=$(etcdctl get $gwenv/vpc)
+subid=$(etcdctl get $gwenv/subnetid128)
+eth1=$(etcdctl get $gwenv/eth1)
+site=$(etcdctl get $gwenv/site)
+secgroup=$(etcdctl get $gwenv/secgroup)
+hostname=$(etcdctl get $gwenv/config_system/hostname)
+host=$(echo "$hostname" | cut -d '.' -f 1)          
+
+ssh -q admin@${hostname} "clish -c 'set interface eth1 state on' -s"
+ssh -q admin@${hostname} "clish -c 'set interface eth1 ipv4-address 10.0.${site}.10 mask-length 25' -s"
+	msgbus " controller process $ipscmd for $tag gateway ${hostname} done, we are deployed and ready for policy."
+    etcdctl set $gwenv/status "deployed"
+    #etcdctl set $SKEY/jobs/start/Connect "${tag} ${site}"

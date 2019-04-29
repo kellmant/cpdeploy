@@ -1,0 +1,56 @@
+#!/bin/bash
+
+if [ -z ${1} ] ; then
+	echo
+	echo "$0 <management domain>"
+	echo
+	echo "management domains available:"
+    	etcdctl ls --sort ctrl/cfg/mg | cut -d '/' -f 5
+	echo
+	exit 1
+fi
+
+if [ ! -d $HOME/ExportImportPolicyPackage ] ; then
+	cd $HOME
+	git clone --recursive https://github.com/CheckPoint-APIs-Team/ExportImportPolicyPackage
+fi
+
+mgenv="ctrl/cfg/mg/${1}"
+username=$(etcdctl get $mgenv/config_system/mgmt_admin_name)
+password=$(etcdctl get $mgenv/config_system/mgmt_admin_passwd)
+mghost=$(etcdctl get $mgenv/config_system/hostname)
+host=$(echo "$mghost" | cut -d '.' -f 1)          
+baseurl=https://$mghost/web_api
+curl_cmd="curl --silent --insecure -X POST"
+
+tree $HOME/export/$mghost 2> /dev/null
+
+ALLPKGS=($(ls $HOME/export/$mghost/*.tar.gz))
+
+if [ ${#ALLPKGS[@]} -eq 0 ] ; then
+	echo
+	echo " No exported policies found for $mghost"
+	echo
+	exit 1
+fi
+
+echo "Found ${#ALLPKGS[@]} exported policy packages for $mghost domain"
+
+for PACKAGE in "${ALLPKGS[@]}" 
+do
+	SHORTNAME=$(echo "$PACKAGE" | cut -d '/' -f 5 | cut -d '.' -f 1)
+	echo
+	echo "$host policy package: $SHORTNAME available in $PACKAGE for processing . . . "
+
+python /ctrl/ExportImportPolicyPackage/import_export_package.py -op import -n $SHORTNAME --all -f ${PACKAGE} -u $username -p $password -m $mghost --unsafe --unsafe-auto-accept
+
+if [ -f $HOME/import_error_log.elg ] ; then
+cat $HOME/import_error_log.elg > $HOME/export/$mghost/${SHORTNAME}.import.elg 2> /dev/null
+fi
+
+rm -rf $HOME/import_error_log.elg
+rm -rf $HOME/import_export.log
+
+
+done
+

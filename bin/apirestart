@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+source $HOME/.IPS
+
+if [ ! -f $HOME/.SMC ] ; then
+    echo "No config found"
+    exit 1
+fi
+
+if [ -z ${1} ] ; then
+    echo
+    echo "who?"
+    echo
+    cat $HOME/.SMC 2> /dev/null
+    exit 1
+fi
+
+
+ mgenv="/ctrl/cfg/mg/${1}" 
+ hostname=$(etcdctl get $mgenv/config_system/hostname) 
+ host=$(echo "$hostname" | cut -d '.' -f 1)
+ cmdtorun="api restart"
+
+ssh admin@${hostname} "$cmdtorun"
+echo "waiting for server to finish processinging startup"
+sleep 15
+ssh admin@${hostname} "api status"
+sleep 10
+echo "activating vsec controller"
+ssh admin@${hostname} "vsec on"
+sleep 3
+msgbus " $ipscmd of $host complete for new manager "
+
+

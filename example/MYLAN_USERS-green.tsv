@@ -1,0 +1,8 @@
+Subnet
+10.90.119.0/24  (LAN 9th flr User)
+10.90.121.0/24  (LAN 12th flr User)
+10.90.122.0/24  (LAN 13th flr User)
+10.90.123.0/24  (LAN 14th flr User)
+10.90.185.0/24  (Internal WiFi 12th floor)
+10.90.186.0/24  (Internal WiFi 13th floor)
+10.90.228.0/22  (Internal WiFi 14th floor)

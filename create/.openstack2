@@ -1,0 +1,239 @@
+#!/bin/bash
+source $HOME/.IPS
+
+if [ -z "${1}" ] ; then
+    echo
+    echo "need configured target to run "
+    echo -e "${BGreen} $cmdenv ${BWhite}<name> ${NC}"
+    echo
+    echo -en "${BWhite}Configured:${NC} "
+    echo -en "$BBlue"
+    confrun=($(etcdctl ls --sort $cfgenv 2> /dev/null))
+    for c in ${confrun[@]}; do
+        echo -en " $(echo $c | cut -d '/' -f 5)"
+    done
+    echo -en "${NC}"
+    echo
+    echo -e "${On_Blue}${BGreen}    - $cmdenv runtime -   ${NC}"
+    echo -en "$BGreen"
+    runners=($(etcdctl ls --sort $runenv 2> /dev/null)) || { runners="${BWhite} No Running Instances found " ; }
+  for i in ${runners[@]}; do
+      runstate=$(etcdctl get $i/State 2> /dev/null)
+    echo -en "$(echo $i | cut -d '/' -f 5) "
+    echo -en "${NC}"
+    echo -en "${Bwhite} $runstate"
+    echo -en "${NC}"
+    echo
+done
+    echo
+    exit
+fi
+
+mgstate="$(etcdctl get $runenv/${1}/State 2> /dev/null)"
+if [ $? -eq 0 ] ; then
+    echo
+    echo -e " ${1} State: ${BYellow} ${mgstate} ${NC}"
+    echo -e " ${BUDDY} can run ${BGreen} $killenv ${1}${NC} to remove"
+    echo -e " or wait for it to shutdown if you already have. "
+    echo
+    exit 1
+fi
+
+etcdctl ls --sort $cfgenv/${1} 2> /dev/null
+if [ $? -ne 0 ] ; then
+    echo
+    echo -e "no control setup for ${1}, run ${BGreen} $cfgenv ${1}${NC} first"
+    echo
+    exit 1
+fi
+
+export mytarget="${1}"
+callout="https://api.bluesun.seclab.ninja/callback"
+
+mgenv="$cfgenv/$mytarget"
+hostname=$(etcdctl get $mgenv/hostname) || { echo "No hostname set, run $cfgenv first " ; exit 1 ; }
+stackuser="stack"
+stackpass="$(xkcdpass | cut -d '-' -f 1)"
+etcdctl set $mgenv/username "$stackuser" &>/dev/null
+etcdctl set $mgenv/password "$stackpass" &>/dev/null
+STARTTIME=$(date +%s)
+#jobstart "$$"
+#trap "jobtrace '$$'" 0 1 2 3 6
+
+
+export tmpfile="/tmp/${ipscmd}.${mytarget}.$$"
+cat > $tmpfile <<EOF
+#cloud-config
+hostname: $mytarget
+fqdn: $hostname
+users:
+  - default
+  - name: stack
+    lock_passwd: False
+    sudo: ["ALL=(ALL) NOPASSWD:ALL\nDefaults:stack !requiretty"]
+    shell: /bin/bash
+
+write_files:
+  - content: |
+        #!/bin/sh
+        DEBIAN_FRONTEND=noninteractive sudo apt-get -qqy update || sudo yum update -qy
+        DEBIAN_FRONTEND=noninteractive sudo apt-get install -qqy git || sudo yum install -qy git
+        GET_IP=\$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+        sudo cp -rf /home/ubuntu/.ssh /home/stack/.ssh
+        sudo chown -R stack:stack /home/stack
+        cd /home/stack
+        git clone -b stable/ocata https://git.openstack.org/openstack-dev/devstack
+        cd devstack
+        echo '[[local|localrc]]' > local.conf
+        echo ADMIN_PASSWORD=$stackpass >> local.conf
+        echo DATABASE_PASSWORD=$stackpass >> local.conf
+        echo SERVICE_PASSWORD=$stackpass >> local.conf
+        echo SERVICE_TOKEN=$stackpass >> local.conf
+        echo RABBIT_PASSWORD=$stackpass >> local.conf
+        echo ENABLE_IDENTITY_V2=true >> local,conf
+        echo public_endpoint=$hostname >> local.conf
+        ./stack.sh
+    path: /home/stack/start.sh
+    permissions: 0755
+
+runcmd:
+  - su -l stack ./start.sh
+
+EOF
+
+##
+##
+# /  .-.  \
+# |=(xXx)=|
+# \  o-o  /
+##
+# fetch the data from the segment of etcd specified and convert into a key value array
+# presumes the segment is under /env/
+# $1 = segment to use on etcd
+
+# fetch from a test area in the etcd env vars
+# output the result:
+msgbus "${BUDDY} $cmdenv config system file created for launch of instance."
+gzip $tmpfile
+
+# launch script
+#
+#
+msgbus "$cmdenv $mytarget started by $BUDDY"
+mgenv="$cfgenv/$mytarget"
+region=$(etcdctl get $mgenv/region) || { echo "No region set, run $cfgenv first " ; exit 1 ; }
+AMI=$(etcdctl get $mgenv/AMI) || { echo "No AMI defined, run $cfgenv first " ; exit 1 ; }
+disk=$(etcdctl get $mgenv/disk) || { echo "No ebs storage, run $cfgenv first " ; exit 1 ; }
+sizeing=$(etcdctl get $mgenv/size) || { echo "Size of instance not set, run $cfgenv first " ; exit 1 ; }
+size=$(etcdctl get size/mg/${sizeing})
+points=$(etcdctl get points/${size})
+vpc=$(etcdctl get $mgenv/vpc)
+secgroup=$(etcdctl get $mgenv/secgroup) || { echo "no security group setup, run $cfgenv first" ; exit 1 ; }
+InstanceId=$(aws ec2 run-instances --region $region --image-id $AMI --key-name $SKEY --security-group-ids $secgroup --user-data fileb://${tmpfile}.gz --instance-type $size --block-device-mappings ${disk}  | jq -r '.Instances[].InstanceId') || { echo "instance not started" ; msgbus "$ipscmd could not start instance in region $region vpc $vpc,  exiting $BUDDY from this mess." ; exit 1 ; }
+#
+echo "Initalizing."
+	msgbus "$runenv initalizing instance $InstanceId in region $region vpc $vpc,  congrats $BUDDY"
+	sleep 20
+getdef=$(aws ec2 describe-instances --region $region --instance-ids $InstanceId | jq '.Reservations[].Instances[]') || { msgbus "$ipscmd can't find evidence of instance starting." ; exit 1 ; }
+declare -A myarray
+        while IFS="=" read -r key value ; do
+            myarray[$key]="$value"
+        done < <(echo "${getdef[@]}" | jq -cr 'to_entries | map("\(.key)=\(.value)") | flatten[]')
+
+for key in "${!myarray[@]}"
+do
+            if [ "$key" == "NetworkInterfaces" ] ; then
+                continue
+            else
+                echo -n " $key => "
+                etcdctl set ${runenv}/${mytarget}/$key "${myarray[$key]}"
+                sleep .4
+                echo
+            fi
+done
+
+host="$mytarget"
+
+#
+# tag the instances so we can identify it
+#
+aws ec2 create-tags --region $region --tags Key=Name,Value=$host --resources $InstanceId
+msgbus " Tagging $InstanceId as $host for $BUDDY"
+aws ec2 create-tags --region $region --tags Key=session,Value=$SKEY --resources $InstanceId
+echo " Waiting for public IP."
+sleep 5
+blastoff=$(date)
+
+#
+# Set DNS record
+#
+IP=$(etcdctl get ${runenv}/${mytarget}/PublicIpAddress) || { msgbus "Can't get Public IP for ${host} bailing." ; exit 1 ; }
+msgbus "${BUDDY} $hostname is $InstanceId at $IP setting name to resolve."
+dnsid=$(echo "$hostname" | cut -d '.' -f 2-)
+zoneid=$(etcdctl get zone/${dnsid}.) 
+mkdir -p $HOME/names
+dns=$HOME/names/DNS.${host}.${dnsid}
+
+echo "dns injection to resolve $host to $IP"
+echo "{" > $dns
+echo "      \"Comment\": \"${hostname} DNS\"," >> $dns
+echo "      \"Changes\": [" >> $dns
+echo "      {" >> $dns
+echo "\"Action\": \"UPSERT\"," >> $dns
+echo "\"ResourceRecordSet\": {" >> $dns
+echo "\"Name\": \"${hostname}\"," >> $dns
+echo "\"Type\": \"A\"," >> $dns
+echo "\"TTL\": 60," >> $dns
+echo "\"ResourceRecords\": [" >> $dns
+echo "     {" >> $dns
+echo "\"Value\": \"$IP\"" >> $dns
+echo "       }" >> $dns
+echo "      ]" >> $dns
+echo "     }" >> $dns
+echo "    }" >> $dns
+echo "   ]" >> $dns
+echo "  }" >> $dns
+
+aws route53 change-resource-record-sets --hosted-zone-id $zoneid --change-batch file://$dns | jq .
+
+#
+# let the user know whats happened
+#
+echo " "
+sleep 5
+#
+# set launch time and cleanup before exit
+#
+land=$(date)
+msgbus "${BUDDY} $cmdenv $InstanceId launched at $blastoff, and should be landed in 5 minutes from $land"
+
+#
+curscore=$(etcdctl get score)
+newscore=$(echo "$curscore + $points" | bc)
+etcdctl set score "$newscore" &>/dev/null
+
+msgbus " SCORE ${scoreit} $BUDDY has scored $points points"
+msgbus " COFFEE BREAK !! Take 15 minutes $BUDDY"
+
+skey $runenv/${mytarget}
+
+
+trap 'exit' SIGINT
+
+cmdtorun="cat /var/log/cloud-user-data"
+
+echo "$cmdenv deploying resources for $hostname "
+echo
+echo "Please wait for instance to come alive"
+
+ENDTIME=$(date +%s)
+secs=$(($ENDTIME - $STARTTIME))
+elapsed="$(($secs/3600))h:$(($secs%3600/60))m:$(($secs%60))s"
+echo
+printf 'Elapsed Time %dh:%dm:%ds\n' $(($secs/3600)) $(($secs%3600/60)) $(($secs%60))
+echo
+msgbus " New $runenv ${hostname} needs first time api activation in the GUI" 
+
+etcdctl set $runenv/${host}/time "$elapsed"
+
+
