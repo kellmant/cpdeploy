@@ -1,17 +1,18 @@
 #!/bin/bash
 #
+APIDOM=$(etcdctl ls ctrl/cfg/mg | cut -d '/' -f 5)
 source $HOME/.IPS
 
-if [ -z ${1} ] ; then
-    echo
-    echo "who?"
-    echo
-    etcdctl ls ctrl/cfg/mg 2> /dev/null | cut -d '/' -f 5
-    echo
-    exit 1
-fi
+#if [ -z ${1} ] ; then
+#    echo
+#    echo "who?"
+#    echo
+#    etcdctl ls ctrl/cfg/mg 2> /dev/null | cut -d '/' -f 5
+#    echo
+#    exit 1
+#fi
 
-if [ -z ${2} ] ; then
+if [ -z ${1} ] ; then
     echo
     echo "What?"
     echo
@@ -19,9 +20,9 @@ if [ -z ${2} ] ; then
     exit 1
 fi
 
-slurp="$@"
-mgsys=$(echo "$slurp" | cut -d " " -f 1)
-mgcmd=$(echo "$slurp" | cut -d " " -f 2-)
+mgcmd="$@"
+mgsys="$APIDOM"
+#mgcmd=$(echo "$slurp" | cut -d " " -f 1-)
 
  mgenv="/ctrl/cfg/mg/${mgsys}" 
  hostname=$(etcdctl get $mgenv/config_system/hostname) || { exit 1 ; }
