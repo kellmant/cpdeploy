@@ -1,16 +1,14 @@
 credentials
-root/.aws/shell
-root/.azure/az*
-root/.azure/access*
-root/.npm
-root/.ssh
-root/.streamline
-cpdeploy/mg/output/*
-!cpdeploy/mg/output/.gitkeep
-cpdeploy/app/domain
-cpdeploy/gw/output/*
-!cpdeploy/gw/output/client/
-!cpdeploy/gw/output/client/.gitkeep
+.aws/shell
+.azure/az*
+.azure/access*
+.npm
+.ssh
+.sessionkey
+.SMC
+ExportImportPolicyPackage
+export
+names
 
 PRIVATEBUILD
 # OS generated files #
@@ -24,3 +22,4 @@ PRIVATEBUILD
 .Trash*
 ehthumbs.db
 Thumbs.db
+.vimrc
