@@ -6,6 +6,9 @@ credentials
 .ssh
 .sessionkey
 .SMC
+.renvrc
+.s3cfg
+.vim
 ExportImportPolicyPackage
 export
 names
@@ -23,3 +26,4 @@ PRIVATEBUILD
 ehthumbs.db
 Thumbs.db
 .vimrc
+.rnd
